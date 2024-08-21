@@ -7,8 +7,8 @@ from metabolights_utils.models.isa.investigation_file import (
     StudyPublications, ValueTypeAnnotation)
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
-from mztab2mtbls.mapper.base_mapper import BaseMapper
-from mztab2mtbls.mztab2 import MzTab, Type
+from mztabm2mtbls.mapper.base_mapper import BaseMapper
+from mztabm2mtbls.mztab2 import MzTab, Type
 
 
 class MetadataPublicationMapper(BaseMapper):

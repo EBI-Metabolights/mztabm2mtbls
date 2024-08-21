@@ -164,7 +164,22 @@
         "value" : null
       },
       "description" : "sphingolipid srm quantitation",
-      "factors" : null
+      "factors" : [
+        {
+          "id" : null,
+          "cv_label" : "MS",
+          "cv_accession" : "MS:1002885",
+          "name" : "Gender",
+          "value" : null
+        },
+        {
+          "id" : null,
+          "cv_label" : "MS",
+          "cv_accession" : "MS:1002885",
+          "name" : "Period",
+          "value" : "day"
+        }
+      ]
     } ],
     "custom" : null,
     "cv" : [ {

@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
-from mztab2mtbls.mztab2 import MzTab
+from mztabm2mtbls.mztab2 import MzTab
 
 
 class BaseMapper(ABC):

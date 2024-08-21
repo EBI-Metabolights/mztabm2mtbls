@@ -8,7 +8,7 @@
             "name": "Run current file",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/mztabm2mtbls/converter.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "env": {

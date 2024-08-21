@@ -10,26 +10,25 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
-from mztab2mtbls.mapper.base_mapper import BaseMapper
-from mztab2mtbls.mztab2 import MzTab, Type
+from mztabm2mtbls.mapper.base_mapper import BaseMapper
+from mztabm2mtbls.mztab2 import MzTab, Type
 
 
-class MetadataPublicationMapper(BaseMapper):
+class MetadataSampleMapper(BaseMapper):
 
     def update(self, mztab_model: MzTab , mtbls_model: MetabolightsStudyModel):
         
-        samples: SamplesFile = list(mtbls_model.samples)[0]
-        reader = Reader.get_sample_file_reader(results_per_page=10000)
-        result: IsaTableFileReaderResult = reader.read("resources/s_MTBLS.txt")
-        mtbls_model.samples["s_MTBLS.txt"] = result.isa_table_file
-        table = result.isa_table_file.table
+        samples: SamplesFile = mtbls_model.samples[list(mtbls_model.samples)[0]]
+
+        table = samples.table
         
         selected_column_headers = {"Characteristics[Organism]": -1, "Characteristics[Organism part]":-1, "Sample Name": -1}
         for header in table.headers:
             if header.column_header in selected_column_headers:
                 selected_column_headers[header.column_header] = header.column_index
-                
+        
         for sample in mztab_model.metadata.sample:
+            
             # add empty row
             for header in table.data:
                 if header == "Protocol REF":

@@ -1,5 +1,7 @@
 import json
+from typing import List
 
+from metabolights_utils import IsaTableFileReaderResult
 from metabolights_utils.isatab import Reader, Writer
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
@@ -12,18 +14,23 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
-from mztab2mtbls import utils
-from mztab2mtbls.mapper.metadata_base import MetadataBaseMapper
-from mztab2mtbls.mapper.metadata_contact import MetadataContactMapper
-from mztab2mtbls.mapper.metadata_cv import MetadataCvMapper
-from mztab2mtbls.mapper.metadata_publication import MetadataPublicationMapper
-from mztab2mtbls.mztab2 import MzTab
+from mztabm2mtbls import utils
+from mztabm2mtbls.mapper.base_mapper import BaseMapper
+from mztabm2mtbls.mapper.metadata_base import MetadataBaseMapper
+from mztabm2mtbls.mapper.metadata_contact import MetadataContactMapper
+from mztabm2mtbls.mapper.metadata_cv import MetadataCvMapper
+from mztabm2mtbls.mapper.metadata_publication import MetadataPublicationMapper
+from mztabm2mtbls.mapper.metadata_sample import MetadataSampleMapper
+from mztabm2mtbls.mapper.metadata_study_variable import \
+    MetadataStudyVariableMapper
+from mztabm2mtbls.mztab2 import MzTab
 
-mappers = [
+mappers: List[BaseMapper] = [
     MetadataCvMapper(),
     MetadataBaseMapper(),
     MetadataContactMapper(),
     MetadataPublicationMapper(),
+    MetadataStudyVariableMapper(),
 ]
 
 
@@ -35,18 +42,11 @@ if __name__ == "__main__":
     mztab_model: MzTab = MzTab.model_validate(mztab_json_data)
     
     
-    mtbls_model: MetabolightsStudyModel  = MetabolightsStudyModel(investigation=Investigation())
-    samples_file = SamplesFile()
-    assay_file = AssayFile()
-    assignment_file = AssignmentFile()
-    
-    mtbls_model.samples["s_MTBLS.txt"] = samples_file
-    mtbls_model.assays["a_MTBLS.txt"] = assay_file
-    mtbls_model.assays["m_MTBLS.tsv"] = assignment_file
-    mtbls_model.investigation.studies.append(Study())
-    
+    mtbls_model: MetabolightsStudyModel  = utils.create_metabolights_study_model()
+        
     for mapper in mappers:
         mapper.update(mztab_model, mtbls_model)
+        
     investigation_writer = InvestigationFileWriter = Writer.get_investigation_file_writer()
     investigation_writer.write(mtbls_model.investigation, "output/i_Investigation.txt", values_in_quotation_mark=True)
     print(mztab_model.metadata.mzTab_version)
