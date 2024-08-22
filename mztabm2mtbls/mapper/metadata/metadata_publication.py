@@ -8,6 +8,7 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
+from mztabm2mtbls.mapper.utils import sanitise_data
 from mztabm2mtbls.mztab2 import MzTab, Type
 
 
@@ -41,7 +42,7 @@ class MetadataPublicationMapper(BaseMapper):
             
             pub = Publication(pub_med_id=pub_med_id, doi=doi) 
             mtbls_model.investigation.studies[0].study_publications.publications.append(pub)
-            uri_comment.value.append(str(uri))      
-            id_comment.value.append(str(mztab_publication.id) if str(mztab_publication.id) else "")
+            uri_comment.value.append(sanitise_data(uri))      
+            id_comment.value.append(sanitise_data(mztab_publication.id) if sanitise_data(mztab_publication.id) else "")
 
             

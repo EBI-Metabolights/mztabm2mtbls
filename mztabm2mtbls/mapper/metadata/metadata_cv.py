@@ -8,6 +8,7 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
+from mztabm2mtbls.mapper.utils import sanitise_data
 from mztabm2mtbls.mztab2 import MzTab
 
 
@@ -23,12 +24,17 @@ class MetadataCvMapper(BaseMapper):
         
         comments = mtbls_model.investigation.ontology_source_references.comments
         comments.append(id_comment)
+        ontology_sources = mtbls_model.investigation.ontology_source_references.references
+        current_source_names = set([source.source_name for source in ontology_sources])
         for cv in mztab_model.metadata.cv:
-            ontology_sources = mtbls_model.investigation.ontology_source_references.references
+            cv_label = sanitise_data(cv.label)
+            if cv_label in current_source_names:
+                continue
+            current_source_names.add(cv_label)
             ontology_sources.append(OntologySourceReference(
-                source_name=str(cv.label) if str(cv.label) else "",
-                source_file=str(cv.uri) if str(cv.uri) else "",
-                source_version=str(cv.version) if str(cv.version) else "",
-                source_description=str(cv.full_name) if str(cv.full_name) else "",
+                source_name=cv_label if cv_label else "",
+                source_file=sanitise_data(cv.uri) if sanitise_data(cv.uri) else "",
+                source_version=sanitise_data(cv.version) if sanitise_data(cv.version) else "",
+                source_description=sanitise_data(cv.full_name) if sanitise_data(cv.full_name) else "",
                 ))
-            id_comment.value.append(str(cv.id) if str(cv.id) else "")
+            id_comment.value.append(sanitise_data(cv.id) if sanitise_data(cv.id) else "")

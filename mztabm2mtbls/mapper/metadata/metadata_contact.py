@@ -8,6 +8,7 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
+from mztabm2mtbls.mapper.utils import sanitise_data
 from mztabm2mtbls.mztab2 import MzTab
 
 
@@ -33,7 +34,7 @@ class MetadataContactMapper(BaseMapper):
             mid_initials=""
             last_name=""
             if contact.name:
-                name_parts = str(contact.name).strip().split(" ")
+                name_parts = sanitise_data(contact.name).strip().split(" ")
                 if len(name_parts) == 1:
                     first_name = name_parts[0]
                 elif len(name_parts) == 2:
@@ -51,5 +52,5 @@ class MetadataContactMapper(BaseMapper):
             )
             mtbls_contacts = mtbls_model.investigation.studies[0].study_contacts.people
             mtbls_contacts.append(person)
-            id_comment.value.append(str(contact.id) if str(contact.id) else "")
-            orcid_comment.value.append(str(contact.orcid) if str(contact.orcid) else "")
+            id_comment.value.append(sanitise_data(contact.id) if sanitise_data(contact.id) else "")
+            orcid_comment.value.append(sanitise_data(contact.orcid) if sanitise_data(contact.orcid) else "")

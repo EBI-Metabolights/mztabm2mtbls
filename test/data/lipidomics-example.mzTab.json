@@ -69,10 +69,28 @@
       "id" : 1,
       "name" : "QEx-1273-prm-sp1",
       "custom" : null,
-      "species" : null,
-      "tissue" : null,
+      "species" : [{
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1001838",
+        "name" : "Homo sapiens",
+        "value" : null
+      }],
+      "tissue" : [{
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:Y",
+        "name" : "liver",
+        "value" : null
+      }],
       "cell_type" : null,
-      "disease" : null,
+      "disease" : [{
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:X",
+        "name" : "Cancer",
+        "value" : null
+      }],
       "description" : "Sphingolipids with concentration reported as picomolar per mg of protein, abundances are reported after calibration correction."
     } ],
     "sample_processing" : [ {

@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional
+from typing import Annotated, List, Optional, Union
 
 from pydantic import AnyUrl, BaseModel, Field, RootModel, constr
 
@@ -218,9 +218,11 @@ class CV(BaseModel):
 class Database(BaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     param: Parameter
-    prefix: Annotated[str, Field(description="The database prefix.")]
-    version: Annotated[str, Field(description="The database version.")]
-    uri: Annotated[AnyUrl, Field(description="The URI to the online database.")]
+    prefix: Annotated[Union[None, str], Field(description="The database prefix.")]
+    version: Annotated[Union[None, str], Field(description="The database version.")]
+    uri: Annotated[
+        Union[None, AnyUrl], Field(description="The URI to the online database.")
+    ]
 
 
 class ColumnParameterMapping(BaseModel):
