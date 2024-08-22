@@ -68,7 +68,28 @@
     "sample" : [ {
       "id" : 1,
       "name" : "QEx-1273-prm-sp1",
-      "custom" : null,
+      "custom" : [{
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1001838",
+        "name" : "Gender",
+        "value" : "Male"
+      },
+      {
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1001838",
+        "name" : "Gender",
+        "value" : "Female"
+      },
+      {
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1001838",
+        "name" : "Age",
+        "value" : "16"
+      }
+    ],
       "species" : [{
         "id" : null,
         "cv_label" : "MS",
@@ -124,7 +145,15 @@
       },
       "setting" : [ "MSMSmassrange: (50.0, 1800.0)" ]
     } ],
-    "derivatization_agent" : null,
+    "derivatization_agent" : [
+      {
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:agent",
+        "name" : "Agent 1",
+        "value" : ""
+      }
+    ],
     "ms_run" : [ {
       "id" : 1,
       "name" : null,

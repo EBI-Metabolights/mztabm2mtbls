@@ -18,8 +18,7 @@ from mztabm2mtbls.mztab2 import MzTab, Type
 class MetadataSoftwareMapper(BaseMapper):
 
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
-        if not mztab_model.metadata.software:
-          return
+
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
 
         selected_protocol = None

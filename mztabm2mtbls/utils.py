@@ -24,6 +24,7 @@ from mztabm2mtbls.mapper.metadata.metadata_cv import MetadataCvMapper
 from mztabm2mtbls.mapper.metadata.metadata_publication import \
     MetadataPublicationMapper
 from mztabm2mtbls.mapper.utils import sanitise_data
+from mztabm2mtbls.mztab2 import MzTab
 
 
 def replace_null_string_with_none(obj):
@@ -53,9 +54,7 @@ def create_metabolights_study_model() -> MetabolightsStudyModel:
             submission_date=submisstion_date,
         )
     )
-    assignment_file = AssignmentFile()
 
-    mtbls_model.metabolite_assignments["m_MTBLS.tsv"] = assignment_file
     study = Study(
         file_name="s_MTBLS.txt",
         identifier="MTBLS",
@@ -69,6 +68,11 @@ def create_metabolights_study_model() -> MetabolightsStudyModel:
         "resources/s_MTBLS.txt", offset=0, limit=10000
     )
     mtbls_model.samples["s_MTBLS.txt"] = result.isa_table_file
+    reader = Reader.get_assignment_file_reader(results_per_page=100000)
+    result: IsaTableFileReaderResult = reader.read(
+        "resources/m_MTBLS_metabolite_profiling_v2_maf.tsv", offset=0, limit=10000
+    )
+    mtbls_model.metabolite_assignments["m_MTBLS_metabolite_profiling_v2_maf.tsv"] = result.isa_table_file
 
     # Create an assay file from template and update i_Investigation.txt file
     reader = Reader.get_assay_file_reader(results_per_page=10000)
@@ -132,7 +136,45 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel):
     )
     study.study_protocols.protocols.append(Protocol(name="Data transformation"))
     study.study_protocols.protocols.append(Protocol(name="Metabolite identification"))
+    
+def modify_mztab_model(mztab_model: MzTab):
 
+    if not mztab_model.metadata.sample_processing:
+        mztab_model.metadata.sample_processing = []
+    if not mztab_model.metadata.sample:
+        mztab_model.metadata.sample = []
+    if not mztab_model.metadata.assay:
+        mztab_model.metadata.assay = []
+    if not mztab_model.metadata.software:
+        mztab_model.metadata.software = []
+    if not mztab_model.metadata.database:
+        mztab_model.metadata.database = []
+    if not mztab_model.metadata.ms_run:
+        mztab_model.metadata.ms_run = []
+    if not mztab_model.metadata.instrument:
+        mztab_model.metadata.instrument = []
+    if not mztab_model.metadata.contact:
+        mztab_model.metadata.contact = []
+    if not mztab_model.metadata.publication:
+        mztab_model.metadata.publication = []
+    if not mztab_model.metadata.external_study_uri:
+        mztab_model.metadata.external_study_uri = []
+    if not mztab_model.metadata.uri:
+        mztab_model.metadata.uri = []
+    if not mztab_model.metadata.derivatization_agent:
+        mztab_model.metadata.derivatization_agent = []
+    if not mztab_model.metadata.study_variable:
+        mztab_model.metadata.study_variable = []
+    if not mztab_model.metadata.custom:
+        mztab_model.metadata.custom = []
+    if not mztab_model.metadata.cv:
+        mztab_model.metadata.cv = []
+    if not mztab_model.smallMoleculeSummary:
+        mztab_model.smallMoleculeSummary = []
+    if not mztab_model.smallMoleculeFeature:
+        mztab_model.smallMoleculeFeature = []
+    if not mztab_model.smallMoleculeEvidence:
+        mztab_model.smallMoleculeEvidence = []
 
 def save_metabolights_study_model(
     mtbls_model: MetabolightsStudyModel, output_dir: str = "output"
@@ -149,6 +191,9 @@ def save_metabolights_study_model(
 
     assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
     dump_isa_table(assay_file, f"{output_dir}/{assay_file.file_path}")
+    
+    assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[list(mtbls_model.metabolite_assignments)[0]]
+    dump_isa_table(assignment_file, f"{output_dir}/{assignment_file.file_path}")
 
 
 def dump_isa_table(

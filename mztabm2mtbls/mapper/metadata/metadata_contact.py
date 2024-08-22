@@ -41,7 +41,7 @@ class MetadataContactMapper(BaseMapper):
                     first_name, last_name = name_parts
                 else:
                     first_name = name_parts[0]
-                    mid_initials = name_parts[1..len(name_parts)-2]
+                    mid_initials = " ".join(name_parts[1:len(name_parts)-2])
                     last_name = name_parts[-1]
             person = Person(
                     first_name=first_name,

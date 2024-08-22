@@ -29,8 +29,7 @@ from mztabm2mtbls.mapper.metadata.metadata_sample_processing import \
     MetadataSampleProcessingMapper
 from mztabm2mtbls.mapper.metadata.metadata_software import \
     MetadataSoftwareMapper
-from mztabm2mtbls.mapper.metadata.metadata_study_variable import \
-    MetadataStudyVariableMapper
+from mztabm2mtbls.mapper.summary.small_molecule_summary import SmallMoleculeSummaryMapper
 from mztabm2mtbls.mztab2 import MzTab
 
 mappers: List[BaseMapper] = [
@@ -39,22 +38,22 @@ mappers: List[BaseMapper] = [
     MetadataContactMapper(),
     MetadataPublicationMapper(),
     MetadataSampleMapper(),
-    MetadataStudyVariableMapper(),
     MetadataSampleProcessingMapper(),
     MetadataSoftwareMapper(),
     MetadataDatabaseMapper(),
-    MetadataAssayMapper()
+    MetadataAssayMapper(),
+    SmallMoleculeSummaryMapper()
 ]
-
-
+        
+        
 if __name__ == "__main__":
 
-    with open("test/data/lipidomics-example.mzTab.json") as f:
+    with open("test/data/singaporean-plasma-site1.mzTab.json") as f:
     # with open("test/data/MTBLS263.mztab.json") as f:
         mztab_json_data = json.load(f)
     utils.replace_null_string_with_none(mztab_json_data)
     mztab_model: MzTab = MzTab.model_validate(mztab_json_data)
-
+    utils.modify_mztab_model(mztab_model)
     mtbls_model: MetabolightsStudyModel = utils.create_metabolights_study_model()
 
     for mapper in mappers:

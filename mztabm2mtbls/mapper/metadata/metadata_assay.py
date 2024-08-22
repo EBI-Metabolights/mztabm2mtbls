@@ -1,7 +1,8 @@
 import os
 from typing import Dict
 
-from metabolights_utils import IsaTableFile, IsaTableFileReaderResult
+from metabolights_utils import (AssayFile, IsaTableFile,
+                                IsaTableFileReaderResult)
 from metabolights_utils.isatab import Reader, Writer
 from metabolights_utils.models.isa.common import Comment
 from metabolights_utils.models.isa.investigation_file import (
@@ -29,10 +30,7 @@ from mztabm2mtbls.mztab2 import Instrument, MzTab, Parameter, Type
 class MetadataAssayMapper(BaseMapper):
 
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
-
-        study = mtbls_model.investigation.studies[0]
-        # samples_file: SamplesFile = mtbls_model.samples[list(mtbls_model.samples)[0]]
-        assay_file: SamplesFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
+        assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
 
         ##################################################################################
         # DEFINE SAMPLE SHEET COLUMNS
@@ -193,7 +191,7 @@ class MetadataAssayMapper(BaseMapper):
                 ms_run = None
                 if ms_run_ref in ms_run_map and ms_run_map[ms_run_ref]:
                     ms_run = ms_run_map[ms_run_ref]
-                    data_file_path = str(ms_run.location) if ms_run.location else ""
+                    data_file_path = str(ms_run.location).strip("/") if ms_run.location else ""
                     data_file_name = ""
                     if data_file_path:
                         data_file_name = "FILES/" + os.path.basename(data_file_path)
