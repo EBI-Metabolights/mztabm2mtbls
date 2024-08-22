@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import shutil
 from typing import List
 
@@ -42,22 +43,22 @@ def replace_null_string_with_none(obj):
                 replace_null_string_with_none(item)
 
 
-def create_metabolights_study_model() -> MetabolightsStudyModel:
+def create_metabolights_study_model(study_id: str="MTBLS") -> MetabolightsStudyModel:
 
     submisstion_date = datetime.datetime.now().strftime("%Y-%m-%d")
     public_release_date = submisstion_date
 
     mtbls_model: MetabolightsStudyModel = MetabolightsStudyModel(
         investigation=Investigation(
-            identifier="MTBLS",
+            identifier=study_id,
             public_release_date=public_release_date,
             submission_date=submisstion_date,
         )
     )
 
     study = Study(
-        file_name="s_MTBLS.txt",
-        identifier="MTBLS",
+        file_name=f"s_{study_id}.txt",
+        identifier=study_id,
         public_release_date=public_release_date,
         submission_date=submisstion_date,
     )
@@ -67,22 +68,24 @@ def create_metabolights_study_model() -> MetabolightsStudyModel:
     result: IsaTableFileReaderResult = reader.read(
         "resources/s_MTBLS.txt", offset=0, limit=10000
     )
-    mtbls_model.samples["s_MTBLS.txt"] = result.isa_table_file
+    mtbls_model.samples[f"s_{study_id}.txt"] = result.isa_table_file
+    result.isa_table_file = f"s_{study_id}.txt"
     reader = Reader.get_assignment_file_reader(results_per_page=100000)
     result: IsaTableFileReaderResult = reader.read(
         "resources/m_MTBLS_metabolite_profiling_v2_maf.tsv", offset=0, limit=10000
     )
-    mtbls_model.metabolite_assignments["m_MTBLS_metabolite_profiling_v2_maf.tsv"] = result.isa_table_file
-
+    mtbls_model.metabolite_assignments[f"m_{study_id}_metabolite_profiling_v2_maf.tsv"] = result.isa_table_file
+    result.isa_table_file.file_path = f"m_{study_id}_metabolite_profiling_v2_maf.tsv"
     # Create an assay file from template and update i_Investigation.txt file
     reader = Reader.get_assay_file_reader(results_per_page=10000)
     result: IsaTableFileReaderResult = reader.read(
         "resources/a_MTBLS_metabolite_profiling.txt", offset=0, limit=10000
     )
-    mtbls_model.assays["a_MTBLS_metabolite_profiling.txt"] = result.isa_table_file
+    mtbls_model.assays[f"a_{study_id}_metabolite_profiling.txt"] = result.isa_table_file
+    result.isa_table_file.file_path = f"a_{study_id}_metabolite_profiling.txt"
     study.study_assays.assays.append(
         Assay(
-            file_name="a_MTBLS_metabolite_profiling.txt",
+            file_name=f"a_{study_id}_metabolite_profiling.txt",
             measurement_type=OntologyAnnotation(
                 term="metabolite profiling",
                 term_source_ref="OBI",
@@ -179,7 +182,8 @@ def modify_mztab_model(mztab_model: MzTab):
 def save_metabolights_study_model(
     mtbls_model: MetabolightsStudyModel, output_dir: str = "output"
 ):
-    report = Writer.get_investigation_file_writer().write(
+    os.makedirs(output_dir, exist_ok=True)
+    Writer.get_investigation_file_writer().write(
         mtbls_model.investigation,
         f"{output_dir}/i_Investigation.txt",
         values_in_quotation_mark=True,

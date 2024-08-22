@@ -228,7 +228,7 @@ def update_isa_table_row(
     for definition in field_maps.values():
         if hasattr(source_obj, definition.field_name):
             value = getattr(source_obj, definition.field_name)
-            if value is not None and sanitise_data(value):
+            if value is not None:
                 if isinstance(value, list) and value:
                     data = value[0]
                     if isinstance(data, Parameter):
