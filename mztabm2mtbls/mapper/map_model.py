@@ -19,6 +19,7 @@ class ProtocoSectionDefinition(BaseModel):
     
 class AssaySheetMapFields(BaseModel):
     assay_id: str = ""
+    assay_name: str = ""
     sample_id: str = ""
     sample_name: str = ""
     ms_run_id: str = ""
@@ -26,7 +27,7 @@ class AssaySheetMapFields(BaseModel):
     data_file_name: str = ""
     format: Union[None, Parameter] = None
     id_format: Union[None, Parameter] = None
-    scan_polarity: Union[None, List[Parameter]] = None
+    scan_polarity: str = ""
     hash: str = ""
     hash_method: Union[None, Parameter] = None
     instrument_id: str = ""

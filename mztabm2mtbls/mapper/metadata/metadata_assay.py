@@ -19,8 +19,10 @@ from mztabm2mtbls.mapper.map_model import (AssaySheetMapFields,
                                            FieldMapDescription)
 from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
                                        add_isa_table_single_column,
-                                       copy_parameter, get_protocol_sections,
-                                       sanitise_data, update_isa_table_row)
+                                       copy_parameter,
+                                       find_first_header_column_index,
+                                       get_protocol_sections, sanitise_data,
+                                       update_isa_table_row)
 from mztabm2mtbls.mztab2 import Instrument, MzTab, Parameter, Type
 
 
@@ -35,53 +37,132 @@ class MetadataAssayMapper(BaseMapper):
         ##################################################################################
         # DEFINE SAMPLE SHEET COLUMNS
         ##################################################################################
-
-        add_isa_table_single_column(
-            assay_file, "Comment[mztab:metadata:assay:id]", new_column_index=0
-        )
-        add_isa_table_single_column(
-            assay_file, "Comment[mztab:metadata:assay:name]", new_column_index=1
-        )
-        add_isa_table_single_column(
-            assay_file, "Comment[mztab:metadata:sample:id]", new_column_index=2
-        )
-        add_isa_table_single_column(
-            assay_file, "Comment[mztab:metadata:ms_run:id]", new_column_index=3
-        )
-        add_isa_table_single_column(
-            assay_file,
+        new_column_index = 0
+        for header in [
+            "Comment[mztab:metadata:assay:id]",
+            "Comment[mztab:metadata:sample:id]",
+            "Comment[mztab:metadata:ms_run:id]",
+            "Comment[mztab:metadata:ms_run:name]",
             "Comment[mztab:metadata:ms_run:instrument:id]",
-            new_column_index=4,
-        )
+        ]:
+            add_isa_table_single_column(
+                assay_file,
+                header,
+                new_column_index=new_column_index,
+            )
+            new_column_index += 1
+
         # add_isa_table_single_column(samples, "Comment[mztab:metadata:assay:external_uri]", new_column_index=4)
+        protocol_sections = get_protocol_sections(assay_file)
+        mass_analyzer_header_name = "Parameter Value[Mass analyzer]"
+        mass_analyzer_column_header = find_first_header_column_index(assay_file, "Parameter Value[Mass analyzer]")
+        if mass_analyzer_column_header is None:
+            raise ValueError(
+                f"Mass analyzer column header {mass_analyzer_header_name} not found in assay file."
+            )
+        add_isa_table_ontology_columns(
+            assay_file,
+            "Parameter Value[Detector]",
+            new_column_index=mass_analyzer_column_header.column_index + 3,
+        )
+        normalization_header = find_first_header_column_index(assay_file, "Normalization Name")
+        if normalization_header is None:
+            raise ValueError(
+                f"Normalization column header {normalization_header} not found in assay file."
+            )
+            
+        new_column_index = normalization_header.column_index + 1
+        # Add columns for after mass analyzer column. Second parameter number of columns. 3 for ontology column
+        for header in [
+            ("Parameter Value[Data file checksum]", 1),
+            ("Parameter Value[Data file checksum type]", 3),
+            ("Parameter Value[Native spectrum identifier format]", 3),
+            ("Parameter Value[Raw data file format]", 3),
+        ]:
+            
+            if header[1] == 3:
+              add_isa_table_ontology_columns(
+                  assay_file,
+                  header[0],
+                  new_column_index=new_column_index,
+              )
+              new_column_index += 3
+            else:
+              add_isa_table_single_column(
+                  assay_file,
+                  header[0],
+                  new_column_index=new_column_index,
+              )
+              new_column_index += 1
 
         ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
         samples_map = {x.id: x for x in mztab_model.metadata.sample}
         instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
 
         ms_run_field_maps = {
+          
+            "Sample Name": FieldMapDescription(field_name="sample_name"),
+            "MS Assay Name": FieldMapDescription(field_name="sample_id"),
+            "Comment[mztab:metadata:assay:id]": FieldMapDescription(
+                field_name="assay_id"
+            ),
+            "MS Assay Name": FieldMapDescription(field_name="ms_run_id"),
+            "Comment[mztab:metadata:sample:id]": FieldMapDescription(
+                field_name="sample_id"
+            ),
+            "Comment[mztab:metadata:ms_run:id]": FieldMapDescription(
+                field_name="ms_run_id"
+            ),
+            "Comment[mztab:metadata:ms_run:name]": FieldMapDescription(
+                field_name="ms_run_name"
+            ),
+            "Comment[mztab:metadata:ms_run:instrument:id]": FieldMapDescription(
+                field_name="instrument_id"
+            ),
             "Parameter Value[Scan polarity]": FieldMapDescription(
                 field_name="scan_polarity"
             ),
-            "Derived Spectral Data File": FieldMapDescription(field_name="location"),
+            "Parameter Value[Instrument]": FieldMapDescription(
+                field_name="instrument_name"
+            ),
+            "Parameter Value[Ion source]": FieldMapDescription(
+                field_name="instrument_source"
+            ),
+            "Parameter Value[Mass analyzer]": FieldMapDescription(
+                field_name="instrument_analyzer"
+            ),
+            "Parameter Value[Detector]": FieldMapDescription(
+                field_name="instrument_detector"
+            ),
+            "Parameter Value[Data file checksum]": FieldMapDescription(
+                field_name="hash"
+            ),
+            "Parameter Value[Data file checksum type]": FieldMapDescription(
+                field_name="hash_method"
+            ),
+            "Parameter Value[Native spectrum identifier format]": FieldMapDescription(
+                field_name="id_format"
+            ),
+            "Parameter Value[Raw data file format]": FieldMapDescription(
+                field_name="format"
+            ),
+            "Derived Spectral Data File": FieldMapDescription(
+                field_name="data_file_name"
+            ),
         }
         for header in assay_file.table.headers:
             if header.column_header in ms_run_field_maps:
-                ms_run_field_maps[header.column_header].target_column_index = header.column_index
-                ms_run_field_maps[header.column_header].target_column_name = header.column_name
+                ms_run_field_maps[header.column_header].target_column_index = (
+                    header.column_index
+                )
+                ms_run_field_maps[header.column_header].target_column_name = (
+                    header.column_name
+                )
 
         #################################################################################################
         # Populate assay sheet rows with default values
-        assay_sheet_row_count = 0
-        for assay in mztab_model.metadata.assay:
-            populated_row_count = 1
-            valid_ms_run_refs = 0
-            for ms_run_ref in assay.ms_run_ref:
-                if ms_run_ref in ms_run_map and ms_run_map[ms_run_ref]:
-                    valid_ms_run_refs += 1
-
-            assay_sheet_row_count += max(populated_row_count, valid_ms_run_refs)
-
+        assay_sheet_row_count = sum([len(x.ms_run_ref) if x.ms_run_ref else 0 for x in mztab_model.metadata.assay])
+        
         initial_row_count = len(assay_file.table.data["Sample Name"])
 
         protocol_sections = get_protocol_sections(assay_file)
@@ -100,24 +181,28 @@ class MetadataAssayMapper(BaseMapper):
 
         next_assay_sheet_row = 0
         for assay in mztab_model.metadata.assay:
+            if not assay.ms_run_ref:
+              continue
             sample_name = ""
             sample_id = ""
             if assay.sample_ref in samples_map:
-                sample_name = str(samples_map[assay.sample_ref].name)
-                sample_id = str(assay.sample_ref)
+                sample_name = sanitise_data(samples_map[assay.sample_ref].name)
+                sample_id = assay.sample_ref
 
-            row_from_ms_run = False
             for ms_run_ref in assay.ms_run_ref:
                 ms_run = None
                 if ms_run_ref in ms_run_map and ms_run_map[ms_run_ref]:
-                    row_from_ms_run = True
                     ms_run = ms_run_map[ms_run_ref]
                     data_file_path = str(ms_run.location) if ms_run.location else ""
                     data_file_name = ""
                     if data_file_path:
                         data_file_name = "FILES/" + os.path.basename(data_file_path)
-                    instrument: Instrument = instruments_map[ms_run.instrument_ref] if ms_run.instrument_ref in instruments_map else None
-                    
+                    instrument: Instrument = (
+                        instruments_map[ms_run.instrument_ref]
+                        if ms_run.instrument_ref in instruments_map
+                        else None
+                    )
+
                     instrument_name = copy_parameter(None)
                     instrument_id = ""
                     instrument_source = copy_parameter(None)
@@ -129,50 +214,52 @@ class MetadataAssayMapper(BaseMapper):
                         instrument_source = copy_parameter(instrument.source)
                         instrument_analyzer = copy_parameter(instrument.analyzer)
                         instrument_detector = copy_parameter(instrument.detector)
-                      
+
+                    posititive_scan = False
+                    negative_scan = False
+                    if ms_run.scan_polarity:
+                        for item in ms_run.scan_polarity:
+                            if "pos" in item.name:
+                                posititive_scan = True
+                            if "neg" in item.name:
+                                negative_scan = True
+                    if posititive_scan and negative_scan:
+                        scan_polarity = "alternating"
+                    elif posititive_scan:
+                        scan_polarity = "positive"
+                    elif negative_scan:
+                        scan_polarity = "negative"
+                    else:
+                        scan_polarity = ""
+
+                    hash_method = copy_parameter(ms_run.hash_method)
+                    hash_value = sanitise_data(ms_run.hash)
+                    if hash_method and hash_value:
+                        hash_method.value = hash_method.value + "|" + hash_value
                     map_fields = AssaySheetMapFields(
-                        assay_id=str(assay.id),
-                        sample_id=str(sample_id),
-                        sample_name=sample_name,
-                        ms_run_id=str(ms_run.id),
-                        ms_run_name=str(ms_run.name),
-                        data_file_name=str(data_file_name),
+                        assay_id=sanitise_data(assay.id),
+                        sample_id=sanitise_data(sample_id),
+                        sample_name=sanitise_data(sample_name),
+                        ms_run_id=sanitise_data(ms_run.id),
+                        ms_run_name=sanitise_data(ms_run.name),
+                        data_file_name=sanitise_data(data_file_name),
                         format=copy_parameter(ms_run.format),
                         id_format=copy_parameter(ms_run.id_format),
-                        scan_polarity=copy_parameter(ms_run.scan_polarity),
+                        scan_polarity=scan_polarity,
                         hash=sanitise_data(ms_run.hash),
                         hash_method=copy_parameter(ms_run.hash_method),
-                        instrument_id=instrument_id,
+                        instrument_id=sanitise_data(instrument_id),
                         instrument_name=instrument_name,
                         instrument_source=instrument_source,
                         instrument_analyzer=instrument_analyzer,
-                        instrument_detector=instrument_detector
+                        instrument_detector=instrument_detector,
                     )
-
 
                     update_isa_table_row(
                         assay_file, next_assay_sheet_row, map_fields, ms_run_field_maps
                     )
                     next_assay_sheet_row += 1
-
-            if not row_from_ms_run:
-                map_fields = AssaySheetMapFields(
-                    assay_id=str(assay.id),
-                    sample_id=str(sample_id),
-                    sample_name=sample_name,
-                    format=copy_parameter(None),
-                    id_format=copy_parameter(None),
-                    scan_polarity=[copy_parameter(None)],
-                    hash_method=copy_parameter(None),
-                    instrument_source=copy_parameter(None),
-                    instrument_analyzer=[copy_parameter(None)],
-                    instrument_detector=copy_parameter(None),
-                )
-                update_isa_table_row(
-                    assay_file, next_assay_sheet_row, map_fields, ms_run_field_maps
-                )
-                next_assay_sheet_row += 1
-
+                  
         # # Map
         # # mzTab2-M  Metabolights sample sheet
         # # species   -> Characteristics[Organism]

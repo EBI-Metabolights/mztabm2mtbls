@@ -153,7 +153,13 @@
         "value" : null
       } ],
       "hash" : null,
-      "hash_method" : null
+      "hash_method" : {
+        "id" : null,
+        "cv_label" : "XY",
+        "cv_accession" : "XY:1000130",
+        "name" : "SHA-1",
+        "value" : null
+      } 
     } ],
     "assay" : [ {
       "id" : 1,

@@ -22,7 +22,11 @@ def sanitise_single_value(value: Union[None, Any]):
         return ""
     return str(value).replace("\n", " ").replace("\r", " ").replace("\t", " ").strip()
 
-
+def find_first_header_column_index(assay_file: IsaTableFile, header_name: str):
+    for column in assay_file.table.headers:
+        if column.column_header == header_name:
+            return column
+    return None
 def copy_parameter(value: Union[None, Parameter, List[Parameter]]):
     if not value:
         return Parameter(
@@ -238,7 +242,7 @@ def update_isa_table_row(
                         sanitise_data(term_source_refs)
                         term_accession_numbers = [x.cv_accession for x in value]
                         sanitise_data(term_accession_numbers)
-
+                            
                         term_source_ref_idx = definition.target_column_index + 1
                         term_source_ref_column_name = isa_table_file.table.columns[
                             term_source_ref_idx
@@ -259,6 +263,26 @@ def update_isa_table_row(
                             row_idx
                         ] = ";".join(value)
                 elif value:
-                    isa_table_file.table.data[definition.target_column_name][
-                        row_idx
-                    ] = sanitise_data(value)
+                    if isinstance(value, Parameter):
+                        isa_table_file.table.data[definition.target_column_name][
+                            row_idx
+                        ] = sanitise_data(value.name)
+                        term_source_ref_idx = definition.target_column_index + 1
+                        term_source_ref_column_name = isa_table_file.table.columns[
+                            term_source_ref_idx
+                        ]
+                        isa_table_file.table.data[term_source_ref_column_name][
+                            row_idx
+                        ] = sanitise_data(value.cv_label)
+
+                        term_accession_number_idx = definition.target_column_index + 2
+                        term_accession_number_column_name = (
+                            isa_table_file.table.columns[term_accession_number_idx]
+                        )
+                        isa_table_file.table.data[term_accession_number_column_name][
+                            row_idx
+                        ] = sanitise_data(value.cv_accession)
+                    else:
+                        isa_table_file.table.data[definition.target_column_name][
+                            row_idx
+                        ] = sanitise_data(value)

@@ -43,7 +43,7 @@ mappers: List[BaseMapper] = [
     MetadataSampleProcessingMapper(),
     MetadataSoftwareMapper(),
     MetadataDatabaseMapper(),
-    # MetadataAssayMapper()
+    MetadataAssayMapper()
 ]
 
 
