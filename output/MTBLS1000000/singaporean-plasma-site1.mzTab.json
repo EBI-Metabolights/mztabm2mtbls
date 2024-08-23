@@ -60,13 +60,7 @@
         "name" : "quadrupole ion trap",
         "value" : null
       } ],
-      "detector" : {
-        "id" : null,
-        "cv_label" : "MS",
-        "cv_accession" : "MS:XXXX",
-        "name" : "detector",
-        "value" : null
-      }
+      "detector" : null
     } ],
     "quantification_method" : {
       "id" : null,
@@ -37817,21 +37811,9 @@
       "id" : 1,
       "name" : null,
       "location" : "file://M11081707.mzML",
-      "instrument_ref" : 1 ,
-      "format" : {
-        "id" : null,
-        "cv_label" : "MS",
-        "cv_accession" : "MS:1000130",
-        "name" : "format",
-        "value" : null
-      },
-      "id_format" : {
-        "id" : null,
-        "cv_label" : "MS",
-        "cv_accession" : "MS:1000130",
-        "name" : "Native file format",
-        "value" : null
-      },
+      "instrument_ref" : [ 1 ],
+      "format" : null,
+      "id_format" : null,
       "fragmentation_method" : null,
       "scan_polarity" : [ {
         "id" : null,
@@ -37840,7 +37822,7 @@
         "name" : "positive scan",
         "value" : null
       } ],
-      "hash" : "daat",
+      "hash" : null,
       "hash_method" : null
     }, {
       "id" : 2,

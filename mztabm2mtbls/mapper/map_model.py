@@ -11,6 +11,7 @@ class FieldMapDescription(BaseModel):
     target_column_index: int = -1
     target_column_name: str = ""
     map_from: Literal["name", "value"] = "name"
+    join_operator: str = ";"
 
 class ProtocoSectionDefinition(BaseModel):
     section_name: str = ""

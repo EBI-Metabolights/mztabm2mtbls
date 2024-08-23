@@ -1,10 +1,11 @@
 import datetime
 import json
 import os
+import re
 import shutil
-from typing import List
+from typing import Any, List, Optional, Union, get_args, get_origin
 
-from metabolights_utils import IsaTableFileReaderResult
+from metabolights_utils import Comment, IsaTableFileReaderResult
 from metabolights_utils.isatab import Reader, Writer
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
@@ -17,16 +18,35 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 from metabolights_utils.utils.hash_utils import EMPTY_FILE_HASH
+from pydantic import BaseModel
 
-from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.metadata.metadata_base import MetadataBaseMapper
-from mztabm2mtbls.mapper.metadata.metadata_contact import MetadataContactMapper
-from mztabm2mtbls.mapper.metadata.metadata_cv import MetadataCvMapper
-from mztabm2mtbls.mapper.metadata.metadata_publication import \
-    MetadataPublicationMapper
-from mztabm2mtbls.mapper.utils import sanitise_data
-from mztabm2mtbls.mztab2 import MzTab
+from mztabm2mtbls.mztab2 import MzTabBaseModel
 
+
+
+def sanitise_data(value: Union[None, Any]):
+    if isinstance(value, list):
+        for idx, val in enumerate(value):
+            value[idx] = sanitise_single_value(val)
+        return value
+    return sanitise_single_value(value)
+
+
+def sanitise_single_value(value: Union[None, Any]):
+    if value is None:
+        return ""
+    return str(value).replace("\n", " ").replace("\r", " ").replace("\t", " ").strip()
+
+
+def get_ontology_source_comment(investigation: Investigation, name: str):
+    comments = investigation.ontology_source_references.comments
+    id_comments = [x for x in comments if x.name == name]
+    if id_comments:
+        return id_comments[0]
+    else:
+        id_comment = Comment(name=name)
+    comments.append(id_comment)
+    return id_comment
 
 def replace_null_string_with_none(obj):
     if isinstance(obj, dict):
@@ -108,6 +128,9 @@ def create_metabolights_study_model(study_id: str="MTBLS") -> MetabolightsStudyM
             source_description="Ontology for Biomedical Investigations",
         )
     )
+    
+    id_comment = get_ontology_source_comment(mtbls_model.investigation, "mztab.metadata.cv:id")
+    id_comment.value.append("")
     # Create initial protocols for MS
     create_initial_protocols(mtbls_model)
     return mtbls_model
@@ -140,45 +163,21 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel):
     study.study_protocols.protocols.append(Protocol(name="Data transformation"))
     study.study_protocols.protocols.append(Protocol(name="Metabolite identification"))
     
-def modify_mztab_model(mztab_model: MzTab):
+def modify_mztab_model(model: MzTabBaseModel):
 
-    if not mztab_model.metadata.sample_processing:
-        mztab_model.metadata.sample_processing = []
-    if not mztab_model.metadata.sample:
-        mztab_model.metadata.sample = []
-    if not mztab_model.metadata.assay:
-        mztab_model.metadata.assay = []
-    if not mztab_model.metadata.software:
-        mztab_model.metadata.software = []
-    if not mztab_model.metadata.database:
-        mztab_model.metadata.database = []
-    if not mztab_model.metadata.ms_run:
-        mztab_model.metadata.ms_run = []
-    if not mztab_model.metadata.instrument:
-        mztab_model.metadata.instrument = []
-    if not mztab_model.metadata.contact:
-        mztab_model.metadata.contact = []
-    if not mztab_model.metadata.publication:
-        mztab_model.metadata.publication = []
-    if not mztab_model.metadata.external_study_uri:
-        mztab_model.metadata.external_study_uri = []
-    if not mztab_model.metadata.uri:
-        mztab_model.metadata.uri = []
-    if not mztab_model.metadata.derivatization_agent:
-        mztab_model.metadata.derivatization_agent = []
-    if not mztab_model.metadata.study_variable:
-        mztab_model.metadata.study_variable = []
-    if not mztab_model.metadata.custom:
-        mztab_model.metadata.custom = []
-    if not mztab_model.metadata.cv:
-        mztab_model.metadata.cv = []
-    if not mztab_model.smallMoleculeSummary:
-        mztab_model.smallMoleculeSummary = []
-    if not mztab_model.smallMoleculeFeature:
-        mztab_model.smallMoleculeFeature = []
-    if not mztab_model.smallMoleculeEvidence:
-        mztab_model.smallMoleculeEvidence = []
-
+    for field_name, field_value in model:
+        field_type = model.__annotations__[field_name]
+        pattern = r"Annotated\[.*List\[.*\],(.*)]"
+        if re.match(pattern, field_type):
+            if field_value is None:
+                setattr(model, field_name, [])
+        elif isinstance(field_value, MzTabBaseModel):
+            modify_mztab_model(field_value)
+        elif isinstance(field_value, list):
+            for item in field_value:
+                if isinstance(item, MzTabBaseModel):
+                    modify_mztab_model(item)
+                    
 def save_metabolights_study_model(
     mtbls_model: MetabolightsStudyModel, output_dir: str = "output"
 ):

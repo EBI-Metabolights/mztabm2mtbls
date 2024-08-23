@@ -20,8 +20,9 @@ from mztabm2mtbls.mapper.map_model import FieldMapDescription
 from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
                                        add_isa_table_single_column,
                                        find_first_header_column_index,
-                                       sanitise_data, update_isa_table_row)
+                                       update_isa_table_row)
 from mztabm2mtbls.mztab2 import MzTab, Parameter, Type
+from mztabm2mtbls.utils import sanitise_data
 
 
 class SmallMoleculeSummaryMapper(BaseMapper):
@@ -43,16 +44,17 @@ class SmallMoleculeSummaryMapper(BaseMapper):
         add_isa_table_single_column(assignment_file, "Comment[mztab:summary:sml_id]", 0)
         first_assay_header_name = ""
         for idx, assay in enumerate(mztab_model.metadata.assay):
-            add_isa_table_single_column(assignment_file, sanitise_data(assay.id))
+            add_isa_table_single_column(assignment_file, sanitise_data(assay.name))
             if idx == 0:
-                first_assay_header_name = sanitise_data(assay.id)
-
+                first_assay_header_name = sanitise_data(assay.name)
+        custom_columns = [ "theoretical_neutral_mass", "adduct_ions", ]
         selected_column_headers = {
-            "database_identifier": FieldMapDescription(field_name="database_identifier"),
-            "chemical_formula": FieldMapDescription(field_name="chemical_formula"),
-            "smiles": FieldMapDescription(field_name="smiles"),
-            "inchi": FieldMapDescription(field_name="inchi"),
-            "metabolite_identification": FieldMapDescription(field_name="chemical_name"),
+            "database_identifier": FieldMapDescription(field_name="database_identifier", join_operator="|"),
+            "chemical_formula": FieldMapDescription(field_name="chemical_formula", join_operator="|"),
+            "smiles": FieldMapDescription(field_name="smiles", join_operator="|"),
+            "inchi": FieldMapDescription(field_name="inchi", join_operator="|"),
+            "reliability": FieldMapDescription(field_name="reliability"),
+            "metabolite_identification": FieldMapDescription(field_name="chemical_name", join_operator="|"),
             "Comment[mztab:summary:sml_id]": FieldMapDescription(field_name="sml_id"),
         }
         
@@ -74,6 +76,7 @@ class SmallMoleculeSummaryMapper(BaseMapper):
             first_assay_column_model = find_first_header_column_index(assignment_file, first_assay_header_name)
         for row_idx, assignment in enumerate(mztab_model.smallMoleculeSummary):
             update_isa_table_row(assignment_file, row_idx, assignment, selected_column_headers)
+            # add abundance values for each assay
             if first_assay_column_model:
                 current_index = first_assay_column_model.column_index
                 for idx in range(len(assignment.abundance_assay)):

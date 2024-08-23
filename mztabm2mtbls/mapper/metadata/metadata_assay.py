@@ -1,5 +1,6 @@
 import os
-from typing import Dict
+import re
+from typing import Dict, List
 
 from metabolights_utils import (AssayFile, IsaTableFile,
                                 IsaTableFileReaderResult)
@@ -22,13 +23,32 @@ from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
                                        add_isa_table_single_column,
                                        copy_parameter,
                                        find_first_header_column_index,
-                                       get_protocol_sections, sanitise_data,
+                                       get_protocol_sections,
                                        update_isa_table_row)
 from mztabm2mtbls.mztab2 import Instrument, MzTab, Parameter, Type
+from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataAssayMapper(BaseMapper):
 
+    def add_protocol_parameter(self, protocols: List[Protocol], protocol_name: str, parameter_header_name: str):
+        for protocol in protocols:
+            if protocol.name == protocol_name:
+                parameter_name = ""
+                if parameter_header_name.startswith("Parameter Value["):
+                    pattern = r"Parameter Value\[(.+)\].*"
+                    result = re.search(pattern, parameter_header_name)
+                    if result:
+                        parameter_name = result.groups()[0]
+                else:
+                    parameter_name = parameter_header_name
+                for parameter in protocol.parameters:
+                    if parameter.term == parameter_name:
+                        return False, "Already exists"
+                protocol.parameters.append(OntologyAnnotation(term=parameter_name))
+                return True, parameter_name
+        return False, "Not found"
+    
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
         assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
 
@@ -49,26 +69,62 @@ class MetadataAssayMapper(BaseMapper):
                 new_column_index=new_column_index,
             )
             new_column_index += 1
-
         # add_isa_table_single_column(samples, "Comment[mztab:metadata:assay:external_uri]", new_column_index=4)
-        protocol_sections = get_protocol_sections(assay_file)
-        mass_analyzer_header_name = "Parameter Value[Mass analyzer]"
-        mass_analyzer_column_header = find_first_header_column_index(assay_file, "Parameter Value[Mass analyzer]")
-        if mass_analyzer_column_header is None:
-            raise ValueError(
-                f"Mass analyzer column header {mass_analyzer_header_name} not found in assay file."
+        protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
+        ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
+        samples_map = {x.id: x for x in mztab_model.metadata.sample}
+        instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
+        referenced_instruments = set()
+        add_custom_columns = {
+            "Parameter Value[Data file checksum]": False,
+            "Parameter Value[Data file checksum type]": False,
+            "Parameter Value[Native spectrum identifier format]": False,
+            "Parameter Value[Raw data file format]": False,
+        }
+        for ms_run in ms_run_map.values():
+            if ms_run.instrument_ref and ms_run.instrument_ref > 0:
+                referenced_instruments.add(ms_run.instrument_ref)
+            if ms_run.format and ms_run.format.name:
+                add_custom_columns["Parameter Value[Raw data file format]"] = True
+            if ms_run.id_format and ms_run.id_format.name:
+                add_custom_columns[
+                    "Parameter Value[Native spectrum identifier format]"
+                ] = True
+            if ms_run.hash or (ms_run.hash_method and ms_run.hash_method.name):
+                add_custom_columns["Parameter Value[Data file checksum]"] = True
+                add_custom_columns["Parameter Value[Data file checksum type]"] = True
+        add_detector_column = False
+        if referenced_instruments:
+            for instrument_id in referenced_instruments:
+                detector = instruments_map[instrument_id].detector
+                if detector and detector.name:
+                    add_detector_column = True
+                    break
+        if add_detector_column:
+            # protocol_sections = get_protocol_sections(assay_file)
+            mass_analyzer_header_name = "Parameter Value[Mass analyzer]"
+            mass_analyzer_column_header = find_first_header_column_index(
+                assay_file, "Parameter Value[Mass analyzer]"
             )
-        add_isa_table_ontology_columns(
-            assay_file,
-            "Parameter Value[Detector]",
-            new_column_index=mass_analyzer_column_header.column_index + 3,
+            if mass_analyzer_column_header is None:
+                raise ValueError(
+                    f"Mass analyzer column header {mass_analyzer_header_name} not found in assay file."
+                )
+            add_isa_table_ontology_columns(
+                assay_file,
+                "Parameter Value[Detector]",
+                new_column_index=mass_analyzer_column_header.column_index + 3,
+            )
+            self.add_protocol_parameter(protocols, "Mass spectrometry", "Parameter Value[Detector]")
+
+        normalization_header = find_first_header_column_index(
+            assay_file, "Normalization Name"
         )
-        normalization_header = find_first_header_column_index(assay_file, "Normalization Name")
         if normalization_header is None:
             raise ValueError(
                 f"Normalization column header {normalization_header} not found in assay file."
             )
-            
+
         new_column_index = normalization_header.column_index + 1
         # Add columns for after mass analyzer column. Second parameter number of columns. 3 for ontology column
         for header in [
@@ -77,79 +133,62 @@ class MetadataAssayMapper(BaseMapper):
             ("Parameter Value[Native spectrum identifier format]", 3),
             ("Parameter Value[Raw data file format]", 3),
         ]:
-            
-            if header[1] == 3:
-              add_isa_table_ontology_columns(
-                  assay_file,
-                  header[0],
-                  new_column_index=new_column_index,
-              )
-              new_column_index += 3
-            else:
-              add_isa_table_single_column(
-                  assay_file,
-                  header[0],
-                  new_column_index=new_column_index,
-              )
-              new_column_index += 1
-
+            if header[0] in add_custom_columns and add_custom_columns[header[0]]:
+                if header[1] == 3:
+                    add_isa_table_ontology_columns(
+                        assay_file,
+                        header[0],
+                        new_column_index=new_column_index,
+                    )
+                    new_column_index += 3
+                else:
+                    add_isa_table_single_column(
+                        assay_file,
+                        header[0],
+                        new_column_index=new_column_index,
+                    )
+                    new_column_index += 1
+                self.add_protocol_parameter(protocols, "Data transformation", header[0])
+                
         ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
         samples_map = {x.id: x for x in mztab_model.metadata.sample}
         instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
+        ms_run_default_field_maps = {
+            "Sample Name": "sample_name",
+            "Extract Name": "assay_name",
+            "Comment[mztab:metadata:assay:id]": "assay_id",
+            "MS Assay Name": "ms_run_id",
+            "Comment[mztab:metadata:sample:id]": "sample_id",
+            "Comment[mztab:metadata:ms_run:id]": "ms_run_id",
+            "Comment[mztab:metadata:ms_run:name]": "ms_run_name",
+            "Comment[mztab:metadata:instrument:id]": "instrument_id",
+            "Parameter Value[Scan polarity]": "scan_polarity",
+            "Parameter Value[Instrument]": "instrument_name",
+            "Parameter Value[Ion source]": "instrument_source",
+            "Parameter Value[Mass analyzer]": "instrument_analyzer",
+            "Parameter Value[Mass analyzer]": "instrument_analyzer",
+        }
+        ms_run_custom_field_maps = {
+            "Parameter Value[Detector]": "instrument_detector",
+            "Parameter Value[Data file checksum]": "hash",
+            "Parameter Value[Data file checksum type]": "hash_method",
+            "Parameter Value[Data file Native spectrum identifier format]": "id_format",
+            "Parameter Value[Raw data file format]": "format",
+        }
 
         ms_run_field_maps = {
-          
-            "Sample Name": FieldMapDescription(field_name="sample_name"),
-            "MS Assay Name": FieldMapDescription(field_name="sample_id"),
-            "Comment[mztab:metadata:assay:id]": FieldMapDescription(
-                field_name="assay_id"
-            ),
-            "MS Assay Name": FieldMapDescription(field_name="ms_run_id"),
-            "Comment[mztab:metadata:sample:id]": FieldMapDescription(
-                field_name="sample_id"
-            ),
-            "Comment[mztab:metadata:ms_run:id]": FieldMapDescription(
-                field_name="ms_run_id"
-            ),
-            "Comment[mztab:metadata:ms_run:name]": FieldMapDescription(
-                field_name="ms_run_name"
-            ),
-            "Comment[mztab:metadata:ms_run:instrument:id]": FieldMapDescription(
-                field_name="instrument_id"
-            ),
-            "Parameter Value[Scan polarity]": FieldMapDescription(
-                field_name="scan_polarity"
-            ),
-            "Parameter Value[Instrument]": FieldMapDescription(
-                field_name="instrument_name"
-            ),
-            "Parameter Value[Ion source]": FieldMapDescription(
-                field_name="instrument_source"
-            ),
-            "Parameter Value[Mass analyzer]": FieldMapDescription(
-                field_name="instrument_analyzer"
-            ),
-            "Parameter Value[Detector]": FieldMapDescription(
-                field_name="instrument_detector"
-            ),
-            "Parameter Value[Data file checksum]": FieldMapDescription(
-                field_name="hash"
-            ),
-            "Parameter Value[Data file checksum type]": FieldMapDescription(
-                field_name="hash_method"
-            ),
-            "Parameter Value[Native spectrum identifier format]": FieldMapDescription(
-                field_name="id_format"
-            ),
-            "Parameter Value[Raw data file format]": FieldMapDescription(
-                field_name="format"
-            ),
-            "Derived Spectral Data File": FieldMapDescription(
-                field_name="data_file_name"
-            ),
+            x: FieldMapDescription(field_name=x) for x in ms_run_default_field_maps
         }
+        ms_run_field_maps.update(
+            {
+                x: FieldMapDescription(field_name=x)
+                for x in ms_run_custom_field_maps
+                if x in add_custom_columns and add_custom_columns[x]
+            }
+        )
+
         for header in assay_file.table.headers:
-            if header.column_header in ms_run_field_maps:
+            if header.column_header in ms_run_default_field_maps:
                 ms_run_field_maps[header.column_header].target_column_index = (
                     header.column_index
                 )
@@ -159,8 +198,13 @@ class MetadataAssayMapper(BaseMapper):
 
         #################################################################################################
         # Populate assay sheet rows with default values
-        assay_sheet_row_count = sum([len(x.ms_run_ref) if x.ms_run_ref else 0 for x in mztab_model.metadata.assay])
-        
+        assay_sheet_row_count = sum(
+            [
+                len(x.ms_run_ref) if x.ms_run_ref else 0
+                for x in mztab_model.metadata.assay
+            ]
+        )
+
         initial_row_count = len(assay_file.table.data["Sample Name"])
 
         protocol_sections = get_protocol_sections(assay_file)
@@ -180,7 +224,7 @@ class MetadataAssayMapper(BaseMapper):
         next_assay_sheet_row = 0
         for assay in mztab_model.metadata.assay:
             if not assay.ms_run_ref:
-              continue
+                continue
             sample_name = ""
             sample_id = ""
             if assay.sample_ref in samples_map:
@@ -191,7 +235,9 @@ class MetadataAssayMapper(BaseMapper):
                 ms_run = None
                 if ms_run_ref in ms_run_map and ms_run_map[ms_run_ref]:
                     ms_run = ms_run_map[ms_run_ref]
-                    data_file_path = str(ms_run.location).strip("/") if ms_run.location else ""
+                    data_file_path = (
+                        str(ms_run.location).strip("/") if ms_run.location else ""
+                    )
                     data_file_name = ""
                     if data_file_path:
                         data_file_name = "FILES/" + os.path.basename(data_file_path)
@@ -236,6 +282,7 @@ class MetadataAssayMapper(BaseMapper):
                         hash_method.value = hash_method.value + "|" + hash_value
                     map_fields = AssaySheetMapFields(
                         assay_id=sanitise_data(assay.id),
+                        assay_name=sanitise_data(assay.name),
                         sample_id=sanitise_data(sample_id),
                         sample_name=sanitise_data(sample_name),
                         ms_run_id=sanitise_data(ms_run.id),
@@ -257,7 +304,7 @@ class MetadataAssayMapper(BaseMapper):
                         assay_file, next_assay_sheet_row, map_fields, ms_run_field_maps
                     )
                     next_assay_sheet_row += 1
-                  
+
         # # Map
         # # mzTab2-M  Metabolights sample sheet
         # # species   -> Characteristics[Organism]

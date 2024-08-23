@@ -36,10 +36,10 @@ from mztabm2mtbls.mapper.summary.small_molecule_summary import \
 from mztabm2mtbls.mztab2 import MzTab
 
 mappers: List[BaseMapper] = [
-    MetadataCvMapper(),
     MetadataBaseMapper(),
     MetadataContactMapper(),
     MetadataPublicationMapper(),
+    MetadataCvMapper(),
     MetadataSampleMapper(),
     MetadataSampleProcessingMapper(),
     MetadataSoftwareMapper(),

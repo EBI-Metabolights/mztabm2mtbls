@@ -11,8 +11,8 @@ from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.utils import add_isa_table_ontology_columns
-from mztabm2mtbls.mztab2 import MzTab, Type
+from mztabm2mtbls.mapper.utils import add_isa_table_ontology_columns, copy_parameter
+from mztabm2mtbls.mztab2 import MzTab, Parameter, Type
 
 
 class MetadataDatabaseMapper(BaseMapper):
@@ -40,13 +40,14 @@ class MetadataDatabaseMapper(BaseMapper):
                 database_version_list.append(identifier + ": { " + str(database.version) + " }"  if database.version else identifier + ": {}" )
                 database_uri_list.append(identifier + ": { " +  str(database.uri) + " }" if database.uri else identifier +  ": {}")
                 database_prefix_list.append(identifier + ": { " +  str(database.prefix) + " }"  if database.prefix else identifier +  ": {}")
-
+                
+                item = copy_parameter(database.param)
                 database_list.append(
                     ValueTypeAnnotation(
                         name=f"mztab.metadata.database.id={database.id}",
-                        type=database.param.name,
-                        term_source_ref=database.param.cv_label,
-                        term_accession_number=database.param.cv_accession,
+                        type=item.name,
+                        term_source_ref=item.cv_label,
+                        term_accession_number=item.cv_accession,
                     )
                 )
         if database_list:

@@ -1,50 +1,58 @@
 import re
 from typing import Any, Dict, List, Literal, Union
 
-from metabolights_utils import ColumnsStructure, IsaTableColumn
+from metabolights_utils import (ColumnsStructure, Comment, Investigation,
+                                IsaTableColumn)
 from metabolights_utils.models.isa.common import IsaTableFile
 
 from mztabm2mtbls.mapper.map_model import (FieldMapDescription,
                                            ProtocoSectionDefinition)
 from mztabm2mtbls.mztab2 import Parameter
+from mztabm2mtbls.utils import sanitise_data
 
 
-def sanitise_data(value: Union[None, Any]):
-    if isinstance(value, list):
-        for idx, val in enumerate(value):
-            value[idx] = sanitise_single_value(val)
-        return value
-    return sanitise_single_value(value)
+def convert_accession_number(cv_label, cv_accession):
+    accession = sanitise_data(cv_accession)
+    if accession:
+        parts = accession.split(":")
+        accession_number = parts[1] if len(parts) > 1 else parts[0]
+        accession = f"http://purl.obolibrary.org/obo/{sanitise_data(cv_label)}_{accession_number}"
+    return accession
 
-
-def sanitise_single_value(value: Union[None, Any]):
-    if value is None:
-        return ""
-    return str(value).replace("\n", " ").replace("\r", " ").replace("\t", " ").strip()
 
 def find_first_header_column_index(assay_file: IsaTableFile, header_name: str):
     for column in assay_file.table.headers:
         if column.column_header == header_name:
             return column
     return None
-def copy_parameter(value: Union[None, Parameter, List[Parameter]]):
+
+
+def copy_parameter(
+    value: Union[None, Parameter, List[Parameter]],
+    accession_number_converter: Union[callable, None] = None,
+):
     if not value:
         return Parameter(
-        id=None,
-        value="",
-        name="",
-        cv_label="",
-        cv_accession="",
-    )
+            id=None,
+            value="",
+            name="",
+            cv_label="",
+            cv_accession="",
+        )
     elif isinstance(value, list):
         return [copy_parameter(x) for x in value]
     else:
+        if accession_number_converter:
+            accession = accession_number_converter(value.cv_label, value.cv_accession)
+        else:
+            accession = convert_accession_number(value.cv_label, value.cv_accession)
+
         return Parameter(
             id=value.id,
             value=sanitise_data(value.value),
             name=sanitise_data(value.name),
             cv_label=sanitise_data(value.cv_label),
-            cv_accession=sanitise_data(value.cv_accession),
+            cv_accession=accession,
         )
 
 
@@ -236,20 +244,20 @@ def update_isa_table_row(
                         sanitise_data(terms)
                         isa_table_file.table.data[definition.target_column_name][
                             row_idx
-                        ] = ";".join(terms)
+                        ] = definition.join_operator.join(terms)
 
                         term_source_refs = [x.cv_label for x in value]
                         sanitise_data(term_source_refs)
                         term_accession_numbers = [x.cv_accession for x in value]
                         sanitise_data(term_accession_numbers)
-                            
+
                         term_source_ref_idx = definition.target_column_index + 1
                         term_source_ref_column_name = isa_table_file.table.columns[
                             term_source_ref_idx
                         ]
                         isa_table_file.table.data[term_source_ref_column_name][
                             row_idx
-                        ] = ";".join(term_source_refs)
+                        ] = definition.join_operator.join(term_source_refs)
 
                         term_accession_number_idx = definition.target_column_index + 2
                         term_accession_number_column_name = (
@@ -257,11 +265,11 @@ def update_isa_table_row(
                         )
                         isa_table_file.table.data[term_accession_number_column_name][
                             row_idx
-                        ] = ";".join(term_accession_numbers)
+                        ] = definition.join_operator.join(term_accession_numbers)
                     else:
                         isa_table_file.table.data[definition.target_column_name][
                             row_idx
-                        ] = ";".join(value)
+                        ] = definition.join_operator.join(value)
                 elif value:
                     if isinstance(value, Parameter):
                         isa_table_file.table.data[definition.target_column_name][

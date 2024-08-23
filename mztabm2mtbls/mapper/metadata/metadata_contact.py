@@ -8,8 +8,8 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.utils import sanitise_data
 from mztabm2mtbls.mztab2 import MzTab
+from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataContactMapper(BaseMapper):
@@ -26,9 +26,8 @@ class MetadataContactMapper(BaseMapper):
                 value=[],
         )
         
-        comments = mtbls_model.investigation.studies[0].study_publications.comments
+        comments = mtbls_model.investigation.studies[0].study_contacts.comments
         comments.append(id_comment)
-        comments.append(orcid_comment)
         for contact in mztab_model.metadata.contact:
             first_name=""
             mid_initials=""
@@ -54,3 +53,7 @@ class MetadataContactMapper(BaseMapper):
             mtbls_contacts.append(person)
             id_comment.value.append(sanitise_data(contact.id) if sanitise_data(contact.id) else "")
             orcid_comment.value.append(sanitise_data(contact.orcid) if sanitise_data(contact.orcid) else "")
+        
+        if [x for x in orcid_comment.value if x]:
+            comments.append(orcid_comment)
+        # mtbls_model.investigation.studies[0].study_contacts.comments.append(id_comment)
