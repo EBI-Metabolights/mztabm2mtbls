@@ -3,7 +3,6 @@
 es_study_index
 .pytest*
 indices*/
-*.tsv
 .secrets/
 config.yaml
 validation*/
