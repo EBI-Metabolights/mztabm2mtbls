@@ -61,4 +61,4 @@ python3 mztabm2mtbls/converter.py
 ```
 
 # outputs
-Converted ISA tab files will bu on output folder.
+Converted ISA tab files will be in the output folder.
