@@ -1,3 +1,4 @@
+import click
 import json
 import os
 import sys
@@ -48,33 +49,20 @@ mappers: List[BaseMapper] = [
     SmallMoleculeSummaryMapper()
 ]
         
-        
-if __name__ == "__main__":
-    input_file = ""
-    output_dir = ""
-    mtbls_accession_number = ""
-    
-    if len(sys.argv) > 1:
-        input_file = sys.argv[1]
-    
-    if not input_file:
-        input_file = "test/data/singaporean-plasma-site1.mzTab.json"
-    
-    if len(sys.argv) > 2:
-        output_dir = sys.argv[2]
+@click.command()
+@click.option('--input-file', default='test/data/singaporean-plasma-site1.mzTab.json', help='The mzTab-M file in JSON format to convert.')
+@click.option('--output_dir', default='output', help='The directory to save the converted files.')
+@click.option('--mtbls_accession_number', default='MTBLS1000000', help='The MetaboLights study accession number.')     
+def convert(input_file: str, output_dir: str, mtbls_accession_number: str):
 
-    if not output_dir:
-        output_dir = "output"
+    #print disclaimer that we currently do not fully validate neither the mzTab-M file, nor the ISA-Tab files
+    print("Please note that the mzTab-M file is not fully validated by this tool. The ISA-Tab files are not validated either at the moment.")
+
+    if input_file.startswith("test/data/singa"):
+        print("Using default input file: test/data/singaporean-plasma-site1.mzTab.json")
+        print("Please use the --input-file option to specify a custom input file.")
         
-    if len(sys.argv) > 3:
-        mtbls_accession_number = sys.argv[3]
-    
-    if not mtbls_accession_number:
-        mtbls_accession_number = "MTBLS1000000"
-        
-    
     with open(input_file) as f:
-    # with open("test/data/MTBLS263.mztab.json") as f:
         mztab_json_data = json.load(f)
     utils.replace_null_string_with_none(mztab_json_data)
     mztab_model: MzTab = MzTab.model_validate(mztab_json_data)
@@ -85,3 +73,6 @@ if __name__ == "__main__":
         mapper.update(mztab_model, mtbls_model)
     study_metadata_output_path = os.path.join(output_dir, mtbls_accession_number)
     utils.save_metabolights_study_model(mtbls_model, output_dir=study_metadata_output_path)
+
+if __name__ == "__main__":
+    convert()
