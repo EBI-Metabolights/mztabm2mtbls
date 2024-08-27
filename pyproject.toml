@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "mztab2mtbls"
+name = "mztabm2mtbls"
 version = "0.1.0"
-description = ""
+description = "A library and scripts to convert mzTab-M to MetaboLights ISA-tab format"
 authors = ["MetaboLights Team"]
 license = "Apache 2.0"
 readme = "README.md"
@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 metabolights-utils = "^1.1.5"
-
+click = "^8.1.7"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.8.0"
