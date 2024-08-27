@@ -12,6 +12,12 @@ To install the dependencies, run the following command:
 poetry install
 ```
 
+To activate the virtual environment, run the following command:
+
+```bash
+poetry shell
+```
+
 ## Usage
 
 At the moment, this library uses the JSON representation of the mzTab-m file. The JSON representation can be generated using the jmztab-m tool. The easiest way to generate the JSON representation is to use the Docker container provided by BioContainers.
@@ -27,6 +33,26 @@ docker run --rm -v "${PWD}":/home/data:rw --workdir /home/data quay.io/biocontai
 ```
 
 The container will accept an mzTab-M file with the `-c` flag and output a JSON file with the `--toJson` flag. The JSON file will be created in the same directory as the input file. The `-o` flag can be used to specify the output file name for the validation results. This will run a default validation on the mzTab-M file, without semantic validation. 
+
+### Workflow overview
+
+1. Create an mzTab-m file with your tool / library of choice.
+2. Convert the mzTab-m file to a JSON file using the jmztab-m tool or the docker container.
+3. Use the converter.py script to convert the JSON file to an ISA-Tab file.
+4. Validate the ISA-Tab file using the metabolights_utils package.
+5. Submit the ISA-Tab files to MetaboLights as a new study.
+6. Success!
+
+```mermaid
+    
+graph TD
+    A[Create mzTab-m file] --> B[Convert mzTab-m to JSON]
+    B --> C[Convert JSON to ISA-Tab]
+    C --> D[Validate ISA-Tab]
+    D --> E[Submit to MetaboLights]
+    E --> F[Success!]
+
+```
 
 ### Run converter for example file
 
