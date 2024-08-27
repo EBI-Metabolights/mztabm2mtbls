@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mztab2mtbls"
+name = "mztabm2mtbls"
 version = "0.1.0"
 description = ""
 authors = ["MetaboLights Team"]
