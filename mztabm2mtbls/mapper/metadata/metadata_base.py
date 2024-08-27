@@ -8,8 +8,9 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.utils import sanitise_data
+from mztabm2mtbls.mapper.utils import copy_parameter
 from mztabm2mtbls.mztab2 import MzTab
+from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataBaseMapper(BaseMapper):
@@ -68,10 +69,11 @@ class MetadataBaseMapper(BaseMapper):
             mztab_model.metadata.quantification_method
             and mztab_model.metadata.quantification_method.name
         ):
+            item = copy_parameter(mztab_model.metadata.quantification_method)
             quantification_method = OntologyAnnotation(
-                term=mztab_model.metadata.quantification_method.name,
-                term_source_ref=mztab_model.metadata.quantification_method.cv_label,
-                term_accession_number=mztab_model.metadata.quantification_method.cv_label,
+                term=item.name,
+                term_source_ref=item.cv_label,
+                term_accession_number=item.cv_accession,
             )
             study.study_design_descriptors.design_types.append(quantification_method)
             descriptor_source_comment.value.append("mztab:metadata:quantification_method")

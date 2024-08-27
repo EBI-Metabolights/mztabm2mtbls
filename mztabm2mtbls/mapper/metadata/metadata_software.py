@@ -11,15 +11,14 @@ from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.utils import add_isa_table_ontology_columns
+from mztabm2mtbls.mapper.utils import add_isa_table_ontology_columns, copy_parameter
 from mztabm2mtbls.mztab2 import MzTab, Type
 
 
 class MetadataSoftwareMapper(BaseMapper):
 
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
-        if not mztab_model.metadata.software:
-          return
+
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
 
         selected_protocol = None
@@ -37,12 +36,14 @@ class MetadataSoftwareMapper(BaseMapper):
 
                 settings = identifier +  ": {" + " ".join(software.setting) +  ": }" if software.setting else identifier +  ": {}"
                 software_settings_list.append(settings)
+                item = copy_parameter(software.parameter)
+
                 software_list.append(
                     ValueTypeAnnotation(
                         name=identifier,
-                        type=software.parameter.name,
-                        term_source_ref=software.parameter.cv_label,
-                        term_accession_number=software.parameter.cv_accession,
+                        type=item.name,
+                        term_source_ref=item.cv_label,
+                        term_accession_number=item.cv_accession,
                     )
                 )
         if software_list:

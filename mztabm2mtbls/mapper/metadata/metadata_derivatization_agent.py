@@ -11,7 +11,8 @@ from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.utils import add_isa_table_ontology_columns
+from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
+                                       copy_parameter)
 from mztabm2mtbls.mztab2 import MzTab, Type
 
 
@@ -20,7 +21,7 @@ class MetadataSDerivatizationAgentMapper(BaseMapper):
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
 
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
-        
+
         selected_protocol = None
         for protocol in protocols:
             if protocol.name == "Extraction":
@@ -30,11 +31,21 @@ class MetadataSDerivatizationAgentMapper(BaseMapper):
             return
         process_list = []
         for param in mztab_model.metadata.derivatization_agent:
-                onto=OntologyAnnotation(
-                    term=param.name,
-                    term_source_ref=param.cv_label,
-                    term_accession_number=param.cv_accession,
-                )
-                process_list.append(onto)
+            item = copy_parameter(param)
+            onto = OntologyAnnotation(
+                term=item.name,
+                term_source_ref=item.cv_label,
+                term_accession_number=item.cv_accession,
+            )
+            process_list.append(onto)
         if process_list:
-            selected_protocol.description +=  "Derivatization agent:" ', '.join([str(x) for x in process_list]) + "<br>"
+            selected_protocol.description += (
+                "Derivatization agent: <br> - "
+                + "<br> - ".join(
+                    [
+                        f"{x.term} [{x.term_source_ref}  {x.term_accession_number} ]"
+                        for x in process_list
+                    ]
+                )
+                + "<br>"
+            )

@@ -10,11 +10,14 @@ from typing import Annotated, List, Optional, Union
 from pydantic import AnyUrl, BaseModel, Field, RootModel, constr
 
 
+class MzTabBaseModel(BaseModel):
+    pass
+
 class Prefix(Enum):
     COM = "COM"
 
 
-class Comment(BaseModel):
+class Comment(MzTabBaseModel):
     prefix: Prefix
     msg: str
     line_number: Optional[int] = None
@@ -46,9 +49,8 @@ class Prefix4(Enum):
 
 class HeaderPrefix2(Enum):
     SEH = "SEH"
-
-
-class Parameter(BaseModel):
+    
+class Parameter(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     cv_label: Optional[str] = ""
     cv_accession: Optional[str] = ""
@@ -56,7 +58,7 @@ class Parameter(BaseModel):
     value: Optional[str] = None
 
 
-class Instrument(BaseModel):
+class Instrument(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     name: Optional[Parameter] = None
     source: Optional[Parameter] = None
@@ -69,7 +71,7 @@ class Instrument(BaseModel):
     detector: Optional[Parameter] = None
 
 
-class SampleProcessing(BaseModel):
+class SampleProcessing(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     sampleProcessing: Annotated[
         Optional[List[Parameter]],
@@ -79,7 +81,7 @@ class SampleProcessing(BaseModel):
     ] = []
 
 
-class Software(BaseModel):
+class Software(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     parameter: Optional[Parameter] = None
     setting: Annotated[
@@ -96,7 +98,7 @@ class Type(Enum):
     uri = "uri"
 
 
-class PublicationItem(BaseModel):
+class PublicationItem(MzTabBaseModel):
     type: Annotated[
         Type, Field(description="The type qualifier of this publication item.")
     ]
@@ -105,7 +107,7 @@ class PublicationItem(BaseModel):
     ]
 
 
-class Contact(BaseModel):
+class Contact(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     name: Annotated[Optional[str], Field(description="The contact's name.")] = None
     affiliation: Annotated[
@@ -127,7 +129,7 @@ class Contact(BaseModel):
     ] = None
 
 
-class Uri(BaseModel):
+class Uri(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     value: Annotated[
         Optional[AnyUrl],
@@ -135,7 +137,7 @@ class Uri(BaseModel):
     ] = None
 
 
-class Sample(BaseModel):
+class Sample(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     name: Annotated[Optional[str], Field(description="The sample's name.")] = None
     custom: Annotated[
@@ -163,7 +165,7 @@ class Sample(BaseModel):
     ] = None
 
 
-class MsRun(BaseModel):
+class MsRun(MzTabBaseModel):
     id: Annotated[int, Field(ge=1)]
     name: Annotated[Optional[str], Field(description="The msRun's name.")] = None
     location: Annotated[AnyUrl, Field(description="The msRun's location URI.")]
@@ -185,7 +187,7 @@ class MsRun(BaseModel):
     hash_method: Optional[Parameter] = None
 
 
-class Assay(BaseModel):
+class Assay(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     name: Annotated[str, Field(description="The assay name.")]
     custom: Annotated[
@@ -203,7 +205,7 @@ class Assay(BaseModel):
     ]
 
 
-class CV(BaseModel):
+class CV(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     label: Annotated[str, Field(description="The abbreviated CV label.")]
     full_name: Annotated[
@@ -215,7 +217,7 @@ class CV(BaseModel):
     uri: Annotated[AnyUrl, Field(description="A URI to the CV definition.")]
 
 
-class Database(BaseModel):
+class Database(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     param: Parameter
     prefix: Annotated[Union[None, str], Field(description="The database prefix.")]
@@ -225,14 +227,14 @@ class Database(BaseModel):
     ]
 
 
-class ColumnParameterMapping(BaseModel):
+class ColumnParameterMapping(MzTabBaseModel):
     column_name: Annotated[
         str, Field(description="The fully qualified target column name.")
     ]
     param: Parameter
 
 
-class OptColumnMapping(BaseModel):
+class OptColumnMapping(MzTabBaseModel):
     identifier: Annotated[str, Field(description="The fully qualified column name.")]
     param: Optional[Parameter] = None
     value: Annotated[
@@ -241,7 +243,7 @@ class OptColumnMapping(BaseModel):
     ] = None
 
 
-class Error(BaseModel):
+class Error(MzTabBaseModel):
     code: int
     message: str
 
@@ -258,7 +260,7 @@ class MessageType(Enum):
     info = "info"
 
 
-class ValidationMessage(BaseModel):
+class ValidationMessage(MzTabBaseModel):
     code: str
     category: Category
     message_type: Optional[MessageType] = "info"
@@ -269,7 +271,7 @@ class ValidationMessage(BaseModel):
 AdductIon = Annotated[str, Field(pattern=r"^\[\d*M([+-][\w\d]+)*\]\d*[+-]$")]
 
 
-class SmallMoleculeSummary(BaseModel):
+class SmallMoleculeSummary(MzTabBaseModel):
     prefix: Annotated[
         Optional[Prefix2],
         Field(
@@ -380,7 +382,7 @@ class SmallMoleculeSummary(BaseModel):
     comment: Optional[List[Comment]] = []
 
 
-class SmallMoleculeFeature(BaseModel):
+class SmallMoleculeFeature(MzTabBaseModel):
     prefix: Annotated[
         Optional[Prefix3],
         Field(
@@ -464,7 +466,7 @@ class SmallMoleculeFeature(BaseModel):
     comment: Optional[List[Comment]] = []
 
 
-class Publication(BaseModel):
+class Publication(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     publicationItems: Annotated[
         List[PublicationItem],
@@ -472,7 +474,7 @@ class Publication(BaseModel):
     ]
 
 
-class SpectraRef(BaseModel):
+class SpectraRef(MzTabBaseModel):
     ms_run: int
     reference: Annotated[
         str,
@@ -482,7 +484,7 @@ class SpectraRef(BaseModel):
     ]
 
 
-class StudyVariable(BaseModel):
+class StudyVariable(MzTabBaseModel):
     id: Annotated[int, Field(ge=1)]
     name: Annotated[str, Field(description="The study variable name.")]
     assay_refs: Annotated[
@@ -503,7 +505,7 @@ class StudyVariable(BaseModel):
     ] = []
 
 
-class Metadata(BaseModel):
+class Metadata(MzTabBaseModel):
     prefix: Annotated[
         Prefix1,
         Field(
@@ -670,7 +672,7 @@ class Metadata(BaseModel):
     ] = []
 
 
-class SmallMoleculeEvidence(BaseModel):
+class SmallMoleculeEvidence(MzTabBaseModel):
     prefix: Annotated[
         Optional[Prefix4],
         Field(
@@ -787,8 +789,14 @@ class SmallMoleculeEvidence(BaseModel):
     comment: Optional[List[Comment]] = []
 
 
-class MzTab(BaseModel):
-    metadata: Metadata
+class MzTab(MzTabBaseModel):
+    metadata:  Annotated[
+        Metadata,
+        Field(description='The metadata section contains general information about the mztab file content.'),
+        # IsaTabMapInfo(mapped=True, target_files=["investigation", "assay", "sample", "maf"]),
+        
+    ]
+    
     smallMoleculeSummary: Annotated[
         List[SmallMoleculeSummary],
         Field(

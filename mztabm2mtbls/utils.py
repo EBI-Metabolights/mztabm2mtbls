@@ -1,9 +1,11 @@
 import datetime
 import json
+import os
+import re
 import shutil
-from typing import List
+from typing import Any, List, Optional, Union, get_args, get_origin
 
-from metabolights_utils import IsaTableFileReaderResult
+from metabolights_utils import Comment, IsaTableFileReaderResult
 from metabolights_utils.isatab import Reader, Writer
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
@@ -16,15 +18,35 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 from metabolights_utils.utils.hash_utils import EMPTY_FILE_HASH
+from pydantic import BaseModel
 
-from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.metadata.metadata_base import MetadataBaseMapper
-from mztabm2mtbls.mapper.metadata.metadata_contact import MetadataContactMapper
-from mztabm2mtbls.mapper.metadata.metadata_cv import MetadataCvMapper
-from mztabm2mtbls.mapper.metadata.metadata_publication import \
-    MetadataPublicationMapper
-from mztabm2mtbls.mapper.utils import sanitise_data
+from mztabm2mtbls.mztab2 import MzTabBaseModel
 
+
+
+def sanitise_data(value: Union[None, Any]):
+    if isinstance(value, list):
+        for idx, val in enumerate(value):
+            value[idx] = sanitise_single_value(val)
+        return value
+    return sanitise_single_value(value)
+
+
+def sanitise_single_value(value: Union[None, Any]):
+    if value is None:
+        return ""
+    return str(value).replace("\n", " ").replace("\r", " ").replace("\t", " ").strip()
+
+
+def get_ontology_source_comment(investigation: Investigation, name: str):
+    comments = investigation.ontology_source_references.comments
+    id_comments = [x for x in comments if x.name == name]
+    if id_comments:
+        return id_comments[0]
+    else:
+        id_comment = Comment(name=name)
+    comments.append(id_comment)
+    return id_comment
 
 def replace_null_string_with_none(obj):
     if isinstance(obj, dict):
@@ -41,24 +63,22 @@ def replace_null_string_with_none(obj):
                 replace_null_string_with_none(item)
 
 
-def create_metabolights_study_model() -> MetabolightsStudyModel:
+def create_metabolights_study_model(study_id: str="MTBLS") -> MetabolightsStudyModel:
 
     submisstion_date = datetime.datetime.now().strftime("%Y-%m-%d")
     public_release_date = submisstion_date
 
     mtbls_model: MetabolightsStudyModel = MetabolightsStudyModel(
         investigation=Investigation(
-            identifier="MTBLS",
+            identifier=study_id,
             public_release_date=public_release_date,
             submission_date=submisstion_date,
         )
     )
-    assignment_file = AssignmentFile()
 
-    mtbls_model.metabolite_assignments["m_MTBLS.tsv"] = assignment_file
     study = Study(
-        file_name="s_MTBLS.txt",
-        identifier="MTBLS",
+        file_name=f"s_{study_id}.txt",
+        identifier=study_id,
         public_release_date=public_release_date,
         submission_date=submisstion_date,
     )
@@ -68,17 +88,24 @@ def create_metabolights_study_model() -> MetabolightsStudyModel:
     result: IsaTableFileReaderResult = reader.read(
         "resources/s_MTBLS.txt", offset=0, limit=10000
     )
-    mtbls_model.samples["s_MTBLS.txt"] = result.isa_table_file
-
+    mtbls_model.samples[f"s_{study_id}.txt"] = result.isa_table_file
+    result.isa_table_file = f"s_{study_id}.txt"
+    reader = Reader.get_assignment_file_reader(results_per_page=100000)
+    result: IsaTableFileReaderResult = reader.read(
+        "resources/m_MTBLS_metabolite_profiling_v2_maf.tsv", offset=0, limit=10000
+    )
+    mtbls_model.metabolite_assignments[f"m_{study_id}_metabolite_profiling_v2_maf.tsv"] = result.isa_table_file
+    result.isa_table_file.file_path = f"m_{study_id}_metabolite_profiling_v2_maf.tsv"
     # Create an assay file from template and update i_Investigation.txt file
     reader = Reader.get_assay_file_reader(results_per_page=10000)
     result: IsaTableFileReaderResult = reader.read(
         "resources/a_MTBLS_metabolite_profiling.txt", offset=0, limit=10000
     )
-    mtbls_model.assays["a_MTBLS_metabolite_profiling.txt"] = result.isa_table_file
+    mtbls_model.assays[f"a_{study_id}_metabolite_profiling.txt"] = result.isa_table_file
+    result.isa_table_file.file_path = f"a_{study_id}_metabolite_profiling.txt"
     study.study_assays.assays.append(
         Assay(
-            file_name="a_MTBLS_metabolite_profiling.txt",
+            file_name=f"a_{study_id}_metabolite_profiling.txt",
             measurement_type=OntologyAnnotation(
                 term="metabolite profiling",
                 term_source_ref="OBI",
@@ -101,6 +128,9 @@ def create_metabolights_study_model() -> MetabolightsStudyModel:
             source_description="Ontology for Biomedical Investigations",
         )
     )
+    
+    id_comment = get_ontology_source_comment(mtbls_model.investigation, "mztab.metadata.cv:id")
+    id_comment.value.append("")
     # Create initial protocols for MS
     create_initial_protocols(mtbls_model)
     return mtbls_model
@@ -132,12 +162,27 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel):
     )
     study.study_protocols.protocols.append(Protocol(name="Data transformation"))
     study.study_protocols.protocols.append(Protocol(name="Metabolite identification"))
+    
+def modify_mztab_model(model: MzTabBaseModel):
 
-
+    for field_name, field_value in model:
+        field_type = model.__annotations__[field_name]
+        pattern = r"Annotated\[.*List\[.*\],(.*)]"
+        if re.match(pattern, field_type):
+            if field_value is None:
+                setattr(model, field_name, [])
+        elif isinstance(field_value, MzTabBaseModel):
+            modify_mztab_model(field_value)
+        elif isinstance(field_value, list):
+            for item in field_value:
+                if isinstance(item, MzTabBaseModel):
+                    modify_mztab_model(item)
+                    
 def save_metabolights_study_model(
     mtbls_model: MetabolightsStudyModel, output_dir: str = "output"
 ):
-    report = Writer.get_investigation_file_writer().write(
+    os.makedirs(output_dir, exist_ok=True)
+    Writer.get_investigation_file_writer().write(
         mtbls_model.investigation,
         f"{output_dir}/i_Investigation.txt",
         values_in_quotation_mark=True,
@@ -149,6 +194,9 @@ def save_metabolights_study_model(
 
     assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
     dump_isa_table(assay_file, f"{output_dir}/{assay_file.file_path}")
+    
+    assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[list(mtbls_model.metabolite_assignments)[0]]
+    dump_isa_table(assignment_file, f"{output_dir}/{assignment_file.file_path}")
 
 
 def dump_isa_table(
