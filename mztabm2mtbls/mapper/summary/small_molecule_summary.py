@@ -53,7 +53,7 @@ class SmallMoleculeSummaryMapper(BaseMapper):
             "chemical_formula": FieldMapDescription(field_name="chemical_formula", join_operator="|"),
             "smiles": FieldMapDescription(field_name="smiles", join_operator="|"),
             "inchi": FieldMapDescription(field_name="inchi", join_operator="|"),
-            "reliability": FieldMapDescription(field_name="reliability"),
+            "reliability": FieldMapDescription(field_name="best_id_confidence_value"),
             "metabolite_identification": FieldMapDescription(field_name="chemical_name", join_operator="|"),
             "Comment[mztab:summary:sml_id]": FieldMapDescription(field_name="sml_id"),
         }
@@ -74,13 +74,24 @@ class SmallMoleculeSummaryMapper(BaseMapper):
         first_assay_column_model = None
         if first_assay_header_name:
             first_assay_column_model = find_first_header_column_index(assignment_file, first_assay_header_name)
-        for row_idx, assignment in enumerate(mztab_model.smallMoleculeSummary):
-            update_isa_table_row(assignment_file, row_idx, assignment, selected_column_headers)
+        sm_features_features_map = {x.smf_id: x for x in mztab_model.smallMoleculeFeature}
+        for row_idx, sms in enumerate(mztab_model.smallMoleculeSummary):
+            update_isa_table_row(assignment_file, row_idx, sms, selected_column_headers)
+            if sms.smf_id_refs:
+                retention_times = [sm_features_features_map[x].exp_mass_to_charge for x in sms.smf_id_refs if x in sm_features_features_map]
+                mass_to_charges = [sm_features_features_map[x].exp_mass_to_charge for x in sms.smf_id_refs if x in sm_features_features_map]
+                assignment_file.table.data["retention_time"][row_idx] = "|".join([str(x) for x in retention_times if x])
+                assignment_file.table.data["mass_to_charge"][row_idx] = "|".join([str(x) for x in mass_to_charges if x])
+                
+            
+            databases = [x for x in mztab_model.metadata.database if x and x.prefix]
+            assignment_file.table.data["database"][row_idx] = ";".join([str(x.prefix) for x in databases if x])
+            assignment_file.table.data["database_version"][row_idx] = ";".join([str(x.version) for x in databases if x])
             # add abundance values for each assay
             if first_assay_column_model:
                 current_index = first_assay_column_model.column_index
-                for idx in range(len(assignment.abundance_assay)):
+                for idx in range(len(sms.abundance_assay)):
                     column_name = assignment_file.table.columns[current_index]
-                    assignment_file.table.data[column_name][row_idx] = str(assignment.abundance_assay[idx])
+                    assignment_file.table.data[column_name][row_idx] = str(sms.abundance_assay[idx])
                     current_index += 1
                 

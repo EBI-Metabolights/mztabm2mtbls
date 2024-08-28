@@ -126,7 +126,7 @@ class MetadataAssayMapper(BaseMapper):
             )
 
         new_column_index = normalization_header.column_index + 1
-        # Add columns for after mass analyzer column. Second parameter number of columns. 3 for ontology column
+        # Add columns for after mass analyzer column. Second parameter: number of columns. 3 for ontology column
         for header in [
             ("Parameter Value[Data file checksum]", 1),
             ("Parameter Value[Data file checksum type]", 3),
