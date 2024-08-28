@@ -161,7 +161,7 @@ class MetadataAssayMapper(BaseMapper):
             "Comment[mztab:metadata:sample:id]": "sample_id",
             "Comment[mztab:metadata:ms_run:id]": "ms_run_id",
             "Comment[mztab:metadata:ms_run:name]": "ms_run_name",
-            "Comment[mztab:metadata:instrument:id]": "instrument_id",
+            "Comment[mztab:metadata:ms_run:instrument:id]": "instrument_id",
             "Parameter Value[Scan polarity]": "scan_polarity",
             "Parameter Value[Instrument]": "instrument_name",
             "Parameter Value[Ion source]": "instrument_source",
@@ -177,24 +177,21 @@ class MetadataAssayMapper(BaseMapper):
         }
 
         ms_run_field_maps = {
-            x: FieldMapDescription(field_name=x) for x in ms_run_default_field_maps
+            x: FieldMapDescription(field_name=ms_run_default_field_maps[x]) for x in ms_run_default_field_maps
         }
         ms_run_field_maps.update(
             {
-                x: FieldMapDescription(field_name=x)
+                x: FieldMapDescription(field_name=ms_run_custom_field_maps[x])
                 for x in ms_run_custom_field_maps
                 if x in add_custom_columns and add_custom_columns[x]
             }
         )
 
         for header in assay_file.table.headers:
-            if header.column_header in ms_run_default_field_maps:
-                ms_run_field_maps[header.column_header].target_column_index = (
-                    header.column_index
-                )
-                ms_run_field_maps[header.column_header].target_column_name = (
-                    header.column_name
-                )
+            if header.column_header in ms_run_field_maps:
+                ms_run_field_maps[header.column_header].target_column_index = header.column_index
+                ms_run_field_maps[header.column_header].target_column_name = header.column_name
+                
 
         #################################################################################################
         # Populate assay sheet rows with default values
@@ -304,39 +301,3 @@ class MetadataAssayMapper(BaseMapper):
                         assay_file, next_assay_sheet_row, map_fields, ms_run_field_maps
                     )
                     next_assay_sheet_row += 1
-
-        # # Map
-        # # mzTab2-M  Metabolights sample sheet
-        # # species   -> Characteristics[Organism]
-        # # name      -> Sample Name
-        # # tissue    -> Characteristics[Organism part]
-
-        # selected_column_headers = {
-        #     "Characteristics[Organism]":  FieldMapDescription(field_name="species"),
-        #     "Characteristics[Organism part]": FieldMapDescription(field_name="tissue"),
-        #     "Sample Name": FieldMapDescription(field_name="name"),
-        #     "Source Name": FieldMapDescription(field_name="name"),
-        #     "Comment[mztab:metadata:sample:id]": FieldMapDescription(field_name="id"),
-        #     "Comment[mztab:metadata:sample:description]": FieldMapDescription(field_name="description"),
-        # }
-
-        # if "Disease" in factor_values:
-        #     selected_column_headers[f"Factor Value[Disease]"] = FieldMapDescription(field_name="disease")
-        # if "Cell type" in factor_values:
-        #     selected_column_headers[f"Factor Value[Cell type]"] = FieldMapDescription(field_name="cell_type")
-
-        # for header in samples.table.headers:
-        #     if header.column_header in selected_column_headers:
-        #         selected_column_headers[header.column_header].target_column_index = header.column_index
-        #         selected_column_headers[header.column_header].target_column_name = header.column_name
-
-        # sample_count = len(mztab_model.metadata.sample)
-        # # create empty sample rows
-        # for column_name in samples.table.columns:
-        #     if column_name == "Protocol REF":
-        #         samples.table.data[column_name] = ["Sample collection"] * sample_count
-        #     elif column_name not in samples.table:
-        #         samples.table.data[column_name] = [""] * sample_count
-
-        # for row_idx, sample in enumerate(mztab_model.metadata.sample):
-        #     update_isa_table_row(samples, row_idx, sample, selected_column_headers)
