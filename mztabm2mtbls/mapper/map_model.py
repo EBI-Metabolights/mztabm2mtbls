@@ -37,3 +37,4 @@ class AssaySheetMapFields(BaseModel):
     instrument_source: Union[None, Parameter] = None
     instrument_analyzer: Union[None, List[Parameter]] = None
     instrument_detector: Union[None, Parameter] = None
+    assignment_filename: str = ""

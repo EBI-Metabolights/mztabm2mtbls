@@ -2,7 +2,7 @@ import os
 import re
 from typing import Dict, List
 
-from metabolights_utils import (AssayFile, IsaTableFile,
+from metabolights_utils import (AssayFile, AssignmentFile, IsaTableFile,
                                 IsaTableFileReaderResult)
 from metabolights_utils.isatab import Reader, Writer
 from metabolights_utils.models.isa.common import Comment
@@ -51,7 +51,8 @@ class MetadataAssayMapper(BaseMapper):
     
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
         assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
-
+        assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[list(mtbls_model.metabolite_assignments)[0]]
+        assignment_filename = assignment_file.file_path
         ##################################################################################
         # DEFINE SAMPLE SHEET COLUMNS
         ##################################################################################
@@ -167,6 +168,8 @@ class MetadataAssayMapper(BaseMapper):
             "Parameter Value[Ion source]": "instrument_source",
             "Parameter Value[Mass analyzer]": "instrument_analyzer",
             "Parameter Value[Mass analyzer]": "instrument_analyzer",
+            "Metabolite Assignment File": "assignment_filename",
+            "Derived Spectral Data File": "data_file_name",
         }
         ms_run_custom_field_maps = {
             "Parameter Value[Detector]": "instrument_detector",
@@ -295,6 +298,7 @@ class MetadataAssayMapper(BaseMapper):
                         instrument_source=instrument_source,
                         instrument_analyzer=instrument_analyzer,
                         instrument_detector=instrument_detector,
+                        assignment_filename=assignment_filename
                     )
 
                     update_isa_table_row(
