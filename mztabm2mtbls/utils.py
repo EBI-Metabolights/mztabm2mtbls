@@ -89,7 +89,7 @@ def create_metabolights_study_model(study_id: str="MTBLS") -> MetabolightsStudyM
         "resources/s_MTBLS.txt", offset=0, limit=10000
     )
     mtbls_model.samples[f"s_{study_id}.txt"] = result.isa_table_file
-    result.isa_table_file = f"s_{study_id}.txt"
+    result.isa_table_file.file_path = f"s_{study_id}.txt"
     reader = Reader.get_assignment_file_reader(results_per_page=100000)
     result: IsaTableFileReaderResult = reader.read(
         "resources/m_MTBLS_metabolite_profiling_v2_maf.tsv", offset=0, limit=10000
