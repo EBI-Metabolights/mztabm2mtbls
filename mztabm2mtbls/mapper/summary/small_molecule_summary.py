@@ -79,14 +79,15 @@ class SmallMoleculeSummaryMapper(BaseMapper):
             update_isa_table_row(assignment_file, row_idx, sms, selected_column_headers)
             if sms.smf_id_refs:
                 retention_times = [sm_features_features_map[x].exp_mass_to_charge for x in sms.smf_id_refs if x in sm_features_features_map]
-                mass_to_charges = [sm_features_features_map[x].exp_mass_to_charge for x in sms.smf_id_refs if x in sm_features_features_map]
+                #mass_to_charges = [sm_features_features_map[x].exp_mass_to_charge for x in sms.smf_id_refs if x in sm_features_features_map]
                 assignment_file.table.data["retention_time"][row_idx] = "|".join([str(x) for x in retention_times if x])
-                assignment_file.table.data["mass_to_charge"][row_idx] = "|".join([str(x) for x in mass_to_charges if x])
+            # use this from the SML entry to represent the theoretical mass_to_charge of the neutral molecule / precursor
+            assignment_file.table.data["mass_to_charge"][row_idx] = "|".join([str(x) for x in sms.theoretical_neutral_mass if x])
                 
             
             databases = [x for x in mztab_model.metadata.database if x and x.prefix]
-            assignment_file.table.data["database"][row_idx] = ";".join([str(x.prefix) for x in databases if x])
-            assignment_file.table.data["database_version"][row_idx] = ";".join([str(x.version) for x in databases if x])
+            assignment_file.table.data["database"][row_idx] = ";".join([str(x.prefix) if x.prefix else '' for x in databases])
+            assignment_file.table.data["database_version"][row_idx] = ";".join([str(x.prefix) if x.prefix else '' for x in databases])
             # add abundance values for each assay
             if first_assay_column_model:
                 current_index = first_assay_column_model.column_index

@@ -15,9 +15,29 @@ from mztabm2mtbls.utils import sanitise_data
 
 class MetadataBaseMapper(BaseMapper):
 
+    # create constructor with argument mztab_sourcefile_location
+    def __init__(self, mztab_sourcefile_location: str, mztab_sourcefile_hash: str):
+        self.mztab_sourcefile_location = mztab_sourcefile_location
+        self.mztab_sourcefile_hash = mztab_sourcefile_hash
+
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
         comments = mtbls_model.investigation.studies[0].comments
         study = mtbls_model.investigation.studies[0]
+
+        comments.append(
+            Comment(
+                name="mztab:source_file:location",
+                value=[sanitise_data(self.mztab_sourcefile_location) if self.mztab_sourcefile_location else ""],
+            )
+        )
+
+        comments.append(
+            Comment(
+                name="mztab:source_file:hash:sha256",
+                value=[sanitise_data(self.mztab_sourcefile_hash) if self.mztab_sourcefile_hash else ""],
+            )
+        )
+
         mztab_version = mztab_model.metadata.mzTab_version
         comments.append(
             Comment(

@@ -3,6 +3,7 @@ import os
 import subprocess
 import sys
 from typing import List
+import hashlib
 
 import click
 from metabolights_utils import IsaTableFileReaderResult
@@ -37,25 +38,12 @@ from mztabm2mtbls.mapper.summary.small_molecule_summary import \
     SmallMoleculeSummaryMapper
 from mztabm2mtbls.mztab2 import MzTab
 
-mappers: List[BaseMapper] = [
-    MetadataBaseMapper(),
-    MetadataContactMapper(),
-    MetadataPublicationMapper(),
-    MetadataCvMapper(),
-    MetadataSampleMapper(),
-    MetadataSampleProcessingMapper(),
-    MetadataSoftwareMapper(),
-    MetadataDatabaseMapper(),
-    MetadataAssayMapper(),
-    SmallMoleculeSummaryMapper(),
-]
-
 
 @click.command()
 @click.option(
     "--input-file",
-    default="test/data/singaporean-plasma-site1.mzTab",
     help="The mzTab-M file in .mzTab or .json format to convert.",
+    type=click.Path(exists=True)
 )
 @click.option(
     "--output_dir", default="output", help="The directory to save the converted files."
@@ -87,6 +75,12 @@ def convert(
     mztab2m_json_convertor_image: str,
     override_mztab2m_json_file: str
 ):
+    # check that input_file is not None and not ""
+    if input_file == None or input_file == "":
+        ctx = click.get_current_context()
+        click.echo(ctx.get_help())
+        ctx.fail("Please provide at least an input file with --input-file")
+
     input_json_file = input_file
     # print disclaimer that we currently do not fully validate neither the mzTab-M file, nor the ISA-Tab files
     print(
@@ -94,11 +88,13 @@ def convert(
         "The ISA-Tab files are not validated either at the moment."
     )
 
-    if input_file.startswith("test/data/singa"):
-        print("Using default input file: test/data/singaporean-plasma-site1.mzTab")
-        print("Please use the --input-file option to specify a custom input file.")
-
     _, extension = os.path.splitext(input_file)
+    mztab_sourcefile_location = input_file
+    with open(input_file, 'rb', buffering=0) as f:
+        mztab_sourcefile_sha256 = hashlib.file_digest(f, 'sha256').hexdigest()
+    
+    print(f"SHA256 digest for {input_file} = {mztab_sourcefile_sha256}")
+
     if extension.lower() != ".json":
         input_json_file = f"{input_file}.json"
         if not override_mztab2m_json_file and os.path.exists(input_json_file):
@@ -148,6 +144,22 @@ def convert(
     mtbls_model: MetabolightsStudyModel = utils.create_metabolights_study_model(
         study_id=mtbls_accession_number
     )
+
+    mappers: List[BaseMapper] = [
+        MetadataBaseMapper(
+            mztab_sourcefile_location=mztab_sourcefile_location, 
+            mztab_sourcefile_hash=mztab_sourcefile_sha256
+        ),
+        MetadataContactMapper(),
+        MetadataPublicationMapper(),
+        MetadataCvMapper(),
+        MetadataSampleMapper(),
+        MetadataSampleProcessingMapper(),
+        MetadataSoftwareMapper(),
+        MetadataDatabaseMapper(),
+        MetadataAssayMapper(),
+        SmallMoleculeSummaryMapper(),
+    ]
 
     for mapper in mappers:
         mapper.update(mztab_model, mtbls_model)
