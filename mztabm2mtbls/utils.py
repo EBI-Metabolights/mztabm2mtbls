@@ -202,6 +202,8 @@ def save_metabolights_study_model(
 def dump_isa_table(
     samples_file: SamplesFile, file_path: str, values_in_quotation_mark=True
 ):
+    # log to which file we are writing
+    print(f"Writing to {file_path}")
     column_order_map = {}
     column_header_map = {}
     data = samples_file.table.data

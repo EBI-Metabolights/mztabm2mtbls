@@ -34,23 +34,52 @@ docker run --rm -v "${PWD}":/home/data:rw --workdir /home/data quay.io/biocontai
 
 The container will accept an mzTab-M file with the `-c` flag and output a JSON file with the `--toJson` flag. The JSON file will be created in the same directory as the input file. The `-o` flag can be used to specify the output file name for the validation results. This will run a default validation on the mzTab-M file, without semantic validation. 
 
+You can also run the conversion with semantic validation of the mzTab-M file activated as follows, supplying a mapping xml file with the `-s` flag:
+
+```bash
+docker run --rm -v "${PWD}":/home/data:rw --workdir /home/data quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1 jmztab-m -c "/home/data/lipidomics-example.mzTab" --toJson -o "/home/data/validation.txt" -s /home/data/mappingFile.xml
+```
+
+Mapping file examples can be found in the mztab-m repository: https://github.com/HUPO-PSI/mzTab/blob/master/specification_document-releases/2_0-Metabolomics-Release 
+
+Please note that for submission to MetaboLights, the mzTab-M file must comply with the minimal profile for MetaboLights. The semantic validation mapping file for the minimal profile can be found in the mztab-m repository.
+
+TODO: Add link to the minimal profile mapping file.
+
 ### Workflow overview
 
 1. Create an mzTab-m file with your tool / library of choice.
 2. Convert the mzTab-m file to a JSON file using the jmztab-m tool or the docker container.
-3. Use the converter.py script to convert the JSON file to an ISA-Tab file.
+3. Use the converter.py script to convert the JSON file to an ISA-Tab file (mztabm2mtbls).
 4. Validate the ISA-Tab file using the metabolights_utils package.
 5. Submit the ISA-Tab files to MetaboLights as a new study.
-6. Success!
+6. Sync and validate the submission.
+7. Success!
 
 ```mermaid
     
 graph TD
-    A[Create mzTab-m file] --> B[Convert mzTab-m to JSON]
-    B --> C[Convert JSON to ISA-Tab]
-    C --> D[Validate ISA-Tab]
-    D --> E[Submit to MetaboLights]
-    E --> F[Success!]
+    A[Create mzTab-m file]
+    B[mzTab-M Tab Separated File]
+    C[mzTab-M JSON]
+    D[MetaboLights ISA-Tab]
+    E[Submission]
+    G[RAW Files]
+    H[DERIVED Files]
+    I[Study]
+    J[Study in Curation]
+    A --> B
+    B -- validate --> B
+    B -- convert with jmzTab-M --> C
+    C -- convert with mztabm2mtbls --> D
+    D -- validate (local) --> D
+    D -- Create Study (MetaboLights Utils) --> I
+    E -- Sync and validate --> E 
+    E -- Refine --> E
+    I -- Prepare --> E
+    G -- Prepare --> E
+    H -- Prepare --> E
+    E -- Check file integrity & Update Study Status--> J
 
 ```
 
@@ -60,5 +89,12 @@ graph TD
 python3 mztabm2mtbls/converter.py
 ```
 
-# outputs
+# Conversion, Validation and Upload Process
 Converted ISA tab files will be in the output folder.
+The script will generate different validation files in the output folder. 
+The first validation file will be the validation of the mzTab-m JSON file. If this validation stage passes without warnings or errors, the script will proceed to the conversion of the JSON file to ISA-Tab. The second validation file will be the validation of the ISA-Tab file against the MetaboLights validation REST API. If this validation stage passes without warnings or errors, the script will proceed to the submission of the ISA-Tab files to MetaboLights.
+In a final step, raw and derived files will be uploaded to the MetaboLights FTP server.
+
+## Structuring mzTab-M files for conversion
+
+MetaboLights requires a specific structure for mzTab-M files to be converted correctly. This requires specific metadata to be present in the mzTab-M file. In contrast to MetaboLights study, that can have multiple assays, mzTab-M files are expected to contain only one assay, corresponding to the application of one analytical method to a set of samples. Please note that the term "assay" is used differently in the context of mzTab-M files, where it refers to the material derived from a sample used for measurement with a mass spectrometry workflow. The MS workflow may contain multiple steps, e.g. chromatography.

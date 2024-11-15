@@ -1,20 +1,11 @@
 import os
 import re
-from typing import Dict, List
+from typing import List
 
-from metabolights_utils import (AssayFile, AssignmentFile, IsaTableFile,
-                                IsaTableFileReaderResult)
-from metabolights_utils.isatab import Reader, Writer
-from metabolights_utils.models.isa.common import Comment
+from metabolights_utils import (AssayFile, AssignmentFile)
 from metabolights_utils.models.isa.investigation_file import (
-    Assay, BaseSection, Factor, Investigation, InvestigationContacts,
-    InvestigationPublications, OntologyAnnotation, OntologySourceReference,
-    OntologySourceReferences, Person, Protocol, Publication, Study,
-    StudyAssays, StudyContacts, StudyFactors, StudyProtocols,
-    StudyPublications, ValueTypeAnnotation)
-from metabolights_utils.models.isa.samples_file import SamplesFile
+    OntologyAnnotation, Protocol)
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
-from pydantic import BaseModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.map_model import (AssaySheetMapFields,
@@ -25,7 +16,7 @@ from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
                                        find_first_header_column_index,
                                        get_protocol_sections,
                                        update_isa_table_row)
-from mztabm2mtbls.mztab2 import Instrument, MzTab, Parameter, Type
+from mztabm2mtbls.mztab2 import Instrument, MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
@@ -166,7 +157,6 @@ class MetadataAssayMapper(BaseMapper):
             "Parameter Value[Scan polarity]": "scan_polarity",
             "Parameter Value[Instrument]": "instrument_name",
             "Parameter Value[Ion source]": "instrument_source",
-            "Parameter Value[Mass analyzer]": "instrument_analyzer",
             "Parameter Value[Mass analyzer]": "instrument_analyzer",
             "Metabolite Assignment File": "assignment_filename",
             "Derived Spectral Data File": "data_file_name",

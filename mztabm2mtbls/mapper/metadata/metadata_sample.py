@@ -1,18 +1,9 @@
-from collections import namedtuple
 from typing import Any, Dict, Set
 
-from metabolights_utils import IsaTableFile, IsaTableFileReaderResult
-from metabolights_utils.isatab import Reader, Writer
-from metabolights_utils.models.isa.common import Comment
 from metabolights_utils.models.isa.investigation_file import (
-    Assay, BaseSection, Factor, Investigation, InvestigationContacts,
-    InvestigationPublications, OntologyAnnotation, OntologySourceReference,
-    OntologySourceReferences, Person, Protocol, Publication, Study,
-    StudyAssays, StudyContacts, StudyFactors, StudyProtocols,
-    StudyPublications, ValueTypeAnnotation)
+    Factor, OntologyAnnotation)
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
-from pydantic import BaseModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.map_model import FieldMapDescription
@@ -20,7 +11,7 @@ from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
                                        add_isa_table_single_column, copy_parameter,
                                        find_first_header_column_index,
                                        update_isa_table_row)
-from mztabm2mtbls.mztab2 import MzTab, Parameter, Type
+from mztabm2mtbls.mztab2 import MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
