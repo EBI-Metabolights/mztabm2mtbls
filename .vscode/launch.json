@@ -15,6 +15,18 @@
                 "PYTHONPATH": "${workspaceFolder}"
             },
             "justMyCode": false
+        },
+        {
+            "name": "validate_local_study",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/validate_local_study.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
         }
     ]
 }
