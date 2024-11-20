@@ -1,10 +1,5 @@
 from metabolights_utils.models.isa.common import Comment
-from metabolights_utils.models.isa.investigation_file import (
-    Assay, BaseSection, Factor, Investigation, InvestigationContacts,
-    InvestigationPublications, OntologyAnnotation, OntologySourceReference,
-    OntologySourceReferences, Person, Protocol, Publication, Study,
-    StudyAssays, StudyContacts, StudyFactors, StudyProtocols,
-    StudyPublications, ValueTypeAnnotation)
+from metabolights_utils.models.isa.investigation_file import Person
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper

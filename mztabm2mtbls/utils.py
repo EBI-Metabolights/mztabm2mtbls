@@ -1,24 +1,17 @@
 import datetime
-import json
 import os
 import re
-import shutil
-from typing import Any, List, Optional, Union, get_args, get_origin
+from typing import Any, Union
 
 from metabolights_utils import Comment, IsaTableFileReaderResult
 from metabolights_utils.isatab import Reader, Writer
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
 from metabolights_utils.models.isa.investigation_file import (
-    Assay, BaseSection, Factor, Investigation, InvestigationContacts,
-    InvestigationPublications, OntologyAnnotation, OntologySourceReference,
-    OntologySourceReferences, Person, Protocol, Publication, Study,
-    StudyAssays, StudyContacts, StudyFactors, StudyProtocols,
-    StudyPublications, ValueTypeAnnotation)
+    Assay, Investigation, OntologyAnnotation, OntologySourceReference,
+    Protocol, Study)
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
-from metabolights_utils.utils.hash_utils import EMPTY_FILE_HASH
-from pydantic import BaseModel
 
 from mztabm2mtbls.mztab2 import MzTabBaseModel
 
@@ -202,6 +195,8 @@ def save_metabolights_study_model(
 def dump_isa_table(
     samples_file: SamplesFile, file_path: str, values_in_quotation_mark=True
 ):
+    # log to which file we are writing
+    print(f"Writing to {file_path}")
     column_order_map = {}
     column_header_map = {}
     data = samples_file.table.data

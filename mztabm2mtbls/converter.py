@@ -73,10 +73,11 @@ def convert(
     mtbls_accession_number: str,
     container_engine: str,
     mztab2m_json_convertor_image: str,
-    override_mztab2m_json_file: str
+    override_mztab2m_json_file: str,
+    # mapping_file: str,
 ):
     # check that input_file is not None and not ""
-    if input_file == None or input_file == "":
+    if input_file is None or input_file == "":
         ctx = click.get_current_context()
         click.echo(ctx.get_help())
         ctx.fail("Please provide at least an input file with --input-file")
@@ -103,6 +104,9 @@ def convert(
             abs_path = os.path.realpath(input_file)
             dirname = os.path.dirname(abs_path)
             filename = os.path.basename(abs_path)
+            # if mapping_file:
+            #     abs_mapping_file = os.path.realpath(mapping_file)
+            
             print(
                 "Converting mzTab file to mzTab json format.",
                 "Please check container management tool (docker, podman, etc.) is installed and runnig."
@@ -114,7 +118,7 @@ def convert(
                         "sh",
                         "-c",
                         f"{container_engine} run --rm -v {dirname}:/home/data:rw --workdir=/home/data {mztab2m_json_convertor_image}" 
-                        f" jmztab-m -c /home/data/{filename} --toJson -o /home/data/{filename}_validation.txt",
+                        f" jmztab-m -c /home/data/{filename} --toJson -o /home/data/{filename}.validation.txt",
                     ],
                     capture_output=True, text=True, check=True, timeout=120
                 )

@@ -1,8 +1,7 @@
 import re
-from typing import Any, Dict, List, Literal, Union
+from typing import Dict, List, Union
 
-from metabolights_utils import (ColumnsStructure, Comment, Investigation,
-                                IsaTableColumn)
+from metabolights_utils import (ColumnsStructure, IsaTableColumn)
 from metabolights_utils.models.isa.common import IsaTableFile
 
 from mztabm2mtbls.mapper.map_model import (FieldMapDescription,
