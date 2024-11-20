@@ -107,6 +107,14 @@ python3 validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROF
 python3 validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mztabm_mapping_file /home/nilshoffmann/Projects/github.com/HUPO-PSI/mztab/specification_document-releases/2_0-Metabolomics-Release/mzTab_2_0-M_mapping.xml
 ```
 
+### Setting the validation level for the mzTab-M validation
+
+Use the `--mztabm_validation_level` parameter to set the validation level for the mzTab-M validation. The default value is `Info`, if the argument is not provided. The possible values are `Error`, `Warning`, and `Info`. If set to `Info`, any info, warning or error level validation messages will lead to a failure of the validation. If set to `Warning`, only warning and error level validation messages will lead to a failure of the validation. If set to `Error`, only error level validation messages will lead to a failure of the validation. Generally, it is recommended to set the validation level to `Warning` to ensure that the mzTab-M file is at least compliant with the MetaboLights minimal profile. However, using `Info` will provide more detailed information about potential improvements of the mzTab-M file metadata. Please note that these levels apply to both the basic validation performed by the jmztab-m tool and the semantic validation performed when an [Mapping file](https://github.com/HUPO-PSI/mzTab/blob/master/specification_document-releases/2_0-Metabolomics-Release/mzTab_2_0-M_mapping.xml) is provided with the `--mztabm_mapping_file` parameter.
+
+```bash
+python3 validate_local_study.py --mtbls_api_token d5487ecf-3c13-438f-ba10-a21daa0baea3 --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error --mtbls_remote_validation True
+```
+
 # Conversion, Validation and Upload Process
 
 Converted ISA tab files will be in the output folder.
