@@ -23,8 +23,8 @@ class MetadataCvMapper(BaseMapper):
         for cv in mztab_model.metadata.cv:
             cv_label = sanitise_data(cv.label)
             if cv_label in ontology_source_ids:
-                
-                idx = ontology_source_ids[cv_label][0]
+                print(f"Updating existing ontology source: {cv_label}: {ontology_source_ids[cv_label]}")
+                idx = ontology_source_ids[cv_label]
                 if cv.id is not None and cv.id > 0 and len(id_comment.value) > idx:
                     id_comment.value[idx] = cv.id
                 continue
