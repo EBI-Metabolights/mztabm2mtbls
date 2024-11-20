@@ -87,6 +87,7 @@ def run_jmztabm_docker(
         )
         if task.returncode != 0:
             print("The conversion of the mzTab file to mzTab json format failed.")
+            print(task.stdout)
             print(task.stderr)
             return False
         return True
@@ -96,6 +97,7 @@ def run_jmztabm_docker(
         return False
     except subprocess.CalledProcessError as exc:
         print("The conversion of the mzTab file to mzTab json format failed.")
+        print(exc.stdout)
         print(exc.stderr)
         return False
     except (OSError, subprocess.SubprocessError) as exc:
@@ -202,40 +204,10 @@ def convert(
                 mztabm_mapping_file=mztabm_mapping_file
             )
             if jmztabm_success:
-                print("The conversion and validation of the mzTab-M file to mzTab-M json format was successful!")
+                print(f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' was successful!")
             else:
-                print("The conversion and validation of the mzTab-M file to mzTab-M json format failed. Please check the logs for further details!")
-                sys.exit(1)
-            # task = None
-            # cmd = [
-            #         "sh",
-            #         "-c",
-            #         f"{container_engine} run --rm -v {dirname}:/home/data:rw --workdir=/home/data {mztab2m_json_convertor_image}" 
-            #         f" jmztab-m -c /home/data/{filename} --toJson | tee {dirname}/{filename}.validation.txt",
-            #     ]
-            # print("Running command: ", " ".join(cmd))
-            # try:
-            #     task = subprocess.run(
-            #         cmd,
-            #         capture_output=True, text=True, check=True, timeout=120
-            #     )
-            # except subprocess.TimeoutExpired as exc:
-            #     print("The conversion of the mzTab file to mzTab json format timed out.")
-            #     sys.exit(1)
-            # except subprocess.CalledProcessError as exc:
-            #     print("The conversion of the mzTab file to mzTab json format failed.")
-            #     print(exc.stderr)
-            #     sys.exit(1)
-            # except Exception as exc:
-            #     print("The conversion of the mzTab file to mzTab json format failed.")
-            #     if task and task.stderr:
-            #         print(task.stderr)
-            #     else:
-            #         print(str(exc))
-            #     sys.exit(1)
-            # finally:
-            #     if task and task.stdout:
-            #         print(task.stdout)
+                print(f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' failed. Please check the logs for further details!")
+                return False
     
     with open(input_json_file) as f:
         mztab_json_data = json.load(f)
@@ -268,7 +240,7 @@ def convert(
     utils.save_metabolights_study_model(
         mtbls_model, output_dir=study_metadata_output_path
     )
-
+    return True
 
 if __name__ == "__main__":
     convert()
