@@ -11,10 +11,37 @@ from metabolights_utils.provider.submission_repository import (
 )
 from mztabm2mtbls import converter
 
-if __name__ == "__main__":
+@click.command()
+@click.option(
+    "--mtbls_api_token",
+    required=True,
+    help="The MetaboLights REST API token to validate the study."
+)
+@click.option(
+    "--mtbls_provisional_study_id",
+    required=True,
+    help="A provisional study id or the name of the local study directory."
+)
+@click.option(
+    "--base_study_path",
+    required=True,
+    help="The base path of the local study directory.",
+    type=click.Path(exists=True)
+)
+@click.option(
+    "--mztabm_mapping_file",
+    required=False,
+    help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
+    type=click.Path(exists=True)
+)
+def convert_and_validate_submission(
+    mtbls_api_token: str,
+    mtbls_provisional_study_id: str,
+    base_study_path: str,
+    mztabm_mapping_file: str
+):
     submission_repo = MetabolightsSubmissionRepository()
-    mtbls_provisional_study_id = "MTBLS263"
-    study_path = "/home/nilshoffmann/Projects/github.com/nilshoffmann/mztabm2mtbls/submission_validation_test/" + mtbls_provisional_study_id
+    study_path = base_study_path + mtbls_provisional_study_id
     ctx = click.Context(converter.convert)
     ctx.forward(
         converter.convert,
@@ -24,7 +51,7 @@ if __name__ == "__main__":
         container_engine="docker",
         mztab2m_json_convertor_image="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
         override_mztab2m_json_file="True",
-        mapping_file=None
+        # mztabm_mapping_file=mztabm_mapping_file
     )
     
     mtbls_converted_study_path = study_path + "/" + mtbls_provisional_study_id
@@ -32,7 +59,7 @@ if __name__ == "__main__":
     success, message = submission_repo.validate_study_v2(
         mtbls_converted_study_path,
         validation_result_file_path,
-        api_token="d5487ecf-3c13-438f-ba10-a21daa0baea3",
+        api_token=mtbls_api_token,
     )
     if success:
         with open(validation_result_file_path, "r", encoding="UTF8") as f:
@@ -45,3 +72,6 @@ if __name__ == "__main__":
             )
     else:
         print(message)
+
+if __name__ == "__main__":
+    convert_and_validate_submission()

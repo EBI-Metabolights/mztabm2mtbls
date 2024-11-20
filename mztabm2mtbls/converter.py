@@ -74,7 +74,7 @@ def convert(
     container_engine: str,
     mztab2m_json_convertor_image: str,
     override_mztab2m_json_file: str,
-    mapping_file: str,
+    # mapping_file: str,
 ):
     # check that input_file is not None and not ""
     if input_file is None or input_file == "":

@@ -89,6 +89,10 @@ graph TD
 python3 mztabm2mtbls/converter.py
 ```
 
+```bash
+python3 validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mztabm_mapping_file /home/nilshoffmann/Projects/github.com/HUPO-PSI/mztab/specification_document-releases/2_0-Metabolomics-Release/mzTab_2_0-M_mapping.xml
+```
+
 # Conversion, Validation and Upload Process
 Converted ISA tab files will be in the output folder.
 The script will generate different validation files in the output folder. 
