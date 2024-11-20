@@ -2,8 +2,9 @@ MTD	mzTab-version	2.0.0-M
 MTD	mzTab-ID	JetBike Test																						
 MTD	software[1]	[MS,MS:1002879,Progenesis QI,2.4.6505.48857]																						
 MTD	publication[1]	doi:10.1073/pnas.1603023113																						
-MTD	publication[1]-title	"Individual variability in human blood metabolites identifies age-related differences"																						
-MTD	publication[1]-status	[EFO, EFO:0001796, published, ]																						
+COM	the following two lines are currently not part of the mzTab-M model and are added for compatibility with the MetaboLights model.
+COM	MTD	publication[1]-title	"Individual variability in human blood metabolites identifies age-related differences"																						
+COM	MTD	publication[1]-status	[EFO, EFO:0001796, published, ]																						
 MTD	ms_run[1]-location	file:///D:/Data%20Sets/Metabolomics/MTBLS263/3injections_inj1_POS.mzML																						
 MTD	ms_run[1]-scan_polarity[1]	[MS,MS:1000130,positive scan,]																						
 MTD	ms_run[1]-format	[MS, MS:1000584, mzML file, ]																						

@@ -112,14 +112,16 @@ def convert(
                 "Please check container management tool (docker, podman, etc.) is installed and runnig."
             )
             task = None
+            cmd = [
+                    "sh",
+                    "-c",
+                    f"{container_engine} run --rm -v {dirname}:/home/data:rw --workdir=/home/data {mztab2m_json_convertor_image}" 
+                    f" jmztab-m -c /home/data/{filename} --toJson | tee {dirname}/{filename}.validation.txt",
+                ]
+            print("Running command: ", " ".join(cmd))
             try:
                 task = subprocess.run(
-                    [
-                        "sh",
-                        "-c",
-                        f"{container_engine} run --rm -v {dirname}:/home/data:rw --workdir=/home/data {mztab2m_json_convertor_image}" 
-                        f" jmztab-m -c /home/data/{filename} --toJson -o /home/data/{filename}.validation.txt",
-                    ],
+                    cmd,
                     capture_output=True, text=True, check=True, timeout=120
                 )
             except subprocess.TimeoutExpired as exc:

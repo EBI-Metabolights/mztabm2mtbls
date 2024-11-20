@@ -34,11 +34,18 @@ from mztabm2mtbls import converter
     help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
     type=click.Path(exists=True)
 )
+@click.option(
+    "--mtbls_remote_validation",
+    required=False,
+    help="A flag to enable remote validation of the study.",
+    default=False
+)
 def convert_and_validate_submission(
     mtbls_api_token: str,
     mtbls_provisional_study_id: str,
     base_study_path: str,
-    mztabm_mapping_file: str
+    mztabm_mapping_file: str,
+    mtbls_remote_validation: bool
 ):
     submission_repo = MetabolightsSubmissionRepository()
     study_path = base_study_path + mtbls_provisional_study_id
@@ -54,24 +61,27 @@ def convert_and_validate_submission(
         # mztabm_mapping_file=mztabm_mapping_file
     )
     
-    mtbls_converted_study_path = study_path + "/" + mtbls_provisional_study_id
-    validation_result_file_path = mtbls_converted_study_path + "/" + mtbls_provisional_study_id + ".remote-validation.json"
-    success, message = submission_repo.validate_study_v2(
-        mtbls_converted_study_path,
-        validation_result_file_path,
-        api_token=mtbls_api_token,
-    )
-    if success:
-        with open(validation_result_file_path, "r", encoding="UTF8") as f:
-            validation_result_json = json.load(f)
-        validation_result = PolicySummaryResult.model_validate(validation_result_json)
-        violations: List[PolicyMessage] = validation_result.messages.violations
-        for item in violations:
-            print(
-                f"{item.identifier}, {item.type}, {item.source_file}, {item.description}, {item.violation}"
-            )
+    if mtbls_remote_validation:
+        mtbls_converted_study_path = study_path + "/" + mtbls_provisional_study_id
+        validation_result_file_path = mtbls_converted_study_path + "/" + mtbls_provisional_study_id + ".remote-validation.json"
+        success, message = submission_repo.validate_study_v2(
+            mtbls_converted_study_path,
+            validation_result_file_path,
+            api_token=mtbls_api_token,
+        )
+        if success:
+            with open(validation_result_file_path, "r", encoding="UTF8") as f:
+                validation_result_json = json.load(f)
+            validation_result = PolicySummaryResult.model_validate(validation_result_json)
+            violations: List[PolicyMessage] = validation_result.messages.violations
+            for item in violations:
+                print(
+                    f"{item.identifier}, {item.type}, {item.source_file}, {item.description}, {item.violation}"
+                )
+        else:
+            print(message)
     else:
-        print(message)
+        print("Remote validation is disabled. Please run with '--mtbls_remote_validation True' flag to enable remote validation!")
 
 if __name__ == "__main__":
     convert_and_validate_submission()
