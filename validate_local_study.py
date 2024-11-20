@@ -29,6 +29,11 @@ from mztabm2mtbls import converter
     type=click.Path(exists=True)
 )
 @click.option(
+    "--mztabm_validation_level",
+    default="Info",
+    help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
+)
+@click.option(
     "--mztabm_mapping_file",
     required=False,
     help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
@@ -44,8 +49,9 @@ def convert_and_validate_submission(
     mtbls_api_token: str,
     mtbls_provisional_study_id: str,
     base_study_path: str,
-    mztabm_mapping_file: str,
-    mtbls_remote_validation: bool
+    mztabm_validation_level: str = "Info",
+    mztabm_mapping_file: str = None,
+    mtbls_remote_validation: bool = False
 ):
     submission_repo = MetabolightsSubmissionRepository()
     study_path = base_study_path + mtbls_provisional_study_id
@@ -58,7 +64,8 @@ def convert_and_validate_submission(
         container_engine="docker",
         mztab2m_json_convertor_image="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
         override_mztab2m_json_file="True",
-        # mztabm_mapping_file=mztabm_mapping_file
+        mztabm_validation_level=mztabm_validation_level,
+        mztabm_mapping_file=mztabm_mapping_file
     )
     
     if mtbls_remote_validation:

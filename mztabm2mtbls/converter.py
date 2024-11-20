@@ -38,6 +38,76 @@ from mztabm2mtbls.mapper.summary.small_molecule_summary import \
     SmallMoleculeSummaryMapper
 from mztabm2mtbls.mztab2 import MzTab
 
+# run the actual conversion process as a shell command, calling the jmztab-m docker container
+def run_jmztabm_docker(
+        container_engine: str = "docker",
+        mztab2m_json_convertor_image: str = "quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
+        dirname: str = ".",
+        filename: str = None,
+        # Info, Warn or Error
+        mztabm_validation_level: str = "Info",
+        mztabm_mapping_file: str = None
+):
+    task = None
+    local_command = [
+        f"{container_engine}",
+        "run",
+        "--rm"
+    ]
+    docker_volume_mounts = [
+        "-v",
+        f"{dirname}:/home/data"
+    ]
+    if mztabm_mapping_file:
+        abs_mztabm_mapping_file = os.path.realpath(mztabm_mapping_file)
+        abs_mztabm_mapping_file_dir = os.path.dirname(abs_mztabm_mapping_file)
+        mztabm_mapping_filename = os.path.basename(abs_mztabm_mapping_file)
+        docker_volume_mounts.extend(["-v", f"{abs_mztabm_mapping_file_dir}/{mztabm_mapping_filename}:/home/data/{mztabm_mapping_filename}"])
+    local_command.extend(docker_volume_mounts)
+    jmztab_m_command = [
+        "--workdir=/home/data",
+        f"{mztab2m_json_convertor_image}",
+        "jmztab-m",
+        "-c",
+        f"/home/data/{filename}",
+        "--toJson",
+        "-o",
+        f"/home/data/{filename}.validation.txt",
+        "-l",
+        f"{mztabm_validation_level}"
+    ]
+    if mztabm_mapping_file:
+        jmztab_m_command.extend(["-s", f"/home/data/{mztabm_mapping_filename}"])
+    local_command.extend(jmztab_m_command)
+    print(f"Running command: {' '.join(local_command)}")
+    try:
+        task = subprocess.run(
+            local_command,
+            capture_output=True, text=True, check=True, timeout=120
+        )
+        if task.returncode != 0:
+            print("The conversion of the mzTab file to mzTab json format failed.")
+            print(task.stderr)
+            return False
+        return True
+    except subprocess.TimeoutExpired as exc:
+        print("The conversion of the mzTab file to mzTab json format timed out.")
+        print(exc.stderr)
+        return False
+    except subprocess.CalledProcessError as exc:
+        print("The conversion of the mzTab file to mzTab json format failed.")
+        print(exc.stderr)
+        return False
+    except (OSError, subprocess.SubprocessError) as exc:
+        print("The conversion of the mzTab file to mzTab json format failed.")
+        if task and task.stderr:
+            print(task.stderr)
+        else:
+            print(str(exc))
+        return False
+    finally:
+        if task and task.stdout:
+            print(task.stdout)
 
 @click.command()
 @click.option(
@@ -67,6 +137,16 @@ from mztabm2mtbls.mztab2 import MzTab
         " and there is a mzTab-M json formatted version of the same file on same directory,"
         " overrides the current json file.",
 )
+@click.option(
+    "--mztabm_validation_level",
+    default="Info",
+    help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
+)
+@click.option(
+    "--mztabm_mapping_file",
+    help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
+    type=click.Path(exists=True)
+)
 def convert(
     input_file: str,
     output_dir: str,
@@ -74,7 +154,9 @@ def convert(
     container_engine: str,
     mztab2m_json_convertor_image: str,
     override_mztab2m_json_file: str,
-    # mapping_file: str,
+    # Info, Warn or Error
+    mztabm_validation_level: str = "Info",
+    mztabm_mapping_file: str = None
 ):
     # check that input_file is not None and not ""
     if input_file is None or input_file == "":
@@ -111,36 +193,49 @@ def convert(
                 "Converting mzTab file to mzTab json format.",
                 "Please check container management tool (docker, podman, etc.) is installed and runnig."
             )
-            task = None
-            cmd = [
-                    "sh",
-                    "-c",
-                    f"{container_engine} run --rm -v {dirname}:/home/data:rw --workdir=/home/data {mztab2m_json_convertor_image}" 
-                    f" jmztab-m -c /home/data/{filename} --toJson | tee {dirname}/{filename}.validation.txt",
-                ]
-            print("Running command: ", " ".join(cmd))
-            try:
-                task = subprocess.run(
-                    cmd,
-                    capture_output=True, text=True, check=True, timeout=120
-                )
-            except subprocess.TimeoutExpired as exc:
-                print("The conversion of the mzTab file to mzTab json format timed out.")
+            jmztabm_success = run_jmztabm_docker(
+                container_engine=container_engine,
+                mztab2m_json_convertor_image=mztab2m_json_convertor_image,
+                dirname=dirname,
+                filename=filename,
+                mztabm_validation_level=mztabm_validation_level,
+                mztabm_mapping_file=mztabm_mapping_file
+            )
+            if jmztabm_success:
+                print("The conversion and validation of the mzTab-M file to mzTab-M json format was successful!")
+            else:
+                print("The conversion and validation of the mzTab-M file to mzTab-M json format failed. Please check the logs for further details!")
                 sys.exit(1)
-            except subprocess.CalledProcessError as exc:
-                print("The conversion of the mzTab file to mzTab json format failed.")
-                print(exc.stderr)
-                sys.exit(1)
-            except Exception as exc:
-                print("The conversion of the mzTab file to mzTab json format failed.")
-                if task and task.stderr:
-                    print(task.stderr)
-                else:
-                    print(str(exc))
-                sys.exit(1)
-            finally:
-                if task and task.stdout:
-                    print(task.stdout)
+            # task = None
+            # cmd = [
+            #         "sh",
+            #         "-c",
+            #         f"{container_engine} run --rm -v {dirname}:/home/data:rw --workdir=/home/data {mztab2m_json_convertor_image}" 
+            #         f" jmztab-m -c /home/data/{filename} --toJson | tee {dirname}/{filename}.validation.txt",
+            #     ]
+            # print("Running command: ", " ".join(cmd))
+            # try:
+            #     task = subprocess.run(
+            #         cmd,
+            #         capture_output=True, text=True, check=True, timeout=120
+            #     )
+            # except subprocess.TimeoutExpired as exc:
+            #     print("The conversion of the mzTab file to mzTab json format timed out.")
+            #     sys.exit(1)
+            # except subprocess.CalledProcessError as exc:
+            #     print("The conversion of the mzTab file to mzTab json format failed.")
+            #     print(exc.stderr)
+            #     sys.exit(1)
+            # except Exception as exc:
+            #     print("The conversion of the mzTab file to mzTab json format failed.")
+            #     if task and task.stderr:
+            #         print(task.stderr)
+            #     else:
+            #         print(str(exc))
+            #     sys.exit(1)
+            # finally:
+            #     if task and task.stdout:
+            #         print(task.stdout)
     
     with open(input_json_file) as f:
         mztab_json_data = json.load(f)
