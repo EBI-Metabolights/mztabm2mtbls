@@ -24,10 +24,27 @@ from mztabm2mtbls import converter
     help="A provisional study id or the name of the local study directory."
 )
 @click.option(
+    "--mtbls_rest_api_base_url",
+    required=False,
+    help="MetaboLights REST API base URL.",
+    default="https://www-test.ebi.ac.uk/metabolights/ws"
+)
+@click.option(
+    "--mtbls_validation_api_base_url",
+    required=False,
+    help="MetaboLights validation REST API base URL.",
+    default="https://www-test.ebi.ac.uk/metabolights/ws3"
+)
+@click.option(
     "--base_study_path",
     required=True,
     help="The base path of the local study directory.",
     type=click.Path(exists=True)
+)
+@click.option(
+    "--mztabm_validation_level",
+    default="Info",
+    help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
 )
 @click.option(
     "--mztabm_validation_level",
@@ -49,12 +66,15 @@ from mztabm2mtbls import converter
 def convert_and_validate_submission(
     mtbls_api_token: str,
     mtbls_provisional_study_id: str,
+    mtbls_rest_api_base_url: str,
+    mtbls_validation_api_base_url: str,
     base_study_path: str,
     mztabm_validation_level: str = "Info",
     mztabm_mapping_file: str = None,
     mtbls_remote_validation: bool = False
 ):
-    submission_repo = MetabolightsSubmissionRepository()
+    submission_repo = MetabolightsSubmissionRepository(rest_api_base_url=mtbls_rest_api_base_url, 
+                                                       validation_api_base_url=mtbls_validation_api_base_url)
     study_path = base_study_path + mtbls_provisional_study_id
     ctx = click.Context(converter.convert)
     ctx.forward(
