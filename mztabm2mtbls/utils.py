@@ -145,7 +145,7 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel):
         Protocol(
             name="Mass spectrometry",
             parameters=[
-                OntologyAnnotation(term="Scan Polarity"),
+                OntologyAnnotation(term="Scan polarity"),
                 OntologyAnnotation(term="Scan m/z range"),
                 OntologyAnnotation(term="Instrument"),
                 OntologyAnnotation(term="Ion source"),

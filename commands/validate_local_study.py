@@ -47,11 +47,6 @@ from mztabm2mtbls import converter
     help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
 )
 @click.option(
-    "--mztabm_validation_level",
-    default="Info",
-    help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
-)
-@click.option(
     "--mztabm_mapping_file",
     required=False,
     help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",

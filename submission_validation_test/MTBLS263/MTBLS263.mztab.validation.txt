@@ -5,10 +5,8 @@ Running jmztabm-cli
  commit: '5fee003a3c97695b422bf556f4b5d9eb24080a3c'
  branch: '1.0.6'
 
-Validator set to level 'Error'
+Validator set to level 'Info'
 Beginning validation of mztab file: /home/data/MTBLS263.mztab
 No structural or logical errors in file:/home/data/MTBLS263.mztab file!
 Writing mzTab object as json to /home/data/MTBLS263.mztab.json
-Beginning semantic validation of mztab file: /home/data/MTBLS263.mztab with mapping file: file:/home/data/mzTab_2_0-M_mapping.xml
-No errors found for semantic validation on level Error
 Finished validation!

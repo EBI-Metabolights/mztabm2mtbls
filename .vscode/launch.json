@@ -20,7 +20,19 @@
             "name": "validate_local_study",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/validate_local_study.py",
+            "program": "${workspaceFolder}/commands/validate_local_study.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Run Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "env": {

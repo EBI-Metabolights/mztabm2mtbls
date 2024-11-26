@@ -168,7 +168,7 @@ class Sample(MzTabBaseModel):
 class MsRun(MzTabBaseModel):
     id: Annotated[int, Field(ge=1)]
     name: Annotated[Optional[str], Field(description="The msRun's name.")] = None
-    location: Annotated[AnyUrl, Field(description="The msRun's location URI.")]
+    location: Annotated[str, Field(description="The msRun's location URI.")]
     instrument_ref: Optional[int] = None
     format: Optional[Parameter] = None
     id_format: Optional[Parameter] = None
@@ -223,7 +223,7 @@ class Database(MzTabBaseModel):
     prefix: Annotated[Union[None, str], Field(description="The database prefix.")]
     version: Annotated[Union[None, str], Field(description="The database version.")]
     uri: Annotated[
-        Union[None, AnyUrl], Field(description="The URI to the online database.")
+        Union[None, str], Field(description="The URI to the online database.")
     ]
 
 
