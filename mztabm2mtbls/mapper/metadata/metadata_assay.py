@@ -4,7 +4,6 @@ from typing import List
 
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
-
 from metabolights_utils.models.isa.investigation_file import (
     OntologyAnnotation,
     Protocol,

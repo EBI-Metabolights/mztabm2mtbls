@@ -1,5 +1,4 @@
 import click
-
 from metabolights_utils.commands.submission.submission_upload import submission_upload
 
 

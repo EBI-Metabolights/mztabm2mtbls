@@ -1,8 +1,11 @@
 import re
 from typing import Dict, List, Union
 
-from metabolights_utils.models.isa.common import ColumnsStructure, IsaTableColumn
-from metabolights_utils.models.isa.common import IsaTableFile
+from metabolights_utils.models.isa.common import (
+    ColumnsStructure,
+    IsaTableColumn,
+    IsaTableFile,
+)
 
 from mztabm2mtbls.mapper.map_model import FieldMapDescription, ProtocoSectionDefinition
 from mztabm2mtbls.mztab2 import Parameter

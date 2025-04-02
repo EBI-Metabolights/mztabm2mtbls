@@ -1,7 +1,6 @@
 from typing import Union
 
 import click
-
 from metabolights_utils.provider.submission_repository import (
     MetabolightsSubmissionRepository,
 )

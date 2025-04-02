@@ -1,15 +1,13 @@
 import datetime
 import os
 import re
-from typing import Any, Dict, Union
+from typing import Any, Union
 
 from metabolights_utils.isatab import Reader, Writer
 from metabolights_utils.isatab.reader import IsaTableFileReaderResult
-
-from metabolights_utils.models.isa.common import Comment, IsaTableFile
-
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
+from metabolights_utils.models.isa.common import Comment, IsaTableFile
 from metabolights_utils.models.isa.investigation_file import (
     Assay,
     Investigation,
@@ -140,7 +138,7 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
     return mtbls_model
 
 
-def create_initial_protocols(mtbls_model: MetabolightsStudyModel):
+def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
     study = mtbls_model.investigation.studies[0]
     study.study_protocols.protocols.append(Protocol(name="Sample collection"))
     study.study_protocols.protocols.append(
@@ -161,7 +159,7 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel):
                 OntologyAnnotation(term="Instrument"),
                 OntologyAnnotation(term="Ion source"),
                 OntologyAnnotation(term="Mass analyzer"),
-            ],
+            ]
         )
     )
     study.study_protocols.protocols.append(Protocol(name="Data transformation"))
@@ -206,7 +204,7 @@ def save_metabolights_study_model(
 
 
 def dump_isa_table(
-    isa_table_file: IsaTableFile, file_path: str, values_in_quotation_mark=True
+    isa_table_file: IsaTableFile, file_path: str, values_in_quotation_mark: bool=True
 ):
     # log to which file we are writing
     print(f"Writing to {file_path}")

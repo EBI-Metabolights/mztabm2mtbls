@@ -14,14 +14,14 @@ from mztabm2mtbls.utils import sanitise_data
 
 class SmallMoleculeSummaryMapper(BaseMapper):
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
-        study = mtbls_model.investigation.studies[0]
+        # study = mtbls_model.investigation.studies[0]
         assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[
             list(mtbls_model.metabolite_assignments)[0]
         ]
 
-        samples_map = {x.id: x for x in mztab_model.metadata.sample}
-        assays_map = {x.id: x for x in mztab_model.metadata.assay}
-        sm_features = {x.smf_id: x for x in mztab_model.smallMoleculeFeature}
+        # samples_map = {x.id: x for x in mztab_model.metadata.sample}
+        # assays_map = {x.id: x for x in mztab_model.metadata.assay}
+        # sm_features = {x.smf_id: x for x in mztab_model.smallMoleculeFeature}
 
         ##################################################################################
         # DEFINE ADDITIONAL MAF FILE SHEET COLUMNS
@@ -34,10 +34,10 @@ class SmallMoleculeSummaryMapper(BaseMapper):
             add_isa_table_single_column(assignment_file, sanitise_data(assay.name))
             if idx == 0:
                 first_assay_header_name = sanitise_data(assay.name)
-        custom_columns = [
-            "theoretical_neutral_mass",
-            "adduct_ions",
-        ]
+        # custom_columns = [
+        #     "theoretical_neutral_mass",
+        #     "adduct_ions",
+        # ]
         selected_column_headers = {
             "database_identifier": FieldMapDescription(
                 field_name="database_identifier", join_operator="|"

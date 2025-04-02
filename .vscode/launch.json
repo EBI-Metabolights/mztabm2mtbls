@@ -1,45 +1,56 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Run converter",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/mztabm2mtbls/converter.py",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "args": ["--input-file=submission_validation_test/MTBLS263/MTBLS263.mztab"],
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "validate_local_study",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/commands/validate_local_study.py",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}"
-            },
-            "justMyCode": false
-        },
-        {
-            "name": "Run Current File",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}"
-            },
-            "justMyCode": false
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run converter",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/mztabm2mtbls/converter.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--input-file=submission_validation_test/MTBLS263/MTBLS263.mztab"
+      ],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "justMyCode": false
+    },
+    {
+      "name": "Validate Local Study",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/commands/validate_study.py",
+      "args": [
+        "--mtbls_provisional_study_id=MTBLS263",
+        "--base_study_path=submission_validation_test/",
+        "--mtbls_remote_validation=False",
+        "--mztabm_mapping_file=submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml",
+        "--mztabm_validation_level=Error",
+        "--mtbls_validation_bundle_path=${workspaceFolder}/bundle.tar.gz",
+        "--opa_executable_path=opa"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "justMyCode": false
+    },
+    {
+      "name": "Run Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "justMyCode": false
+    }
+  ]
 }
