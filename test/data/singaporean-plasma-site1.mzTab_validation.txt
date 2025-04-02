@@ -1,0 +1,14 @@
+Running jmztabm-cli
+ version: '1.0.6'
+ build-date: '2021-01-02T17:21:49.058Z'
+ scm-location: 'https://github.com/lifs-tools/jmztab-m/tree/master/jmztabm-cli'
+ commit: '5fee003a3c97695b422bf556f4b5d9eb24080a3c'
+ branch: '1.0.6'
+
+Validator set to default level 'Info'
+Beginning validation of mztab file: /home/data/singaporean-plasma-site1.mzTab
+[Info-2037] line -1: The mzTab file should contain a small molecule feature section.
+[Info-2038] line -1: The mzTab file should contain a small molecule evidence section.
+There were 2 validation messages including 0 warnings or errors during validation of your file, please check the output for details!
+Writing mzTab object as json to /home/data/singaporean-plasma-site1.mzTab.json
+Finished validation!

@@ -7,11 +7,12 @@ from __future__ import annotations
 from enum import Enum
 from typing import Annotated, List, Optional, Union
 
-from pydantic import AnyUrl, BaseModel, Field, RootModel, constr
+from pydantic import AnyUrl, BaseModel, Field
 
 
 class MzTabBaseModel(BaseModel):
     pass
+
 
 class Prefix(Enum):
     COM = "COM"
@@ -49,7 +50,8 @@ class Prefix4(Enum):
 
 class HeaderPrefix2(Enum):
     SEH = "SEH"
-    
+
+
 class Parameter(MzTabBaseModel):
     id: Annotated[Optional[int], Field(ge=1)] = None
     cv_label: Optional[str] = ""
@@ -201,7 +203,7 @@ class Assay(MzTabBaseModel):
     sample_ref: Optional[int] = None
     ms_run_ref: Annotated[
         List[int],
-        Field(description="The ms run(s) referenced by this assay.", min_items=1),
+        Field(description="The ms run(s) referenced by this assay.", min_length=1),
     ]
 
 
@@ -479,7 +481,7 @@ class SpectraRef(MzTabBaseModel):
     reference: Annotated[
         str,
         Field(
-            description="The (vendor-dependendent) reference string to the actual mass spectrum.\n"
+            description="The (vendor-dependent) reference string to the actual mass spectrum.\n"
         ),
     ]
 
@@ -510,9 +512,9 @@ class Metadata(MzTabBaseModel):
         Prefix1,
         Field(
             description="The metadata section prefix. MUST always be MTD.\n",
-            example="MTD",
+            examples=["MTD"],
         ),
-    ]
+    ] = Prefix1.MTD
     mzTab_version: Annotated[
         str,
         Field(
@@ -532,14 +534,14 @@ class Metadata(MzTabBaseModel):
     title: Annotated[
         Optional[str],
         Field(
-            description="The file’s human readable title.\n",
+            description="The file's human readable title.\n",
             example="MTD title My first test experiment",
         ),
     ] = None
     description: Annotated[
         Optional[str],
         Field(
-            description="The file’s human readable description.\n",
+            description="The file's human readable description.\n",
             example="MTD description An experiment investigating the effects of Il-6.",
         ),
     ] = None
@@ -678,13 +680,13 @@ class SmallMoleculeEvidence(MzTabBaseModel):
         Field(
             description="The small molecule evidence table row prefix. SME MUST be used for rows of the small molecule evidence table."
         ),
-    ] = "SME"
+    ] = Prefix4.SME
     header_prefix: Annotated[
         Optional[HeaderPrefix2],
         Field(
             description="The small molecule evidence table header prefix. SEH MUST be used for the small molecule evidence table header line (the column labels)."
         ),
-    ] = "SEH"
+    ] = HeaderPrefix2.SEH
     sme_id: Annotated[
         int,
         Field(
@@ -790,18 +792,19 @@ class SmallMoleculeEvidence(MzTabBaseModel):
 
 
 class MzTab(MzTabBaseModel):
-    metadata:  Annotated[
+    metadata: Annotated[
         Metadata,
-        Field(description='The metadata section contains general information about the mztab file content.'),
+        Field(
+            description="The metadata section contains general information about the mztab file content."
+        ),
         # IsaTabMapInfo(mapped=True, target_files=["investigation", "assay", "sample", "maf"]),
-        
     ]
-    
+
     smallMoleculeSummary: Annotated[
         List[SmallMoleculeSummary],
         Field(
             description="The small molecule section is table-based. The small molecule section MUST always come after the metadata section. All table columns MUST be Tab separated. There MUST NOT be any empty cells; missing values MUST be reported using “null” for columns where Is Nullable = “True”.\n\nEach row of the small molecule section is intended to report one final result to be communicated in terms of a molecule that has been quantified. In many cases, this may be the molecule of biological interest, although in some cases, the final result could be a derivatized form as appropriate – although it is desirable for the database identifier(s) to reference to the biological (non-derivatized) form. In general, different adduct forms would generally be reported in the Small Molecule Feature section.\n\nThe order of columns MUST follow the order specified below.\n\nAll columns are MANDATORY except for “opt_” columns.\n",
-            min_items=1,
+            min_length=1,
         ),
     ]
     smallMoleculeFeature: Annotated[

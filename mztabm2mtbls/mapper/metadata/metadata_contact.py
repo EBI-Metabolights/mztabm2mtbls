@@ -8,25 +8,24 @@ from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataContactMapper(BaseMapper):
-
-    def update(self, mztab_model: MzTab , mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
         if not mztab_model.metadata.contact:
             return
         id_comment = Comment(
-                name="mztab:metadata:contact:id",
-                value=[],
+            name="mztab:metadata:contact:id",
+            value=[],
         )
         orcid_comment = Comment(
-                name="mztab:metadata:contact:orcid",
-                value=[],
+            name="mztab:metadata:contact:orcid",
+            value=[],
         )
-        
+
         comments = mtbls_model.investigation.studies[0].study_contacts.comments
         comments.append(id_comment)
         for contact in mztab_model.metadata.contact:
-            first_name=""
-            mid_initials=""
-            last_name=""
+            first_name = ""
+            mid_initials = ""
+            last_name = ""
             if contact.name:
                 name_parts = sanitise_data(contact.name).strip().split(" ")
                 if len(name_parts) == 1:
@@ -35,20 +34,24 @@ class MetadataContactMapper(BaseMapper):
                     first_name, last_name = name_parts
                 else:
                     first_name = name_parts[0]
-                    mid_initials = " ".join(name_parts[1:len(name_parts)-2])
+                    mid_initials = " ".join(name_parts[1 : len(name_parts) - 2])
                     last_name = name_parts[-1]
             person = Person(
-                    first_name=first_name,
-                    mid_initials=mid_initials,
-                    last_name=last_name,
-                    email=contact.email,
-                    affiliation=contact.affiliation,
+                first_name=first_name,
+                mid_initials=mid_initials,
+                last_name=last_name,
+                email=contact.email,
+                affiliation=contact.affiliation,
             )
             mtbls_contacts = mtbls_model.investigation.studies[0].study_contacts.people
             mtbls_contacts.append(person)
-            id_comment.value.append(sanitise_data(contact.id) if sanitise_data(contact.id) else "")
-            orcid_comment.value.append(sanitise_data(contact.orcid) if sanitise_data(contact.orcid) else "")
-        
+            id_comment.value.append(
+                sanitise_data(contact.id) if sanitise_data(contact.id) else ""
+            )
+            orcid_comment.value.append(
+                sanitise_data(contact.orcid) if sanitise_data(contact.orcid) else ""
+            )
+
         if [x for x in orcid_comment.value if x]:
             comments.append(orcid_comment)
         # mtbls_model.investigation.studies[0].study_contacts.comments.append(id_comment)

@@ -86,25 +86,25 @@ graph TD
 ### Run converter for example file
 
 ```bash
-python3 mztabm2mtbls/converter.py
+python3 mztabm2mtbls/converter.py --input-file submission_validation_test/MTBLS263/MTBLS263.mztab --mtbls_accession_number MTBLS100001
 ```
 
 ### Run converter without remote validation
 
 ```bash
-python3 validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False
+python3 commandsvalidate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False
 ```
 
 ### Run converter with remote validation
 
 ```bash
-python3 validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True
+python3 commands/validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True
 ```
 
 ### Run converter with mapping file
 
 ```bash
-python3 validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mztabm_mapping_file /home/nilshoffmann/Projects/github.com/HUPO-PSI/mztab/specification_document-releases/2_0-Metabolomics-Release/mzTab_2_0-M_mapping.xml
+python3 commands/validate_local_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mztabm_mapping_file submission_validation_test/mzTab_2_0-M_mapping.xml
 ```
 
 ### Setting the validation level for the mzTab-M validation

@@ -11,6 +11,7 @@
             "program": "${workspaceFolder}/mztabm2mtbls/converter.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
+            "args": ["--input-file=submission_validation_test/MTBLS263/MTBLS263.mztab"],
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             },

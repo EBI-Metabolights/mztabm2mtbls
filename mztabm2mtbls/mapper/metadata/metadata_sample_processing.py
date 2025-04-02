@@ -1,14 +1,12 @@
-from metabolights_utils.models.isa.investigation_file import (
-    OntologyAnnotation)
+from metabolights_utils.models.isa.investigation_file import OntologyAnnotation
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.utils import (copy_parameter)
+from mztabm2mtbls.mapper.utils import copy_parameter
 from mztabm2mtbls.mztab2 import MzTab
 
 
 class MetadataSampleProcessingMapper(BaseMapper):
-
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
 

@@ -1,22 +1,10 @@
 import json
 import os
 import subprocess
-import sys
 from typing import List
 import hashlib
 
 import click
-from metabolights_utils import IsaTableFileReaderResult
-from metabolights_utils.isatab import Reader, Writer
-from metabolights_utils.models.isa.assay_file import AssayFile
-from metabolights_utils.models.isa.assignment_file import AssignmentFile
-from metabolights_utils.models.isa.investigation_file import (
-    Assay, BaseSection, Factor, Investigation, InvestigationContacts,
-    InvestigationPublications, OntologyAnnotation, OntologySourceReference,
-    OntologySourceReferences, Person, Protocol, Publication, Study,
-    StudyAssays, StudyContacts, StudyFactors, StudyProtocols,
-    StudyPublications, ValueTypeAnnotation)
-from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls import utils
@@ -25,44 +13,42 @@ from mztabm2mtbls.mapper.metadata.metadata_assay import MetadataAssayMapper
 from mztabm2mtbls.mapper.metadata.metadata_base import MetadataBaseMapper
 from mztabm2mtbls.mapper.metadata.metadata_contact import MetadataContactMapper
 from mztabm2mtbls.mapper.metadata.metadata_cv import MetadataCvMapper
-from mztabm2mtbls.mapper.metadata.metadata_database import \
-    MetadataDatabaseMapper
-from mztabm2mtbls.mapper.metadata.metadata_publication import \
-    MetadataPublicationMapper
+from mztabm2mtbls.mapper.metadata.metadata_database import MetadataDatabaseMapper
+from mztabm2mtbls.mapper.metadata.metadata_publication import MetadataPublicationMapper
 from mztabm2mtbls.mapper.metadata.metadata_sample import MetadataSampleMapper
-from mztabm2mtbls.mapper.metadata.metadata_sample_processing import \
-    MetadataSampleProcessingMapper
-from mztabm2mtbls.mapper.metadata.metadata_software import \
-    MetadataSoftwareMapper
-from mztabm2mtbls.mapper.summary.small_molecule_summary import \
-    SmallMoleculeSummaryMapper
+from mztabm2mtbls.mapper.metadata.metadata_sample_processing import (
+    MetadataSampleProcessingMapper,
+)
+from mztabm2mtbls.mapper.metadata.metadata_software import MetadataSoftwareMapper
+from mztabm2mtbls.mapper.summary.small_molecule_summary import (
+    SmallMoleculeSummaryMapper,
+)
 from mztabm2mtbls.mztab2 import MzTab
+
 
 # run the actual conversion process as a shell command, calling the jmztab-m docker container
 def run_jmztabm_docker(
-        container_engine: str = "docker",
-        mztab2m_json_convertor_image: str = "quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
-        dirname: str = ".",
-        filename: str = None,
-        # Info, Warn or Error
-        mztabm_validation_level: str = "Info",
-        mztabm_mapping_file: str = None
+    container_engine: str = "docker",
+    mztab2m_json_convertor_image: str = "quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
+    dirname: str = ".",
+    filename: str = None,
+    # Info, Warn or Error
+    mztabm_validation_level: str = "Info",
+    mztabm_mapping_file: str = None,
 ):
     task = None
-    local_command = [
-        f"{container_engine}",
-        "run",
-        "--rm"
-    ]
-    docker_volume_mounts = [
-        "-v",
-        f"{dirname}:/home/data"
-    ]
+    local_command = [f"{container_engine}", "run", "--rm"]
+    docker_volume_mounts = ["-v", f"{dirname}:/home/data"]
     if mztabm_mapping_file:
         abs_mztabm_mapping_file = os.path.realpath(mztabm_mapping_file)
         abs_mztabm_mapping_file_dir = os.path.dirname(abs_mztabm_mapping_file)
         mztabm_mapping_filename = os.path.basename(abs_mztabm_mapping_file)
-        docker_volume_mounts.extend(["-v", f"{abs_mztabm_mapping_file_dir}/{mztabm_mapping_filename}:/home/data/{mztabm_mapping_filename}"])
+        docker_volume_mounts.extend(
+            [
+                "-v",
+                f"{abs_mztabm_mapping_file_dir}/{mztabm_mapping_filename}:/home/data/{mztabm_mapping_filename}",
+            ]
+        )
     local_command.extend(docker_volume_mounts)
     jmztab_m_command = [
         "--workdir=/home/data",
@@ -74,7 +60,7 @@ def run_jmztabm_docker(
         "-o",
         f"/home/data/{filename}.validation.txt",
         "-l",
-        f"{mztabm_validation_level}"
+        f"{mztabm_validation_level}",
     ]
     if mztabm_mapping_file:
         jmztab_m_command.extend(["-s", f"/home/data/{mztabm_mapping_filename}"])
@@ -82,8 +68,7 @@ def run_jmztabm_docker(
     print(f"Running command: {' '.join(local_command)}")
     try:
         task = subprocess.run(
-            local_command,
-            capture_output=True, text=True, check=True, timeout=120
+            local_command, capture_output=True, text=True, check=True, timeout=120
         )
         if task.returncode != 0:
             print("The conversion of the mzTab file to mzTab json format failed.")
@@ -111,11 +96,12 @@ def run_jmztabm_docker(
         if task and task.stdout:
             print(task.stdout)
 
+
 @click.command()
 @click.option(
     "--input-file",
     help="The mzTab-M file in .mzTab or .json format to convert.",
-    type=click.Path(exists=True)
+    type=click.Path(exists=True),
 )
 @click.option(
     "--output_dir", default="output", help="The directory to save the converted files."
@@ -135,9 +121,9 @@ def run_jmztabm_docker(
     "--override_mztab2m_json_file",
     is_flag=False,
     default=False,
-    help="If input file is mzTab-M file with extension .mzTab or .txt" 
-        " and there is a mzTab-M json formatted version of the same file on same directory,"
-        " overrides the current json file.",
+    help="If input file is mzTab-M file with extension .mzTab or .txt"
+    " and there is a mzTab-M json formatted version of the same file on same directory,"
+    " overrides the current json file.",
 )
 @click.option(
     "--mztabm_validation_level",
@@ -147,7 +133,7 @@ def run_jmztabm_docker(
 @click.option(
     "--mztabm_mapping_file",
     help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
-    type=click.Path(exists=True)
+    type=click.Path(exists=True),
 )
 def convert(
     input_file: str,
@@ -158,7 +144,7 @@ def convert(
     override_mztab2m_json_file: str,
     # Info, Warn or Error
     mztabm_validation_level: str = "Info",
-    mztabm_mapping_file: str = None
+    mztabm_mapping_file: str = None,
 ):
     # check that input_file is not None and not ""
     if input_file is None or input_file == "":
@@ -170,14 +156,14 @@ def convert(
     # print disclaimer that we currently do not fully validate neither the mzTab-M file, nor the ISA-Tab files
     print(
         "Please note that the mzTab-M file is not fully validated by this tool.",
-        "The ISA-Tab files are not validated either at the moment."
+        "The ISA-Tab files are not validated either at the moment.",
     )
 
     _, extension = os.path.splitext(input_file)
     mztab_sourcefile_location = input_file
-    with open(input_file, 'rb', buffering=0) as f:
-        mztab_sourcefile_sha256 = hashlib.file_digest(f, 'sha256').hexdigest()
-    
+    with open(input_file, "rb", buffering=0) as f:
+        mztab_sourcefile_sha256 = hashlib.file_digest(f, "sha256").hexdigest()
+
     print(f"SHA256 digest for {input_file} = {mztab_sourcefile_sha256}")
 
     if extension.lower() != ".json":
@@ -190,10 +176,10 @@ def convert(
             filename = os.path.basename(abs_path)
             # if mapping_file:
             #     abs_mapping_file = os.path.realpath(mapping_file)
-            
+
             print(
                 "Converting mzTab file to mzTab json format.",
-                "Please check container management tool (docker, podman, etc.) is installed and runnig."
+                "Please check container management tool (docker, podman, etc.) is installed and runnig.",
             )
             jmztabm_success = run_jmztabm_docker(
                 container_engine=container_engine,
@@ -201,14 +187,18 @@ def convert(
                 dirname=dirname,
                 filename=filename,
                 mztabm_validation_level=mztabm_validation_level,
-                mztabm_mapping_file=mztabm_mapping_file
+                mztabm_mapping_file=mztabm_mapping_file,
             )
             if jmztabm_success:
-                print(f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' was successful!")
+                print(
+                    f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' was successful!"
+                )
             else:
-                print(f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' failed. Please check the logs for further details!")
+                print(
+                    f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' failed. Please check the logs for further details!"
+                )
                 return False
-    
+
     with open(input_json_file) as f:
         mztab_json_data = json.load(f)
     utils.replace_null_string_with_none(mztab_json_data)
@@ -220,8 +210,8 @@ def convert(
 
     mappers: List[BaseMapper] = [
         MetadataBaseMapper(
-            mztab_sourcefile_location=mztab_sourcefile_location, 
-            mztab_sourcefile_hash=mztab_sourcefile_sha256
+            mztab_sourcefile_location=mztab_sourcefile_location,
+            mztab_sourcefile_hash=mztab_sourcefile_sha256,
         ),
         MetadataContactMapper(),
         MetadataPublicationMapper(),
@@ -241,6 +231,7 @@ def convert(
         mtbls_model, output_dir=study_metadata_output_path
     )
     return True
+
 
 if __name__ == "__main__":
     convert()

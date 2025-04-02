@@ -1,24 +1,24 @@
 from typing import Any, Dict, Set
 
-from metabolights_utils.models.isa.investigation_file import (
-    Factor, OntologyAnnotation)
+from metabolights_utils.models.isa.investigation_file import Factor, OntologyAnnotation
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.map_model import FieldMapDescription
-from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
-                                       add_isa_table_single_column, copy_parameter,
-                                       find_first_header_column_index,
-                                       update_isa_table_row)
+from mztabm2mtbls.mapper.utils import (
+    add_isa_table_ontology_columns,
+    add_isa_table_single_column,
+    copy_parameter,
+    find_first_header_column_index,
+    update_isa_table_row,
+)
 from mztabm2mtbls.mztab2 import MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataSampleMapper(BaseMapper):
-
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
-
         study = mtbls_model.investigation.studies[0]
         samples_file: SamplesFile = mtbls_model.samples[list(mtbls_model.samples)[0]]
 
@@ -154,12 +154,12 @@ class MetadataSampleMapper(BaseMapper):
 
         for header in samples_file.table.headers:
             if header.column_header in selected_column_headers:
-                selected_column_headers[header.column_header].target_column_index = (
-                    header.column_index
-                )
-                selected_column_headers[header.column_header].target_column_name = (
-                    header.column_name
-                )
+                selected_column_headers[
+                    header.column_header
+                ].target_column_index = header.column_index
+                selected_column_headers[
+                    header.column_header
+                ].target_column_name = header.column_name
 
         sample_count = len(mztab_model.metadata.sample)
         # create empty sample rows
@@ -193,8 +193,8 @@ class MetadataSampleMapper(BaseMapper):
                         val = sanitise_data(factor_tuple[3])
                         if val:
                             if samples_file.table.data[column_name][row_idx]:
-                                samples_file.table.data[column_name][
-                                    row_idx
-                                ] += f";{val}"
+                                samples_file.table.data[column_name][row_idx] += (
+                                    f";{val}"
+                                )
                             else:
                                 samples_file.table.data[column_name][row_idx] = val

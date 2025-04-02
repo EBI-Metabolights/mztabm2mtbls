@@ -1,23 +1,30 @@
 import datetime
 import os
 import re
-from typing import Any, Union
+from typing import Any, Dict, Union
 
-from metabolights_utils import Comment, IsaTableFileReaderResult
 from metabolights_utils.isatab import Reader, Writer
+from metabolights_utils.isatab.reader import IsaTableFileReaderResult
+
+from metabolights_utils.models.isa.common import Comment, IsaTableFile
+
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
 from metabolights_utils.models.isa.investigation_file import (
-    Assay, Investigation, OntologyAnnotation, OntologySourceReference,
-    Protocol, Study)
+    Assay,
+    Investigation,
+    OntologyAnnotation,
+    OntologySourceReference,
+    Protocol,
+    Study,
+)
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mztab2 import MzTabBaseModel
 
 
-
-def sanitise_data(value: Union[None, Any]):
+def sanitise_data(value: Union[None, Any]) -> Union[str, list[str]]:
     if isinstance(value, list):
         for idx, val in enumerate(value):
             value[idx] = sanitise_single_value(val)
@@ -25,7 +32,7 @@ def sanitise_data(value: Union[None, Any]):
     return sanitise_single_value(value)
 
 
-def sanitise_single_value(value: Union[None, Any]):
+def sanitise_single_value(value: Union[None, Any]) -> str:
     if value is None:
         return ""
     return str(value).replace("\n", " ").replace("\r", " ").replace("\t", " ").strip()
@@ -40,6 +47,7 @@ def get_ontology_source_comment(investigation: Investigation, name: str):
         id_comment = Comment(name=name)
     comments.append(id_comment)
     return id_comment
+
 
 def replace_null_string_with_none(obj):
     if isinstance(obj, dict):
@@ -56,8 +64,7 @@ def replace_null_string_with_none(obj):
                 replace_null_string_with_none(item)
 
 
-def create_metabolights_study_model(study_id: str="MTBLS") -> MetabolightsStudyModel:
-
+def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStudyModel:
     submisstion_date = datetime.datetime.now().strftime("%Y-%m-%d")
     public_release_date = submisstion_date
 
@@ -87,7 +94,9 @@ def create_metabolights_study_model(study_id: str="MTBLS") -> MetabolightsStudyM
     result: IsaTableFileReaderResult = reader.read(
         "resources/m_MTBLS_metabolite_profiling_v2_maf.tsv", offset=0, limit=10000
     )
-    mtbls_model.metabolite_assignments[f"m_{study_id}_metabolite_profiling_v2_maf.tsv"] = result.isa_table_file
+    mtbls_model.metabolite_assignments[
+        f"m_{study_id}_metabolite_profiling_v2_maf.tsv"
+    ] = result.isa_table_file
     result.isa_table_file.file_path = f"m_{study_id}_metabolite_profiling_v2_maf.tsv"
     # Create an assay file from template and update i_Investigation.txt file
     reader = Reader.get_assay_file_reader(results_per_page=10000)
@@ -121,8 +130,10 @@ def create_metabolights_study_model(study_id: str="MTBLS") -> MetabolightsStudyM
             source_description="Ontology for Biomedical Investigations",
         )
     )
-    
-    id_comment = get_ontology_source_comment(mtbls_model.investigation, "mztab.metadata.cv:id")
+
+    id_comment = get_ontology_source_comment(
+        mtbls_model.investigation, "mztab.metadata.cv:id"
+    )
     id_comment.value.append("")
     # Create initial protocols for MS
     create_initial_protocols(mtbls_model)
@@ -155,9 +166,9 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel):
     )
     study.study_protocols.protocols.append(Protocol(name="Data transformation"))
     study.study_protocols.protocols.append(Protocol(name="Metabolite identification"))
-    
-def modify_mztab_model(model: MzTabBaseModel):
 
+
+def modify_mztab_model(model: MzTabBaseModel):
     for field_name, field_value in model:
         field_type = model.__annotations__[field_name]
         pattern = r"Annotated\[.*List\[.*\],(.*)]"
@@ -170,7 +181,8 @@ def modify_mztab_model(model: MzTabBaseModel):
             for item in field_value:
                 if isinstance(item, MzTabBaseModel):
                     modify_mztab_model(item)
-                    
+
+
 def save_metabolights_study_model(
     mtbls_model: MetabolightsStudyModel, output_dir: str = "output"
 ):
@@ -178,29 +190,30 @@ def save_metabolights_study_model(
     Writer.get_investigation_file_writer().write(
         mtbls_model.investigation,
         f"{output_dir}/i_Investigation.txt",
-        values_in_quotation_mark=True,
+        values_in_quotation_mark=False,
     )
 
     samples_file: SamplesFile = mtbls_model.samples[list(mtbls_model.samples)[0]]
-    dump_isa_table(samples_file, f"{output_dir}/{samples_file.file_path}")
-
+    dump_isa_table(samples_file, f"{output_dir}/{samples_file.file_path}", values_in_quotation_mark=False)
 
     assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
-    dump_isa_table(assay_file, f"{output_dir}/{assay_file.file_path}")
-    
-    assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[list(mtbls_model.metabolite_assignments)[0]]
-    dump_isa_table(assignment_file, f"{output_dir}/{assignment_file.file_path}")
+    dump_isa_table(assay_file, f"{output_dir}/{assay_file.file_path}", values_in_quotation_mark=False)
+
+    assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[
+        list(mtbls_model.metabolite_assignments)[0]
+    ]
+    dump_isa_table(assignment_file, f"{output_dir}/{assignment_file.file_path}", values_in_quotation_mark=False)
 
 
 def dump_isa_table(
-    samples_file: SamplesFile, file_path: str, values_in_quotation_mark=True
+    isa_table_file: IsaTableFile, file_path: str, values_in_quotation_mark=True
 ):
     # log to which file we are writing
     print(f"Writing to {file_path}")
     column_order_map = {}
     column_header_map = {}
-    data = samples_file.table.data
-    for column_model in samples_file.table.headers:
+    data = isa_table_file.table.data
+    for column_model in isa_table_file.table.headers:
         column_order_map[column_model.column_index] = column_model.column_name
         column_header_map[column_model.column_index] = column_model.column_header
 
@@ -220,7 +233,7 @@ def dump_isa_table(
         for row_idx in range(len(data[column_names[0]])):
             row = [data[column_name][row_idx] for column_name in column_names]
             for idx, cell in enumerate(row):
-                cell = sanitise_data(cell) if row[idx] else ""
+                cell = sanitise_single_value(cell) if row[idx] else ""
                 if values_in_quotation_mark:
                     cell = f'"{cell}"'
                 else:

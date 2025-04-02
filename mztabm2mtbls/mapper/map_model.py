@@ -1,4 +1,3 @@
-
 from typing import List, Literal, Union
 
 from pydantic import BaseModel
@@ -13,12 +12,13 @@ class FieldMapDescription(BaseModel):
     map_from: Literal["name", "value"] = "name"
     join_operator: str = ";"
 
+
 class ProtocoSectionDefinition(BaseModel):
     section_name: str = ""
     column_index: int = -1
     column_name: str = ""
 
-    
+
 class AssaySheetMapFields(BaseModel):
     assay_id: str = ""
     assay_name: str = ""

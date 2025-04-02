@@ -9,7 +9,6 @@ from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataBaseMapper(BaseMapper):
-
     # create constructor with argument mztab_sourcefile_location
     def __init__(self, mztab_sourcefile_location: str, mztab_sourcefile_hash: str):
         self.mztab_sourcefile_location = mztab_sourcefile_location
@@ -22,14 +21,22 @@ class MetadataBaseMapper(BaseMapper):
         comments.append(
             Comment(
                 name="mztab:source_file:location",
-                value=[sanitise_data(self.mztab_sourcefile_location) if self.mztab_sourcefile_location else ""],
+                value=[
+                    sanitise_data(self.mztab_sourcefile_location)
+                    if self.mztab_sourcefile_location
+                    else ""
+                ],
             )
         )
 
         comments.append(
             Comment(
                 name="mztab:source_file:hash:sha256",
-                value=[sanitise_data(self.mztab_sourcefile_hash) if self.mztab_sourcefile_hash else ""],
+                value=[
+                    sanitise_data(self.mztab_sourcefile_hash)
+                    if self.mztab_sourcefile_hash
+                    else ""
+                ],
             )
         )
 
@@ -76,8 +83,8 @@ class MetadataBaseMapper(BaseMapper):
                 )
             )
         descriptor_source_comment = Comment(
-                name="mztab:source_field",
-                value=[],
+            name="mztab:source_field",
+            value=[],
         )
         study.study_design_descriptors.comments.append(descriptor_source_comment)
         if (
@@ -91,5 +98,6 @@ class MetadataBaseMapper(BaseMapper):
                 term_accession_number=item.cv_accession,
             )
             study.study_design_descriptors.design_types.append(quantification_method)
-            descriptor_source_comment.value.append("mztab:metadata:quantification_method")
-        
+            descriptor_source_comment.value.append(
+                "mztab:metadata:quantification_method"
+            )

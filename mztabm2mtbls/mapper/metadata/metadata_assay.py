@@ -2,27 +2,33 @@ import os
 import re
 from typing import List
 
-from metabolights_utils import (AssayFile, AssignmentFile)
+from metabolights_utils.models.isa.assay_file import AssayFile
+from metabolights_utils.models.isa.assignment_file import AssignmentFile
+
 from metabolights_utils.models.isa.investigation_file import (
-    OntologyAnnotation, Protocol)
+    OntologyAnnotation,
+    Protocol,
+)
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mapper.map_model import (AssaySheetMapFields,
-                                           FieldMapDescription)
-from mztabm2mtbls.mapper.utils import (add_isa_table_ontology_columns,
-                                       add_isa_table_single_column,
-                                       copy_parameter,
-                                       find_first_header_column_index,
-                                       get_protocol_sections,
-                                       update_isa_table_row)
+from mztabm2mtbls.mapper.map_model import AssaySheetMapFields, FieldMapDescription
+from mztabm2mtbls.mapper.utils import (
+    add_isa_table_ontology_columns,
+    add_isa_table_single_column,
+    copy_parameter,
+    find_first_header_column_index,
+    get_protocol_sections,
+    update_isa_table_row,
+)
 from mztabm2mtbls.mztab2 import Instrument, MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataAssayMapper(BaseMapper):
-
-    def add_protocol_parameter(self, protocols: List[Protocol], protocol_name: str, parameter_header_name: str):
+    def add_protocol_parameter(
+        self, protocols: List[Protocol], protocol_name: str, parameter_header_name: str
+    ):
         for protocol in protocols:
             if protocol.name == protocol_name:
                 parameter_name = ""
@@ -39,10 +45,12 @@ class MetadataAssayMapper(BaseMapper):
                 protocol.parameters.append(OntologyAnnotation(term=parameter_name))
                 return True, parameter_name
         return False, "Not found"
-    
+
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
         assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
-        assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[list(mtbls_model.metabolite_assignments)[0]]
+        assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[
+            list(mtbls_model.metabolite_assignments)[0]
+        ]
         assignment_filename = assignment_file.file_path
         ##################################################################################
         # DEFINE SAMPLE SHEET COLUMNS
@@ -107,7 +115,9 @@ class MetadataAssayMapper(BaseMapper):
                 "Parameter Value[Detector]",
                 new_column_index=mass_analyzer_column_header.column_index + 3,
             )
-            self.add_protocol_parameter(protocols, "Mass spectrometry", "Parameter Value[Detector]")
+            self.add_protocol_parameter(
+                protocols, "Mass spectrometry", "Parameter Value[Detector]"
+            )
 
         normalization_header = find_first_header_column_index(
             assay_file, "Normalization Name"
@@ -141,7 +151,7 @@ class MetadataAssayMapper(BaseMapper):
                     )
                     new_column_index += 1
                 self.add_protocol_parameter(protocols, "Data transformation", header[0])
-                
+
         ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
         samples_map = {x.id: x for x in mztab_model.metadata.sample}
         instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
@@ -170,7 +180,8 @@ class MetadataAssayMapper(BaseMapper):
         }
 
         ms_run_field_maps = {
-            x: FieldMapDescription(field_name=ms_run_default_field_maps[x]) for x in ms_run_default_field_maps
+            x: FieldMapDescription(field_name=ms_run_default_field_maps[x])
+            for x in ms_run_default_field_maps
         }
         ms_run_field_maps.update(
             {
@@ -182,9 +193,12 @@ class MetadataAssayMapper(BaseMapper):
 
         for header in assay_file.table.headers:
             if header.column_header in ms_run_field_maps:
-                ms_run_field_maps[header.column_header].target_column_index = header.column_index
-                ms_run_field_maps[header.column_header].target_column_name = header.column_name
-                
+                ms_run_field_maps[
+                    header.column_header
+                ].target_column_index = header.column_index
+                ms_run_field_maps[
+                    header.column_header
+                ].target_column_name = header.column_name
 
         #################################################################################################
         # Populate assay sheet rows with default values
@@ -288,7 +302,7 @@ class MetadataAssayMapper(BaseMapper):
                         instrument_source=instrument_source,
                         instrument_analyzer=instrument_analyzer,
                         instrument_detector=instrument_detector,
-                        assignment_filename=assignment_filename
+                        assignment_filename=assignment_filename,
                     )
 
                     update_isa_table_row(

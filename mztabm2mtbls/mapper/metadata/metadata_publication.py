@@ -1,7 +1,9 @@
 from metabolights_utils.models.isa.common import Comment
 from metabolights_utils.models.isa.investigation_file import (
-    OntologyAnnotation, OntologySourceReference,
-    Publication)
+    OntologyAnnotation,
+    OntologySourceReference,
+    Publication,
+)
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
@@ -10,7 +12,6 @@ from mztabm2mtbls.utils import get_ontology_source_comment, sanitise_data
 
 
 class MetadataPublicationMapper(BaseMapper):
-
     def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
         if not mztab_model.metadata.publication:
             return
@@ -24,7 +25,7 @@ class MetadataPublicationMapper(BaseMapper):
         )
         comments = mtbls_model.investigation.studies[0].study_publications.comments
         comments.append(id_comment)
-        
+
         status_updated = False
         for mztab_publication in mztab_model.metadata.publication:
             doi = ""
@@ -61,10 +62,10 @@ class MetadataPublicationMapper(BaseMapper):
                 if sanitise_data(mztab_publication.id)
                 else ""
             )
-        
+
         if [x for x in uri_comment.value if x]:
             comments.append(uri_comment)
-        
+
         if status_updated:
             references = mtbls_model.investigation.ontology_source_references.references
             sources = [x for x in references if x.source_name == "EFO"]
