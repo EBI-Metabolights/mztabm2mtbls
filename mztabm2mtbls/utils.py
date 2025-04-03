@@ -99,7 +99,7 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
     # Create an assay file from template and update i_Investigation.txt file
     reader = Reader.get_assay_file_reader(results_per_page=10000)
     result: IsaTableFileReaderResult = reader.read(
-        "resources/a_MTBLS_metabolite_profiling.txt", offset=0, limit=10000
+        "resources/a_template_MS-phase_metabolite_profiling.txt", offset=0, limit=10000
     )
     mtbls_model.assays[f"a_{study_id}_metabolite_profiling.txt"] = result.isa_table_file
     result.isa_table_file.file_path = f"a_{study_id}_metabolite_profiling.txt"
@@ -140,19 +140,31 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
 
 def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
     study = mtbls_model.investigation.studies[0]
-    study.study_protocols.protocols.append(Protocol(name="Sample collection"))
+    study.study_protocols.protocols.append(Protocol(name="Sample collection", 
+            protocol_type=OntologyAnnotation(term="Sample collection"),))
     study.study_protocols.protocols.append(
         Protocol(
             name="Extraction",
+            protocol_type=OntologyAnnotation(term="Extraction"),
             parameters=[
                 OntologyAnnotation(term="Post Extraction"),
                 OntologyAnnotation(term="Derivatization"),
             ],
         )
     )
+    # study.study_protocols.protocols.append(
+    #     Protocol(
+    #         name="Direct infusion",
+    #         protocol_type=OntologyAnnotation(term="Direct infusion"),
+    #         parameters=[
+    #             OntologyAnnotation(term="DI Instrument"),
+    #         ]
+    #     )
+    # )
     study.study_protocols.protocols.append(
         Protocol(
             name="Mass spectrometry",
+            protocol_type=OntologyAnnotation(term="Mass spectrometry"),
             parameters=[
                 OntologyAnnotation(term="Scan polarity"),
                 OntologyAnnotation(term="Scan m/z range"),
@@ -162,8 +174,8 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
             ]
         )
     )
-    study.study_protocols.protocols.append(Protocol(name="Data transformation"))
-    study.study_protocols.protocols.append(Protocol(name="Metabolite identification"))
+    study.study_protocols.protocols.append(Protocol(name="Data transformation", protocol_type=OntologyAnnotation(term="Data transformation")))
+    study.study_protocols.protocols.append(Protocol(name="Metabolite identification", protocol_type=OntologyAnnotation(term="Metabolite identification")))
 
 
 def modify_mztab_model(model: MzTabBaseModel):

@@ -1,102 +1,103 @@
 ONTOLOGY SOURCE REFERENCE
-Term Source Name	"OBI"	"EFO"	"MS"
-Term Source File	"http://purl.obolibrary.org/obo/obi.owl"	"http://www.ebi.ac.uk/efo/efo.owl"	"https://raw.githubusercontent.com/HUPO-PSI/psi-ms-CV/master/psi-ms.obo"
-Term Source Version	"2024-06-10"	"2018-09-08"	"4.0.9"
-Term Source Description	"Ontology for Biomedical Investigations"	"Experimental Factor Ontology"	"PSI-MS controlled vocabulary"
-Comment[mztab.metadata.cv:id]	""	"2"	"1"
+Term Source Name	OBI	EFO	MS	MSIO	CHMO
+Term Source File	http://purl.obolibrary.org/obo/obi.owl	http://www.ebi.ac.uk/efo/efo.owl	https://raw.githubusercontent.com/HUPO-PSI/psi-ms-CV/master/psi-ms.obo	http://purl.obolibrary.org/obo/msio.owl	http://purl.obolibrary.org/obo/chmo.owl
+Term Source Version	2024-06-10	2018-09-08	4.0.9	1.0	1.2
+Term Source Description	Ontology for Biomedical Investigations	Experimental Factor Ontology	PSI-MS controlled vocabulary	Metabolomics Standards Initiative Ontology	Chemical Methods Ontology
+Comment[mztab.metadata.cv:id]		2	1	3	4
 INVESTIGATION
-Investigation Identifier	"MTBLS263"
-Investigation Title	""
-Investigation Description	""
-Investigation Submission Date	"2024-11-26"
-Investigation Public Release Date	"2024-11-26"
+Investigation Identifier	MTBLS263
+Investigation Title	
+Investigation Description	
+Investigation Submission Date	2025-04-03
+Investigation Public Release Date	2025-04-03
 INVESTIGATION PUBLICATIONS
-Investigation PubMed ID	""
-Investigation Publication DOI	""
-Investigation Publication Author List	""
-Investigation Publication Title	""
-Investigation Publication Status	""
-Investigation Publication Status Term Accession Number	""
-Investigation Publication Status Term Source REF	""
+Investigation PubMed ID	
+Investigation Publication DOI	
+Investigation Publication Author List	
+Investigation Publication Title	
+Investigation Publication Status	
+Investigation Publication Status Term Accession Number	
+Investigation Publication Status Term Source REF	
 INVESTIGATION CONTACTS
-Investigation Person Last Name	""
-Investigation Person First Name	""
-Investigation Person Mid Initials	""
-Investigation Person Email	""
-Investigation Person Phone	""
-Investigation Person Fax	""
-Investigation Person Address	""
-Investigation Person Affiliation	""
-Investigation Person Roles	""
-Investigation Person Roles Term Accession Number	""
-Investigation Person Roles Term Source REF	""
+Investigation Person Last Name	
+Investigation Person First Name	
+Investigation Person Mid Initials	
+Investigation Person Email	
+Investigation Person Phone	
+Investigation Person Fax	
+Investigation Person Address	
+Investigation Person Affiliation	
+Investigation Person Roles	
+Investigation Person Roles Term Accession Number	
+Investigation Person Roles Term Source REF	
 STUDY
-Study Identifier	"MTBLS263"
-Study Title	""
-Study Description	""
-Study Submission Date	"2024-11-20"
-Study Public Release Date	"2024-11-20"
-Study File Name	"s_MTBLS263.txt"
-Comment[mztab:source_file:location]	"submission_validation_test/MTBLS263/MTBLS263.mztab"
-Comment[mztab:source_file:hash:sha256]	"2508982fe634fb923f62b0564f54ad40632ab50fce59a7e5fd1f213e4e26e231"
-Comment[mztab:metadata:mzTab_version]	"2.0.0-M"
-Comment[mztab:metadata:mzTab_ID]	"JetBike Test"
+Study Identifier	MTBLS263
+Study Title	Individual variability in human blood metabolites identifies age-related differences
+Study Description	Metabolites present in human blood document individual physiological states influenced by genetic, epigenetic, and lifestyle factors. Using high-resolution liquid chromatography-mass spectrometry (LC-MS), we performed nontargeted, quantitative metabolomics analysis in blood of 15 young (29 ± 4 y of age) and 15 elderly (81 ± 7 y of age) individuals. Coefficients of variation (CV = SD/mean) were obtained for 126 blood metabolites of all 30 donors. Fifty-five RBC-enriched metabolites, for which metabolomics studies have been scarce, are highlighted here. We found 14 blood compounds that show remarkable age-related increases or decreases; they include 1,5-anhydroglucitol, dimethyl-guanosine, acetyl-carnosine, carnosine, ophthalmic acid, UDP-acetyl-glucosamine, N-acetyl-arginine, N6-acetyl-lysine, pantothenate, citrulline, leucine, isoleucine, NAD+, and NADP+. Six of them are RBC-enriched, suggesting that RBC metabolomics is highly valuable for human aging research. Age differences are partly explained by a decrease in antioxidant production or increasing inefficiency of urea metabolism among the elderly. Pearson’s coefficients demonstrated that some age-related compounds are correlated, suggesting that aging affects them concomitantly. Although our CV values are mostly consistent with those CVs previously published, we here report previously unidentified CVs of 51 blood compounds. Compounds having moderate to high CV values (0.4–2.5) are often modified. Compounds having low CV values, such as ATP and glutathione, may be related to various diseases because their concentrations are strictly controlled, and changes in them would compromise health. Thus, human blood is a rich source of information about individual metabolic differences
+Study Submission Date	2025-04-03
+Study Public Release Date	2025-04-03
+Study File Name	s_MTBLS263.txt
+Comment[mztab:source_file:location]	submission_validation_test/MTBLS263/MTBLS263.mztab
+Comment[mztab:source_file:hash:sha256]	662ca07c1e5bec497a6f78763fd1dae93ab6abcbddbc953647346c99a56b962a
+Comment[mztab:metadata:mzTab_version]	2.0.0-M
+Comment[mztab:metadata:mzTab_ID]	JetBike Test
 STUDY DESIGN DESCRIPTORS
-Study Design Type	"LC-MS label-free quantitation analysis"
-Study Design Type Term Accession Number	"http://purl.obolibrary.org/obo/MS_1001834"
-Study Design Type Term Source REF	"MS"
-Comment[mztab:source_field]	"mztab:metadata:quantification_method"
+Study Design Type	tandem mass spectrometry	untargeted metabolite profiling	high-performance liquid chromatography-mass spectrometry	LC-MS label-free quantitation analysis
+Study Design Type Term Accession Number	EFO:0030056	MSIO:0000101	CHMO:0000796	http://purl.obolibrary.org/obo/MS_1001834
+Study Design Type Term Source REF	EFO	MSIO	CHMO	MS
+Comment[mztab:source_field]	mztab:metadata:quantification_method
 STUDY PUBLICATIONS
-Study PubMed ID	""
-Study Publication DOI	"10.1073/pnas.1603023113"
-Study Publication Author List	""
-Study Publication Title	""
-Study Publication Status	"published"
-Study Publication Status Term Accession Number	"http://www.ebi.ac.uk/efo/EFO_0001796"
-Study Publication Status Term Source REF	"EFO"
-Comment[mztab.metadata.publication:id]	"1"
+Study PubMed ID	
+Study Publication DOI	10.1073/pnas.1603023113
+Study Publication Author List	
+Study Publication Title	
+Study Publication Status	published
+Study Publication Status Term Accession Number	http://www.ebi.ac.uk/efo/EFO_0001796
+Study Publication Status Term Source REF	EFO
+Comment[mztab.metadata.publication:id]	1
 STUDY FACTORS
-Study Factor Name	""
-Study Factor Type	""
-Study Factor Type Term Accession Number	""
-Study Factor Type Term Source REF	""
+Study Factor Name	
+Study Factor Type	
+Study Factor Type Term Accession Number	
+Study Factor Type Term Source REF	
 STUDY ASSAYS
-Study Assay File Name	"a_MTBLS263_metabolite_profiling.txt"
-Study Assay Measurement Type	"metabolite profiling"
-Study Assay Measurement Type Term Accession Number	"http://purl.obolibrary.org/obo/OBI_0000366"
-Study Assay Measurement Type Term Source REF	"OBI"
-Study Assay Technology Type	"mass spectrometry assay"
-Study Assay Technology Type Term Accession Number	"http://purl.obolibrary.org/obo/OBI_0000470"
-Study Assay Technology Type Term Source REF	"OBI"
-Study Assay Technology Platform	"Mass spectrometry"
+Study Assay File Name	a_MTBLS263_metabolite_profiling.txt
+Study Assay Measurement Type	metabolite profiling
+Study Assay Measurement Type Term Accession Number	http://purl.obolibrary.org/obo/OBI_0000366
+Study Assay Measurement Type Term Source REF	OBI
+Study Assay Technology Type	mass spectrometry assay
+Study Assay Technology Type Term Accession Number	http://purl.obolibrary.org/obo/OBI_0000470
+Study Assay Technology Type Term Source REF	OBI
+Study Assay Technology Platform	Mass spectrometry
 STUDY PROTOCOLS
-Study Protocol Name	"Sample collection"	"Extraction"	"Mass spectrometry"	"Data transformation"	"Metabolite identification"
-Study Protocol Type	""	""	""	""	""
-Study Protocol Type Term Accession Number	""	""	""	""	""
-Study Protocol Type Term Source REF	""	""	""	""	""
-Study Protocol Description	""	""	""	""	""
-Study Protocol URI	""	""	""	""	""
-Study Protocol Version	""	""	""	""	""
-Study Protocol Parameters Name	""	"Post Extraction;Derivatization"	"Scan polarity;Scan m/z range;Instrument;Ion source;Mass analyzer"	"Native spectrum identifier format;Raw data file format"	""
-Study Protocol Parameters Name Term Accession Number	""	";"	";;;;"	";"	""
-Study Protocol Parameters Name Term Source REF	""	";"	";;;;"	";"	""
-Study Protocol Components Name	""	""	""	"mztab.metadata.software.id=1"	"mztab.metadata.database.id=1;mztab.metadata.database.id=2"
-Study Protocol Components Type	""	""	""	"Progenesis QI"	"no database;Local CHEBI copy"
-Study Protocol Components Type Term Accession Number	""	""	""	"http://purl.obolibrary.org/obo/MS_1002879"	";"
-Study Protocol Components Type Term Source REF	""	""	""	"MS"	";"
-Comment[mztab.metadata.software:setting]	"mztab.metadata.software.id=1: {}"
-Comment[mztab.metadata.database:prefix]	"mztab.metadata.database.id=1: {}"	"mztab.metadata.database.id=2: { CHEBI }"
-Comment[mztab.metadata.database:version]	"mztab.metadata.database.id=1: { Unknown }"	"mztab.metadata.database.id=2: { Unknown }"
-Comment[mztab.metadata.database:uri]	"mztab.metadata.database.id=1: {}"	"mztab.metadata.database.id=2: { file:///E:/Projects/MTBLS263/MTLBS263.sdf }"
+Study Protocol Name	Sample collection	Extraction	Mass spectrometry	Data transformation	Metabolite identification
+Study Protocol Type	Sample collection	Extraction	Mass spectrometry	Data transformation	Metabolite identification
+Study Protocol Type Term Accession Number					
+Study Protocol Type Term Source REF					
+Study Protocol Description	Species: . Homo sapiens. Organism parts:. blood		Mass spectrometry instruments: . LTQ Orbitrap. analyzers:. orbitrap. sources:. ESI	Data transformation software List: Progenesis QI	Databases: no database, Local CHEBI copy
+Study Protocol URI					
+Study Protocol Version					
+Study Protocol Parameters Name		Post Extraction;Derivatization	Scan polarity;Scan m/z range;Instrument;Ion source;Mass analyzer	Native spectrum identifier format;Raw data file format	
+Study Protocol Parameters Name Term Accession Number		;	;;;;	;	
+Study Protocol Parameters Name Term Source REF		;	;;;;	;	
+Study Protocol Components Name				mztab.metadata.software.id=1	mztab.metadata.database.id=1;mztab.metadata.database.id=2
+Study Protocol Components Type				Progenesis QI	no database;Local CHEBI copy
+Study Protocol Components Type Term Accession Number				http://purl.obolibrary.org/obo/MS_1002879	;
+Study Protocol Components Type Term Source REF				MS	;
+Comment[mztab.metadata.software:setting]	mztab.metadata.software.id=1: {}
+Comment[mztab.metadata.database:prefix]	mztab.metadata.database.id=1: {}	mztab.metadata.database.id=2: { CHEBI }
+Comment[mztab.metadata.database:version]	mztab.metadata.database.id=1: { Unknown }	mztab.metadata.database.id=2: { Unknown }
+Comment[mztab.metadata.database:uri]	mztab.metadata.database.id=1: {}	mztab.metadata.database.id=2: { file:///E:/Projects/MTBLS263/MTLBS263.sdf }
 STUDY CONTACTS
-Study Person Last Name	""
-Study Person First Name	""
-Study Person Mid Initials	""
-Study Person Email	""
-Study Person Phone	""
-Study Person Fax	""
-Study Person Address	""
-Study Person Affiliation	""
-Study Person Roles	""
-Study Person Roles Term Accession Number	""
-Study Person Roles Term Source REF	""
+Study Person Last Name	Chaleckis
+Study Person First Name	Romanas
+Study Person Mid Initials	
+Study Person Email	romanas.chaleckis@gmail.com
+Study Person Phone	
+Study Person Fax	
+Study Person Address	
+Study Person Affiliation	Okinawa Institute of Science and Technology Graduate University
+Study Person Roles	
+Study Person Roles Term Accession Number	
+Study Person Roles Term Source REF	
+Comment[mztab:metadata:contact:id]	1

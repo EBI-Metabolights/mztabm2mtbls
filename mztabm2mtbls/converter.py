@@ -1,8 +1,8 @@
-import hashlib
 import json
 import os
 import subprocess
 from typing import List
+import hashlib
 
 import click
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
@@ -197,7 +197,7 @@ def convert(
                 print(
                     f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' failed. Please check the logs for further details!"
                 )
-                return False
+                # return False
 
     with open(input_json_file) as f:
         mztab_json_data = json.load(f)

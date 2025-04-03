@@ -1,4 +1,3 @@
-.DS_Store
 .mypy*
 es_study_index
 .pytest*

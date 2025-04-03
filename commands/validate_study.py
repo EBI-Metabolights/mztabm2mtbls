@@ -98,6 +98,7 @@ def convert_and_validate_submission(
         rest_api_base_url=mtbls_rest_api_base_url,
         validation_api_base_url=mtbls_validation_api_base_url,
     )
+    
     study_path = base_study_path + mtbls_provisional_study_id
     ctx = click.Context(converter.convert)
     ctx.forward(
@@ -184,8 +185,8 @@ def convert_and_validate_submission(
                 json.dump(validation_result, f, indent=2)
             violation_results = OpaValidationResult.model_validate(validation_result)
             errors = [x for x in violation_results.violations if x.type == PolicyMessageType.ERROR]
-            for x in errors:
-                print(x.model_dump(by_alias=True))
+            for idx, x in enumerate(errors):
+                print(idx + 1, x.title, x.description, x.violation)
             if errors:
                 print(f"Number of errors: {len(errors)}. Validation results are stored on {validation_output_path}")
             else:

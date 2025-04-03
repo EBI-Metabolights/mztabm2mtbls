@@ -47,7 +47,10 @@ class MetadataBaseMapper(BaseMapper):
                 value=[sanitise_data(mztab_version) if mztab_version else ""],
             )
         )
-
+        keywords = study.study_design_descriptors.design_types
+        if mztab_model.metadata.custom:
+            for item in mztab_model.metadata.custom:
+                keywords.append(OntologyAnnotation(term=item.name, term_accession_number=item.cv_accession, term_source_ref=item.cv_label))
         mztab_id = mztab_model.metadata.mzTab_ID
         comments.append(
             Comment(
@@ -59,7 +62,7 @@ class MetadataBaseMapper(BaseMapper):
         title = mztab_model.metadata.title
         study.title = sanitise_data(title) if title else ""
         description = mztab_model.metadata.description
-        study.title = sanitise_data(description) if description else ""
+        study.description = sanitise_data(description) if description else ""
         if mztab_model.metadata.uri:
             comments.append(
                 Comment(

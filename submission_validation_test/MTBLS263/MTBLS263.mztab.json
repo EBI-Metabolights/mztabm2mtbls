@@ -3,9 +3,14 @@
     "prefix" : "MTD",
     "mzTab-version" : "2.0.0-M",
     "mzTab-ID" : "JetBike Test",
-    "title" : null,
-    "description" : null,
-    "contact" : null,
+    "title" : "Individual variability in human blood metabolites identifies age-related differences",
+    "description" : "Metabolites present in human blood document individual physiological states influenced by genetic, epigenetic, and lifestyle factors. Using high-resolution liquid chromatography-mass spectrometry (LC-MS), we performed nontargeted, quantitative metabolomics analysis in blood of 15 young (29 ± 4 y of age) and 15 elderly (81 ± 7 y of age) individuals. Coefficients of variation (CV = SD/mean) were obtained for 126 blood metabolites of all 30 donors. Fifty-five RBC-enriched metabolites, for which metabolomics studies have been scarce, are highlighted here. We found 14 blood compounds that show remarkable age-related increases or decreases; they include 1,5-anhydroglucitol, dimethyl-guanosine, acetyl-carnosine, carnosine, ophthalmic acid, UDP-acetyl-glucosamine, N-acetyl-arginine, N6-acetyl-lysine, pantothenate, citrulline, leucine, isoleucine, NAD+, and NADP+. Six of them are RBC-enriched, suggesting that RBC metabolomics is highly valuable for human aging research. Age differences are partly explained by a decrease in antioxidant production or increasing inefficiency of urea metabolism among the elderly. Pearson’s coefficients demonstrated that some age-related compounds are correlated, suggesting that aging affects them concomitantly. Although our CV values are mostly consistent with those CVs previously published, we here report previously unidentified CVs of 51 blood compounds. Compounds having moderate to high CV values (0.4–2.5) are often modified. Compounds having low CV values, such as ATP and glutathione, may be related to various diseases because their concentrations are strictly controlled, and changes in them would compromise health. Thus, human blood is a rich source of information about individual metabolic differences",
+    "contact" : [ {
+      "id" : 1,
+      "name" : "Romanas Chaleckis",
+      "affiliation" : "Okinawa Institute of Science and Technology Graduate University",
+      "email" : "romanas.chaleckis@gmail.com"
+    } ],
     "publication" : [ {
       "id" : 1,
       "publicationItems" : [ {
@@ -15,7 +20,31 @@
     } ],
     "uri" : null,
     "external_study_uri" : null,
-    "instrument" : null,
+    "instrument" : [ {
+      "id" : 1,
+      "name" : {
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1000449",
+        "name" : "LTQ Orbitrap",
+        "value" : null
+      },
+      "source" : {
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1000073",
+        "name" : "ESI",
+        "value" : null
+      },
+      "analyzer" : [ {
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1000484",
+        "name" : "orbitrap",
+        "value" : null
+      } ],
+      "detector" : null
+    } ],
     "quantification_method" : {
       "id" : null,
       "cv_label" : "MS",
@@ -27,8 +56,20 @@
       "id" : 1,
       "name" : "3injections_POS",
       "custom" : null,
-      "species" : null,
-      "tissue" : null,
+      "species" : [ {
+        "id" : null,
+        "cv_label" : "NCBITaxon",
+        "cv_accession" : "NCBITaxon:9606",
+        "name" : "Homo sapiens",
+        "value" : null
+      } ],
+      "tissue" : [ {
+        "id" : null,
+        "cv_label" : "BTO",
+        "cv_accession" : "BTO:0000089",
+        "name" : "blood",
+        "value" : null
+      } ],
       "cell_type" : null,
       "disease" : null,
       "description" : null
@@ -36,8 +77,20 @@
       "id" : 2,
       "name" : "3samples_sampl1_POS",
       "custom" : null,
-      "species" : null,
-      "tissue" : null,
+      "species" : [ {
+        "id" : null,
+        "cv_label" : "NCBITaxon",
+        "cv_accession" : "NCBITaxon:9606",
+        "name" : "Homo sapiens",
+        "value" : null
+      } ],
+      "tissue" : [ {
+        "id" : null,
+        "cv_label" : "BTO",
+        "cv_accession" : "BTO:0000089",
+        "name" : "blood",
+        "value" : null
+      } ],
       "cell_type" : null,
       "disease" : null,
       "description" : null
@@ -45,8 +98,20 @@
       "id" : 3,
       "name" : "3samples_sampl2_POS",
       "custom" : null,
-      "species" : null,
-      "tissue" : null,
+      "species" : [ {
+        "id" : null,
+        "cv_label" : "NCBITaxon",
+        "cv_accession" : "NCBITaxon:9606",
+        "name" : "Homo sapiens",
+        "value" : null
+      } ],
+      "tissue" : [ {
+        "id" : null,
+        "cv_label" : "BTO",
+        "cv_accession" : "BTO:0000089",
+        "name" : "blood",
+        "value" : null
+      } ],
       "cell_type" : null,
       "disease" : null,
       "description" : null
@@ -54,8 +119,20 @@
       "id" : 4,
       "name" : "3samples_sampl3_POS",
       "custom" : null,
-      "species" : null,
-      "tissue" : null,
+      "species" : [ {
+        "id" : null,
+        "cv_label" : "NCBITaxon",
+        "cv_accession" : "NCBITaxon:9606",
+        "name" : "Homo sapiens",
+        "value" : null
+      } ],
+      "tissue" : [ {
+        "id" : null,
+        "cv_label" : "BTO",
+        "cv_accession" : "BTO:0000089",
+        "name" : "blood",
+        "value" : null
+      } ],
       "cell_type" : null,
       "disease" : null,
       "description" : null
@@ -77,7 +154,7 @@
       "id" : 1,
       "name" : null,
       "location" : "file:///D:/Data%20Sets/Metabolomics/MTBLS263/3injections_inj1_POS.mzML",
-      "instrument_ref" : null,
+      "instrument_ref" : 1,
       "format" : {
         "id" : null,
         "cv_label" : "MS",
@@ -106,7 +183,7 @@
       "id" : 2,
       "name" : null,
       "location" : "file:///D:/Data%20Sets/Metabolomics/MTBLS263/3injections_inj2_POS.mzML",
-      "instrument_ref" : null,
+      "instrument_ref" : 1,
       "format" : {
         "id" : null,
         "cv_label" : "MS",
@@ -135,7 +212,7 @@
       "id" : 3,
       "name" : null,
       "location" : "file:///D:/Data%20Sets/Metabolomics/MTBLS263/3injections_inj3_POS.mzML",
-      "instrument_ref" : null,
+      "instrument_ref" : 1,
       "format" : {
         "id" : null,
         "cv_label" : "MS",
@@ -164,7 +241,7 @@
       "id" : 4,
       "name" : null,
       "location" : "file:///D:/Data%20Sets/Metabolomics/MTBLS263/3samples_sampl1_POS.mzML",
-      "instrument_ref" : null,
+      "instrument_ref" : 1,
       "format" : {
         "id" : null,
         "cv_label" : "MS",
@@ -193,7 +270,7 @@
       "id" : 5,
       "name" : null,
       "location" : "file:///D:/Data%20Sets/Metabolomics/MTBLS263/3samples_sampl2_POS.mzML",
-      "instrument_ref" : null,
+      "instrument_ref" : 1,
       "format" : {
         "id" : null,
         "cv_label" : "MS",
@@ -222,7 +299,7 @@
       "id" : 6,
       "name" : null,
       "location" : "file:///D:/Data%20Sets/Metabolomics/MTBLS263/3samples_sampl3_POS.mzML",
-      "instrument_ref" : null,
+      "instrument_ref" : 1,
       "format" : {
         "id" : null,
         "cv_label" : "MS",
@@ -308,7 +385,25 @@
       "description" : "Samples",
       "factors" : null
     } ],
-    "custom" : null,
+    "custom" : [ {
+      "id" : 1,
+      "cv_label" : "EFO",
+      "cv_accession" : "EFO:0030056",
+      "name" : "tandem mass spectrometry",
+      "value" : null
+    }, {
+      "id" : 2,
+      "cv_label" : "MSIO",
+      "cv_accession" : "MSIO:0000101",
+      "name" : "untargeted metabolite profiling",
+      "value" : null
+    }, {
+      "id" : 3,
+      "cv_label" : "CHMO",
+      "cv_accession" : "CHMO:0000796",
+      "name" : "high-performance liquid chromatography-mass spectrometry",
+      "value" : null
+    } ],
     "cv" : [ {
       "id" : 1,
       "label" : "MS",
@@ -321,6 +416,18 @@
       "full_name" : "Experimental Factor Ontology",
       "version" : "3.71.0",
       "uri" : "https://github.com/EBISPOT/efo/releases/download/v3.71.0/efo.obo"
+    }, {
+      "id" : 3,
+      "label" : "MSIO",
+      "full_name" : "Metabolomics Standards Initiative Ontology",
+      "version" : "1.0",
+      "uri" : "http://purl.obolibrary.org/obo/msio.owl"
+    }, {
+      "id" : 4,
+      "label" : "CHMO",
+      "full_name" : "Chemical Methods Ontology",
+      "version" : "1.2",
+      "uri" : "http://purl.obolibrary.org/obo/chmo.owl"
     } ],
     "small_molecule-quantification_unit" : {
       "id" : null,
@@ -2459,14 +2566,18 @@
   "comment" : [ {
     "prefix" : "COM",
     "msg" : "the following two lines are currently not part of the mzTab-M model and are added for compatibility with the MetaboLights model.",
-    "line_number" : 5
-  }, {
-    "prefix" : "COM",
-    "msg" : "MTD",
-    "line_number" : 6
-  }, {
-    "prefix" : "COM",
-    "msg" : "MTD",
     "line_number" : 7
+  }, {
+    "prefix" : "COM",
+    "msg" : "MTD",
+    "line_number" : 8
+  }, {
+    "prefix" : "COM",
+    "msg" : "MTD",
+    "line_number" : 9
+  }, {
+    "prefix" : "COM",
+    "msg" : "MTD",
+    "line_number" : 10
   } ]
 }

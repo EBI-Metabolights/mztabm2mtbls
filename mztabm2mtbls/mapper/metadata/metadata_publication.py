@@ -53,9 +53,8 @@ class MetadataPublicationMapper(BaseMapper):
                     term_accession_number="http://www.ebi.ac.uk/efo/EFO_0001795",
                 )
             status_updated = True
-            mtbls_model.investigation.studies[0].study_publications.publications.append(
-                pub
-            )
+            publications = mtbls_model.investigation.studies[0].study_publications.publications
+            publications.append(pub)
             uri_comment.value.append(sanitise_data(uri))
             id_comment.value.append(
                 sanitise_data(mztab_publication.id)

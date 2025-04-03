@@ -57,6 +57,7 @@ class MetadataDatabaseMapper(BaseMapper):
                         term_accession_number=item.cv_accession,
                     )
                 )
+        selected_protocol.description = f"Databases: {', '.join([x.type for x in database_list])}" 
         if database_list:
             database_prefix_comment = Comment(
                 name="mztab.metadata.database:prefix",

@@ -73,6 +73,24 @@ class MetadataAssayMapper(BaseMapper):
         ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
         samples_map = {x.id: x for x in mztab_model.metadata.sample}
         instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
+        
+        for protocol in protocols:
+            if protocol.name == "Mass spectrometry":
+                names = " ".join([x.name.name for x in mztab_model.metadata.instrument if x.name])
+                analyzers = set()
+                sources = " ".join([x.source.name for x in mztab_model.metadata.instrument if x.source.name])
+                for instrument in mztab_model.metadata.instrument:
+                    analyzers.update([x.name for x in instrument.analyzer if x.name])
+                protocol.description = ". ".join(["Mass spectrometry instruments: ", names, "analyzers:", ", ".join(analyzers), "sources:", sources])
+            elif protocol.name == "Sample collection":
+                species = set()
+                tissues = set()
+
+                for x in mztab_model.metadata.sample:
+                    species.update([x.name for x in x.species])
+                    tissues.update([x.name for x in x.tissue])
+                                    
+                protocol.description = ". ".join(["Species: ", ", ".join({x for x in species}), "Organism parts:", ", ".join({x for x in tissues})])
         referenced_instruments = set()
         add_custom_columns = {
             "Parameter Value[Data file checksum]": False,
@@ -99,24 +117,24 @@ class MetadataAssayMapper(BaseMapper):
                 if detector and detector.name:
                     add_detector_column = True
                     break
-        if add_detector_column:
-            # protocol_sections = get_protocol_sections(assay_file)
-            mass_analyzer_header_name = "Parameter Value[Mass analyzer]"
-            mass_analyzer_column_header = find_first_header_column_index(
-                assay_file, "Parameter Value[Mass analyzer]"
-            )
-            if mass_analyzer_column_header is None:
-                raise ValueError(
-                    f"Mass analyzer column header {mass_analyzer_header_name} not found in assay file."
-                )
-            add_isa_table_ontology_columns(
-                assay_file,
-                "Parameter Value[Detector]",
-                new_column_index=mass_analyzer_column_header.column_index + 3,
-            )
-            self.add_protocol_parameter(
-                protocols, "Mass spectrometry", "Parameter Value[Detector]"
-            )
+        # if add_detector_column:
+        #     # protocol_sections = get_protocol_sections(assay_file)
+        #     mass_analyzer_header_name = "Parameter Value[Mass analyzer]"
+        #     mass_analyzer_column_header = find_first_header_column_index(
+        #         assay_file, "Parameter Value[Mass analyzer]"
+        #     )
+        #     if mass_analyzer_column_header is None:
+        #         raise ValueError(
+        #             f"Mass analyzer column header {mass_analyzer_header_name} not found in assay file."
+        #         )
+        #     add_isa_table_ontology_columns(
+        #         assay_file,
+        #         "Parameter Value[Detector]",
+        #         new_column_index=mass_analyzer_column_header.column_index + 3,
+        #     )
+        #     self.add_protocol_parameter(
+        #         protocols, "Mass spectrometry", "Parameter Value[Detector]"
+        #     )
 
         normalization_header = find_first_header_column_index(
             assay_file, "Normalization Name"
@@ -209,7 +227,7 @@ class MetadataAssayMapper(BaseMapper):
         )
 
         initial_row_count = len(assay_file.table.data["Sample Name"])
-
+        
         protocol_sections = get_protocol_sections(assay_file)
         for column_name in assay_file.table.columns:
             value = (
@@ -253,13 +271,13 @@ class MetadataAssayMapper(BaseMapper):
                     instrument_name = copy_parameter(None)
                     instrument_id = ""
                     instrument_source = copy_parameter(None)
-                    instrument_analyzer = [copy_parameter(None)]
+                    instrument_analyzer = ""
                     instrument_detector = copy_parameter(None)
                     if instrument:
                         instrument_id = str(instrument.id) if instrument.id else ""
                         instrument_name = copy_parameter(instrument.name)
                         instrument_source = copy_parameter(instrument.source)
-                        instrument_analyzer = copy_parameter(instrument.analyzer)
+                        instrument_analyzer = instrument.analyzer[0].name if instrument.analyzer else ""
                         instrument_detector = copy_parameter(instrument.detector)
 
                     posititive_scan = False
