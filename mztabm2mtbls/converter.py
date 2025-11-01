@@ -1,8 +1,8 @@
+import hashlib
 import json
 import os
 import subprocess
 from typing import List
-import hashlib
 
 import click
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel

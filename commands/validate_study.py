@@ -4,22 +4,22 @@ import subprocess
 from typing import List, Union
 
 import click
-from metabolights_utils.provider.submission_model import (
-    PolicyMessage,
-    PolicySummaryResult,
-    OpaValidationResult
-)
-from metabolights_utils.provider.submission_repository import (
-    MetabolightsSubmissionRepository,
-)
+from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 from metabolights_utils.provider.local_folder_metadata_collector import (
     LocalFolderMetadataCollector,
 )
 from metabolights_utils.provider.study_provider import MetabolightsStudyProvider
-from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from metabolights_utils.provider.submission_model import (
+    OpaValidationResult,
+    PolicyMessage,
+    PolicyMessageType,
+    PolicySummaryResult,
+)
+from metabolights_utils.provider.submission_repository import (
+    MetabolightsSubmissionRepository,
+)
 
 from mztabm2mtbls import converter
-from metabolights_utils.provider.submission_model import PolicyMessageType
 
 
 @click.command()
@@ -73,7 +73,7 @@ from metabolights_utils.provider.submission_model import PolicyMessageType
     "--mtbls_validation_bundle_path",
     required=False,
     help="A flag to enable remote validation of the study. "
-        "You can download the latest one on https://github.com/EBI-Metabolights/mtbls-validation/raw/main/bundle/bundle.tar.gz",
+    "You can download the latest one on https://github.com/EBI-Metabolights/mtbls-validation/raw/main/bundle/bundle.tar.gz",
     default="bundle.tar.gz",
 )
 @click.option(
@@ -92,13 +92,13 @@ def convert_and_validate_submission(
     mztabm_mapping_file: Union[None, str] = None,
     mtbls_remote_validation: bool = False,
     opa_executable_path: str = "opa",
-    mtbls_validation_bundle_path: str = "bundle.tar.gz"
+    mtbls_validation_bundle_path: str = "bundle.tar.gz",
 ):
     submission_repo = MetabolightsSubmissionRepository(
         rest_api_base_url=mtbls_rest_api_base_url,
         validation_api_base_url=mtbls_validation_api_base_url,
     )
-    
+
     study_path = base_study_path + mtbls_provisional_study_id
     ctx = click.Context(converter.convert)
     ctx.forward(
@@ -144,7 +144,9 @@ def convert_and_validate_submission(
             db_metadata_collector=None,
             folder_metadata_collector=LocalFolderMetadataCollector(),
         )
-        target_path = os.path.join(base_study_path, mtbls_provisional_study_id, mtbls_provisional_study_id)
+        target_path = os.path.join(
+            base_study_path, mtbls_provisional_study_id, mtbls_provisional_study_id
+        )
         model: MetabolightsStudyModel = provider.load_study(
             mtbls_provisional_study_id,
             study_path=target_path,
@@ -157,18 +159,26 @@ def convert_and_validate_submission(
             calculate_metadata_size=False,
         )
         json_validation_input = model.model_dump(by_alias=True)
-        relative_validation_input_path = os.path.join(base_study_path, mtbls_provisional_study_id, f"{mtbls_provisional_study_id}_validation_input.json")
+        relative_validation_input_path = os.path.join(
+            base_study_path,
+            mtbls_provisional_study_id,
+            f"{mtbls_provisional_study_id}_validation_input.json",
+        )
         validation_input_path = os.path.realpath(relative_validation_input_path)
-        with open(validation_input_path, "w") as f: 
+        with open(validation_input_path, "w") as f:
             json.dump(json_validation_input, f, indent=2)
-        
+
         task = None
-        local_command = [opa_executable_path, 
-                         "eval", 
-                         "--data", mtbls_validation_bundle_path, 
-                         "data.metabolights.validation.v2.report.complete_report", 
-                         "-i", validation_input_path]
-        
+        local_command = [
+            opa_executable_path,
+            "eval",
+            "--data",
+            mtbls_validation_bundle_path,
+            "data.metabolights.validation.v2.report.complete_report",
+            "-i",
+            validation_input_path,
+        ]
+
         try:
             task = subprocess.run(
                 local_command, capture_output=True, text=True, check=True, timeout=120
@@ -179,18 +189,34 @@ def convert_and_validate_submission(
                 print(task.stderr)
                 return False
             raw_validation_result = json.loads(task.stdout)
-            validation_result = raw_validation_result.get("result")[0].get("expressions")[0].get("value")
-            validation_output_path = os.path.join(base_study_path, mtbls_provisional_study_id, f"{mtbls_provisional_study_id}_validation_output.json") 
-            with open(validation_output_path, "w") as f: 
+            validation_result = (
+                raw_validation_result.get("result")[0]
+                .get("expressions")[0]
+                .get("value")
+            )
+            validation_output_path = os.path.join(
+                base_study_path,
+                mtbls_provisional_study_id,
+                f"{mtbls_provisional_study_id}_validation_output.json",
+            )
+            with open(validation_output_path, "w") as f:
                 json.dump(validation_result, f, indent=2)
             violation_results = OpaValidationResult.model_validate(validation_result)
-            errors = [x for x in violation_results.violations if x.type == PolicyMessageType.ERROR]
+            errors = [
+                x
+                for x in violation_results.violations
+                if x.type == PolicyMessageType.ERROR
+            ]
             for idx, x in enumerate(errors):
                 print(idx + 1, x.title, x.description, x.violation)
             if errors:
-                print(f"Number of errors: {len(errors)}. Validation results are stored on {validation_output_path}")
+                print(
+                    f"Number of errors: {len(errors)}. Validation results are stored on {validation_output_path}"
+                )
             else:
-                print(f"SUCCESS. Validation result is stored on {validation_output_path}")
+                print(
+                    f"SUCCESS. Validation result is stored on {validation_output_path}"
+                )
             return True
         except subprocess.TimeoutExpired as exc:
             print("The validation process timed out.")
@@ -211,7 +237,7 @@ def convert_and_validate_submission(
         finally:
             # if task and task.stdout:
             #     print(task.stdout)
-            
+
             print(
                 "Remote validation is disabled. Please run with '--mtbls_remote_validation True' flag to enable remote validation!"
             )

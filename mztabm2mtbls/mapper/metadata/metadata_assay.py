@@ -73,15 +73,32 @@ class MetadataAssayMapper(BaseMapper):
         ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
         samples_map = {x.id: x for x in mztab_model.metadata.sample}
         instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
-        
+
         for protocol in protocols:
             if protocol.name == "Mass spectrometry":
-                names = " ".join([x.name.name for x in mztab_model.metadata.instrument if x.name])
+                names = " ".join(
+                    [x.name.name for x in mztab_model.metadata.instrument if x.name]
+                )
                 analyzers = set()
-                sources = " ".join([x.source.name for x in mztab_model.metadata.instrument if x.source.name])
+                sources = " ".join(
+                    [
+                        x.source.name
+                        for x in mztab_model.metadata.instrument
+                        if x.source.name
+                    ]
+                )
                 for instrument in mztab_model.metadata.instrument:
                     analyzers.update([x.name for x in instrument.analyzer if x.name])
-                protocol.description = ". ".join(["Mass spectrometry instruments: ", names, "analyzers:", ", ".join(analyzers), "sources:", sources])
+                protocol.description = ". ".join(
+                    [
+                        "Mass spectrometry instruments: ",
+                        names,
+                        "analyzers:",
+                        ", ".join(analyzers),
+                        "sources:",
+                        sources,
+                    ]
+                )
             elif protocol.name == "Sample collection":
                 species = set()
                 tissues = set()
@@ -89,8 +106,15 @@ class MetadataAssayMapper(BaseMapper):
                 for x in mztab_model.metadata.sample:
                     species.update([x.name for x in x.species])
                     tissues.update([x.name for x in x.tissue])
-                                    
-                protocol.description = ". ".join(["Species: ", ", ".join({x for x in species}), "Organism parts:", ", ".join({x for x in tissues})])
+
+                protocol.description = ". ".join(
+                    [
+                        "Species: ",
+                        ", ".join({x for x in species}),
+                        "Organism parts:",
+                        ", ".join({x for x in tissues}),
+                    ]
+                )
         referenced_instruments = set()
         add_custom_columns = {
             "Parameter Value[Data file checksum]": False,
@@ -110,14 +134,14 @@ class MetadataAssayMapper(BaseMapper):
             if ms_run.hash or (ms_run.hash_method and ms_run.hash_method.name):
                 add_custom_columns["Parameter Value[Data file checksum]"] = True
                 add_custom_columns["Parameter Value[Data file checksum type]"] = True
-        add_detector_column = False
-        if referenced_instruments:
-            for instrument_id in referenced_instruments:
-                detector = instruments_map[instrument_id].detector
-                if detector and detector.name:
-                    add_detector_column = True
-                    break
-        # if add_detector_column:
+        # add_detector_column = False
+        # if referenced_instruments:
+        #     for instrument_id in referenced_instruments:
+        #         detector = instruments_map[instrument_id].detector
+        #         if detector and detector.name:
+        #             add_detector_column = True
+        #             break
+        # # if add_detector_column:
         #     # protocol_sections = get_protocol_sections(assay_file)
         #     mass_analyzer_header_name = "Parameter Value[Mass analyzer]"
         #     mass_analyzer_column_header = find_first_header_column_index(
@@ -145,7 +169,8 @@ class MetadataAssayMapper(BaseMapper):
             )
 
         new_column_index = normalization_header.column_index + 1
-        # Add columns for after mass analyzer column. Second parameter: number of columns. 3 for ontology column
+        # Add columns for after mass analyzer column. 
+        # Second parameter: number of columns. 3 for ontology column
         for header in [
             ("Parameter Value[Data file checksum]", 1),
             ("Parameter Value[Data file checksum type]", 3),
@@ -227,7 +252,7 @@ class MetadataAssayMapper(BaseMapper):
         )
 
         initial_row_count = len(assay_file.table.data["Sample Name"])
-        
+
         protocol_sections = get_protocol_sections(assay_file)
         for column_name in assay_file.table.columns:
             value = (
@@ -277,7 +302,9 @@ class MetadataAssayMapper(BaseMapper):
                         instrument_id = str(instrument.id) if instrument.id else ""
                         instrument_name = copy_parameter(instrument.name)
                         instrument_source = copy_parameter(instrument.source)
-                        instrument_analyzer = instrument.analyzer[0].name if instrument.analyzer else ""
+                        instrument_analyzer = (
+                            instrument.analyzer[0].name if instrument.analyzer else ""
+                        )
                         instrument_detector = copy_parameter(instrument.detector)
 
                     posititive_scan = False

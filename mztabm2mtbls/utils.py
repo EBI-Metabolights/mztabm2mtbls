@@ -13,9 +13,9 @@ from metabolights_utils.models.isa.investigation_file import (
     Investigation,
     OntologyAnnotation,
     OntologySourceReference,
+    ParameterDefinition,
     Protocol,
     Study,
-    ParameterDefinition
 )
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
@@ -141,8 +141,12 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
 
 def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
     study = mtbls_model.investigation.studies[0]
-    study.study_protocols.protocols.append(Protocol(name="Sample collection", 
-            protocol_type=OntologyAnnotation(term="Sample collection"),))
+    study.study_protocols.protocols.append(
+        Protocol(
+            name="Sample collection",
+            protocol_type=OntologyAnnotation(term="Sample collection"),
+        )
+    )
     study.study_protocols.protocols.append(
         Protocol(
             name="Extraction",
@@ -172,11 +176,21 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
                 ParameterDefinition(term="Instrument"),
                 ParameterDefinition(term="Ion source"),
                 ParameterDefinition(term="Mass analyzer"),
-            ]
+            ],
         )
     )
-    study.study_protocols.protocols.append(Protocol(name="Data transformation", protocol_type=OntologyAnnotation(term="Data transformation")))
-    study.study_protocols.protocols.append(Protocol(name="Metabolite identification", protocol_type=OntologyAnnotation(term="Metabolite identification")))
+    study.study_protocols.protocols.append(
+        Protocol(
+            name="Data transformation",
+            protocol_type=OntologyAnnotation(term="Data transformation"),
+        )
+    )
+    study.study_protocols.protocols.append(
+        Protocol(
+            name="Metabolite identification",
+            protocol_type=OntologyAnnotation(term="Metabolite identification"),
+        )
+    )
 
 
 def modify_mztab_model(model: MzTabBaseModel):
@@ -205,19 +219,31 @@ def save_metabolights_study_model(
     )
 
     samples_file: SamplesFile = mtbls_model.samples[list(mtbls_model.samples)[0]]
-    dump_isa_table(samples_file, f"{output_dir}/{samples_file.file_path}", values_in_quotation_mark=False)
+    dump_isa_table(
+        samples_file,
+        f"{output_dir}/{samples_file.file_path}",
+        values_in_quotation_mark=False,
+    )
 
     assay_file: AssayFile = mtbls_model.assays[list(mtbls_model.assays)[0]]
-    dump_isa_table(assay_file, f"{output_dir}/{assay_file.file_path}", values_in_quotation_mark=False)
+    dump_isa_table(
+        assay_file,
+        f"{output_dir}/{assay_file.file_path}",
+        values_in_quotation_mark=False,
+    )
 
     assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[
         list(mtbls_model.metabolite_assignments)[0]
     ]
-    dump_isa_table(assignment_file, f"{output_dir}/{assignment_file.file_path}", values_in_quotation_mark=False)
+    dump_isa_table(
+        assignment_file,
+        f"{output_dir}/{assignment_file.file_path}",
+        values_in_quotation_mark=False,
+    )
 
 
 def dump_isa_table(
-    isa_table_file: IsaTableFile, file_path: str, values_in_quotation_mark: bool=True
+    isa_table_file: IsaTableFile, file_path: str, values_in_quotation_mark: bool = True
 ):
     # log to which file we are writing
     print(f"Writing to {file_path}")
