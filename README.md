@@ -5,17 +5,31 @@ Due to the differences in the respective formats, the conversion is not straight
 
 ## Installation
 
-This library uses poetry for dependency management. Please check the [Poetry documentation](https://python-poetry.org/docs/) for installation instructions.
-To install the dependencies, run the following command:
 
 ```bash
-poetry install
-```
 
-To activate the virtual environment, run the following command:
+# install python package manager uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-```bash
-poetry shell
+# add $HOME/.local/bin to your PATH, either restart your shell or run
+export PATH=$HOME/.local/bin:$PATH
+
+# Mac command
+# brew install git
+
+# clone project from github
+git clone https://github.com/EBI-Metabolights/mztabm2mtbls.git
+
+cd mztabm2mtbls
+
+# install python if it is not installed
+uv python install 3.13
+
+# install python dependencies
+uv sync
+
+# open your IDE (vscode, pycharm, etc.) and set python interpreter as .venv/bin/python
+
 ```
 
 ## Usage
@@ -86,30 +100,56 @@ graph TD
 ### Run converter for example file
 
 ```bash
-python3 mztabm2mtbls/converter.py --input-file submission_validation_test/MTBLS263/MTBLS263.mztab --mtbls_accession_number MTBLS100001
+PYTHONPATH=. uv run python mztabm2mtbls/converter.py --input-file submission_validation_test/MTBLS263/MTBLS263.mztab --mtbls_accession_number MTBLS100001
 ```
 
 ### Run converter without remote validation
 
 Install following requirements before running local validation
 
-- Download the latest version of MetaboLights validation bundle on local folders from https://github.com/EBI-Metabolights/mtbls-validation/raw/main/bundle/bundle.tar.gz
+- Ensure docker daemon is running
 - Download OPA agent https://www.openpolicyagent.org/docs/latest/#1-download-opa
 
 ```bash
-python3 commands/validate_study.py --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error --mtbls_validation_bundle_path bundle.tar.gz --opa_executable_path opa
+    # Download opa for Mac (Apple Silicon)
+    curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_darwin_arm64
+    chmod 755 ./opa
+    ./opa version
+
+    # ALTERNATIVE DOWNLOADS 
+    ############################################################################
+    # Download opa linux (AMD version)
+    curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+    # ARM64 version
+    # curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_arm64
+    chmod 755 ./opa
+    ./opa version
+    ############################################################################
+
+    ############################################################################
+    # Download opa linux (AMD version)
+    curl -L -o opa.exe https://openpolicyagent.org/downloads/latest/opa_windows_amd64.exe
+    opa.exe version
+    ############################################################################
+    
+```
+
+```bash
+rm -rf bundle.tar.gz
+curl -L -o bundle.tar.gz https://github.com/EBI-Metabolights/mtbls-validation/raw/main/bundle/bundle.tar.gz
+PYTHONPATH=. uv run python commands/validate_study.py --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error --mtbls_validation_bundle_path bundle.tar.gz --opa_executable_path ./opa
 ```
 
 ### Run converter with remote validation
 
 ```bash
-python3 commands/validate_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True
+PYTHONPATH=. uv run python commands/validate_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True
 ```
 
 ### Run converter with mapping file
 
 ```bash
-python3 commands/validate_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/mzTab_2_0-M_mapping.xml
+PYTHONPATH=. uv run python  commands/validate_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/mzTab_2_0-M_mapping.xml
 ```
 
 ### Setting the validation level for the mzTab-M validation
@@ -117,7 +157,7 @@ python3 commands/validate_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_P
 Use the `--mztabm_validation_level` parameter to set the validation level for the mzTab-M validation. The default value is `Info`, if the argument is not provided. The possible values are `Error`, `Warning`, and `Info`. If set to `Info`, any info, warning or error level validation messages will lead to a failure of the validation. If set to `Warning`, only warning and error level validation messages will lead to a failure of the validation. If set to `Error`, only error level validation messages will lead to a failure of the validation. Generally, it is recommended to set the validation level to `Warning` to ensure that the mzTab-M file is at least compliant with the MetaboLights minimal profile. However, using `Info` will provide more detailed information about potential improvements of the mzTab-M file metadata. Please note that these levels apply to both the basic validation performed by the jmztab-m tool and the semantic validation performed when an [Mapping file](https://github.com/HUPO-PSI/mzTab/blob/master/specification_document-releases/2_0-Metabolomics-Release/mzTab_2_0-M_mapping.xml) is provided with the `--mztabm_mapping_file` parameter.
 
 ```bash
-python3 commands/validate_study.py --mtbls_api_token d5487ecf-3c13-438f-ba10-a21daa0baea3 --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error
+PYTHONPATH=. uv run python commands/validate_study.py --mtbls_api_token d5487ecf-3c13-438f-ba10-a21daa0baea3 --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error
 ```
 
 # Conversion, Validation and Upload Process

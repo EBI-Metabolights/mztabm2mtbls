@@ -1,13 +1,13 @@
 {
-  "version": "v1.0",
+  "version": "v1.1",
   "investigationFilePath": "i_Investigation.txt",
   "investigation": {
     "comments": [],
     "identifier": "MTBLS263",
     "title": "",
     "description": "",
-    "submissionDate": "2025-04-03",
-    "publicReleaseDate": "2025-04-03",
+    "submissionDate": "2025-11-01",
+    "publicReleaseDate": "2025-11-01",
     "ontologySourceReferences": {
       "comments": [
         {
@@ -93,9 +93,20 @@
         "identifier": "MTBLS263",
         "title": "Individual variability in human blood metabolites identifies age-related differences",
         "description": "Metabolites present in human blood document individual physiological states influenced by genetic, epigenetic, and lifestyle factors. Using high-resolution liquid chromatography-mass spectrometry (LC-MS), we performed nontargeted, quantitative metabolomics analysis in blood of 15 young (29 \u00b1 4 y of age) and 15 elderly (81 \u00b1 7 y of age) individuals. Coefficients of variation (CV = SD/mean) were obtained for 126 blood metabolites of all 30 donors. Fifty-five RBC-enriched metabolites, for which metabolomics studies have been scarce, are highlighted here. We found 14 blood compounds that show remarkable age-related increases or decreases; they include 1,5-anhydroglucitol, dimethyl-guanosine, acetyl-carnosine, carnosine, ophthalmic acid, UDP-acetyl-glucosamine, N-acetyl-arginine, N6-acetyl-lysine, pantothenate, citrulline, leucine, isoleucine, NAD+, and NADP+. Six of them are RBC-enriched, suggesting that RBC metabolomics is highly valuable for human aging research. Age differences are partly explained by a decrease in antioxidant production or increasing inefficiency of urea metabolism among the elderly. Pearson\u2019s coefficients demonstrated that some age-related compounds are correlated, suggesting that aging affects them concomitantly. Although our CV values are mostly consistent with those CVs previously published, we here report previously unidentified CVs of 51 blood compounds. Compounds having moderate to high CV values (0.4\u20132.5) are often modified. Compounds having low CV values, such as ATP and glutathione, may be related to various diseases because their concentrations are strictly controlled, and changes in them would compromise health. Thus, human blood is a rich source of information about individual metabolic differences",
-        "submissionDate": "2025-04-03",
-        "publicReleaseDate": "2025-04-03",
+        "submissionDate": "2025-11-01",
+        "publicReleaseDate": "2025-11-01",
         "fileName": "s_MTBLS263.txt",
+        "studyCategory": "",
+        "templateVersion": "",
+        "sampleTemplate": "",
+        "mhdAccession": "",
+        "mhdModelVersion": "",
+        "revisionNumber": "",
+        "revisionDate": "",
+        "revisionComment": "",
+        "datasetLicense": "",
+        "funders": [],
+        "characteristicTypes": [],
         "studyDesignDescriptors": {
           "comments": [
             {
@@ -109,22 +120,30 @@
             {
               "term": "tandem mass spectrometry",
               "termAccessionNumber": "EFO:0030056",
-              "termSourceRef": "EFO"
+              "termSourceRef": "EFO",
+              "category": "",
+              "source": ""
             },
             {
               "term": "untargeted metabolite profiling",
               "termAccessionNumber": "MSIO:0000101",
-              "termSourceRef": "MSIO"
+              "termSourceRef": "MSIO",
+              "category": "",
+              "source": ""
             },
             {
               "term": "high-performance liquid chromatography-mass spectrometry",
               "termAccessionNumber": "CHMO:0000796",
-              "termSourceRef": "CHMO"
+              "termSourceRef": "CHMO",
+              "category": "",
+              "source": ""
             },
             {
               "term": "LC-MS label-free quantitation analysis",
               "termAccessionNumber": "http://purl.obolibrary.org/obo/MS_1001834",
-              "termSourceRef": "MS"
+              "termSourceRef": "MS",
+              "category": "",
+              "source": ""
             }
           ]
         },
@@ -170,7 +189,20 @@
                 "termAccessionNumber": "http://purl.obolibrary.org/obo/OBI_0000470",
                 "termSourceRef": "OBI"
               },
-              "technologyPlatform": "Mass spectrometry"
+              "technologyPlatform": "Mass spectrometry",
+              "assayIdentifier": "",
+              "assayType": {
+                "term": "",
+                "termAccessionNumber": "",
+                "termSourceRef": ""
+              },
+              "omicsType": {
+                "term": "",
+                "termAccessionNumber": "",
+                "termSourceRef": ""
+              },
+              "assayDescriptors": [],
+              "resultFileFormat": ""
             }
           ]
         },
@@ -232,12 +264,14 @@
                 {
                   "term": "Post Extraction",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 },
                 {
                   "term": "Derivatization",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 }
               ],
               "components": []
@@ -256,27 +290,32 @@
                 {
                   "term": "Scan polarity",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 },
                 {
                   "term": "Scan m/z range",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 },
                 {
                   "term": "Instrument",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 },
                 {
                   "term": "Ion source",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 },
                 {
                   "term": "Mass analyzer",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 }
               ],
               "components": []
@@ -295,12 +334,14 @@
                 {
                   "term": "Native spectrum identifier format",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 },
                 {
                   "term": "Raw data file format",
                   "termAccessionNumber": "",
-                  "termSourceRef": ""
+                  "termSourceRef": "",
+                  "valueFormat": ""
                 }
               ],
               "components": [
@@ -359,7 +400,10 @@
               "fax": "",
               "address": "",
               "affiliation": "Okinawa Institute of Science and Technology Graduate University",
-              "roles": []
+              "roles": [],
+              "orcid": "",
+              "additionalEmails": [],
+              "affiliationRorId": ""
             }
           ]
         }
@@ -713,9 +757,9 @@
         "sortOptions": []
       },
       "sampleNames": [
-        "3injections_POS",
-        "3samples_sampl1_POS",
         "3samples_sampl2_POS",
+        "3samples_sampl1_POS",
+        "3injections_POS",
         "3samples_sampl3_POS"
       ],
       "organisms": [
@@ -1523,9 +1567,9 @@
         "sortOptions": []
       },
       "sampleNames": [
-        "3injections_POS",
-        "3samples_sampl1_POS",
         "3samples_sampl2_POS",
+        "3samples_sampl1_POS",
+        "3injections_POS",
         "3samples_sampl3_POS"
       ],
       "assayNames": [
@@ -1536,12 +1580,12 @@
       ],
       "referencedRawFiles": [],
       "referencedDerivedFiles": [
+        "FILES/3samples_sampl1_POS.mzML",
+        "FILES/3samples_sampl3_POS.mzML",
         "FILES/3injections_inj3_POS.mzML",
         "FILES/3injections_inj1_POS.mzML",
         "FILES/3samples_sampl2_POS.mzML",
-        "FILES/3samples_sampl1_POS.mzML",
-        "FILES/3injections_inj2_POS.mzML",
-        "FILES/3samples_sampl3_POS.mzML"
+        "FILES/3injections_inj2_POS.mzML"
       ],
       "referencedRawFileExtensions": [],
       "referencedDerivedFileExtensions": [
@@ -1567,12 +1611,12 @@
   ],
   "referencedRawFiles": [],
   "referencedDerivedFiles": [
-    "FILES/3samples_sampl1_POS.mzML",
-    "FILES/3injections_inj3_POS.mzML",
     "FILES/3injections_inj1_POS.mzML",
-    "FILES/3injections_inj2_POS.mzML",
+    "FILES/3samples_sampl3_POS.mzML",
+    "FILES/3samples_sampl1_POS.mzML",
     "FILES/3samples_sampl2_POS.mzML",
-    "FILES/3samples_sampl3_POS.mzML"
+    "FILES/3injections_inj2_POS.mzML",
+    "FILES/3injections_inj3_POS.mzML"
   ],
   "foldersInHierarchy": [
     "FILES"
@@ -2487,23 +2531,23 @@
         "sortOptions": []
       },
       "identifiedMetaboliteNames": [
-        "Urate",
-        "myo-Inositol",
-        "Methionine",
-        "Glutamine",
-        "Lysine",
-        "GDP",
-        "Proline",
         "Creatinine",
-        "Leucine",
-        "PIPES [M-H]-",
-        "Taurine",
-        "UMP",
+        "Methionine",
+        "Lysine",
         "Valine",
-        "Glycerol-2-phosphate",
         "Hypoxanthine",
-        "Asparagine",
-        "Threonine"
+        "Urate",
+        "Threonine",
+        "PIPES [M-H]-",
+        "Proline",
+        "Glycerol-2-phosphate",
+        "Leucine",
+        "myo-Inositol",
+        "UMP",
+        "Taurine",
+        "Glutamine",
+        "GDP",
+        "Asparagine"
       ],
       "metaboliteAssignments": {
         "Creatinine": "CHEBI:16737",
@@ -2550,7 +2594,22 @@
     "status": "DORMANT",
     "curationRequest": "MANUAL_CURATION",
     "overrides": {},
-    "submitters": []
+    "submitters": [],
+    "reservedAccession": "",
+    "reservedSubmissionId": "",
+    "revisionDate": "",
+    "revisionNumber": 0,
+    "revisionComment": "",
+    "firstPrivateDate": "",
+    "firstPublicDate": "",
+    "datasetLicense": "",
+    "datasetLicenseVersion": "",
+    "datasetLicenseUrl": "",
+    "sampleTemplate": "",
+    "studyCategory": 0,
+    "templateVersion": "",
+    "reservedMhdAccession": "",
+    "mhdModelVersion": ""
   },
   "studyFolderMetadata": {
     "dataFolderSizeCalculated": false,
@@ -2566,8 +2625,8 @@
         "sizeInBytes": 0,
         "isDirectory": true,
         "isLink": false,
-        "modifiedAt": 1732630088,
-        "createdAt": 1743606521,
+        "modifiedAt": 1761980560,
+        "createdAt": 1761980560,
         "mode": "755",
         "tags": []
       }
@@ -2581,8 +2640,8 @@
         "sizeInBytes": 877,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1743663621,
-        "createdAt": 1743663621,
+        "modifiedAt": 1761983203,
+        "createdAt": 1761983203,
         "mode": "644",
         "tags": [
           "type:isatab_file/samples"
@@ -2596,8 +2655,8 @@
         "sizeInBytes": 3151,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1743663621,
-        "createdAt": 1743663621,
+        "modifiedAt": 1761983203,
+        "createdAt": 1761983203,
         "mode": "644",
         "tags": [
           "type:isatab_file/assignments"
@@ -2611,8 +2670,8 @@
         "sizeInBytes": 1,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1732630577,
-        "createdAt": 1741252416,
+        "modifiedAt": 1761980560,
+        "createdAt": 1761980560,
         "mode": "644",
         "tags": []
       },
@@ -2624,8 +2683,8 @@
         "sizeInBytes": 1,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1732630579,
-        "createdAt": 1741252416,
+        "modifiedAt": 1761980560,
+        "createdAt": 1761980560,
         "mode": "644",
         "tags": []
       },
@@ -2637,8 +2696,8 @@
         "sizeInBytes": 1,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1732630584,
-        "createdAt": 1741252416,
+        "modifiedAt": 1761980560,
+        "createdAt": 1761980560,
         "mode": "644",
         "tags": []
       },
@@ -2650,8 +2709,8 @@
         "sizeInBytes": 1,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1732630587,
-        "createdAt": 1741252416,
+        "modifiedAt": 1761980560,
+        "createdAt": 1761980560,
         "mode": "644",
         "tags": []
       },
@@ -2663,8 +2722,8 @@
         "sizeInBytes": 1,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1732630576,
-        "createdAt": 1741252416,
+        "modifiedAt": 1761980560,
+        "createdAt": 1761980560,
         "mode": "644",
         "tags": []
       },
@@ -2676,8 +2735,8 @@
         "sizeInBytes": 1,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1732630581,
-        "createdAt": 1741252416,
+        "modifiedAt": 1761980560,
+        "createdAt": 1761980560,
         "mode": "644",
         "tags": []
       },
@@ -2689,8 +2748,8 @@
         "sizeInBytes": 7348,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1743663620,
-        "createdAt": 1743663620,
+        "modifiedAt": 1761983203,
+        "createdAt": 1761983203,
         "mode": "644",
         "tags": [
           "type:isatab_file/investigation"
@@ -2704,8 +2763,8 @@
         "sizeInBytes": 3199,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1743663621,
-        "createdAt": 1743663621,
+        "modifiedAt": 1761983203,
+        "createdAt": 1761983203,
         "mode": "644",
         "tags": [
           "type:isatab_file/assay"

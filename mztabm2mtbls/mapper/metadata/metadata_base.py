@@ -1,5 +1,7 @@
 from metabolights_utils.models.isa.common import Comment
-from metabolights_utils.models.isa.investigation_file import OntologyAnnotation
+from metabolights_utils.models.isa.investigation_file import (
+    ExtendedOntologyAnnotation,
+)
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
@@ -50,7 +52,13 @@ class MetadataBaseMapper(BaseMapper):
         keywords = study.study_design_descriptors.design_types
         if mztab_model.metadata.custom:
             for item in mztab_model.metadata.custom:
-                keywords.append(OntologyAnnotation(term=item.name, term_accession_number=item.cv_accession, term_source_ref=item.cv_label))
+                keywords.append(
+                    ExtendedOntologyAnnotation(
+                        term=item.name,
+                        term_accession_number=item.cv_accession,
+                        term_source_ref=item.cv_label,
+                    )
+                )
         mztab_id = mztab_model.metadata.mzTab_ID
         comments.append(
             Comment(
@@ -95,7 +103,7 @@ class MetadataBaseMapper(BaseMapper):
             and mztab_model.metadata.quantification_method.name
         ):
             item = copy_parameter(mztab_model.metadata.quantification_method)
-            quantification_method = OntologyAnnotation(
+            quantification_method = ExtendedOntologyAnnotation(
                 term=item.name,
                 term_source_ref=item.cv_label,
                 term_accession_number=item.cv_accession,

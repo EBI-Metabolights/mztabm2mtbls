@@ -15,6 +15,7 @@ from metabolights_utils.models.isa.investigation_file import (
     OntologySourceReference,
     Protocol,
     Study,
+    ParameterDefinition
 )
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
@@ -147,8 +148,8 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
             name="Extraction",
             protocol_type=OntologyAnnotation(term="Extraction"),
             parameters=[
-                OntologyAnnotation(term="Post Extraction"),
-                OntologyAnnotation(term="Derivatization"),
+                ParameterDefinition(term="Post Extraction"),
+                ParameterDefinition(term="Derivatization"),
             ],
         )
     )
@@ -157,7 +158,7 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
     #         name="Direct infusion",
     #         protocol_type=OntologyAnnotation(term="Direct infusion"),
     #         parameters=[
-    #             OntologyAnnotation(term="DI Instrument"),
+    #             ParameterDefinition(term="DI Instrument"),
     #         ]
     #     )
     # )
@@ -166,11 +167,11 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
             name="Mass spectrometry",
             protocol_type=OntologyAnnotation(term="Mass spectrometry"),
             parameters=[
-                OntologyAnnotation(term="Scan polarity"),
-                OntologyAnnotation(term="Scan m/z range"),
-                OntologyAnnotation(term="Instrument"),
-                OntologyAnnotation(term="Ion source"),
-                OntologyAnnotation(term="Mass analyzer"),
+                ParameterDefinition(term="Scan polarity"),
+                ParameterDefinition(term="Scan m/z range"),
+                ParameterDefinition(term="Instrument"),
+                ParameterDefinition(term="Ion source"),
+                ParameterDefinition(term="Mass analyzer"),
             ]
         )
     )

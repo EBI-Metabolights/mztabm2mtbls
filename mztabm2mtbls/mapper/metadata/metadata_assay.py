@@ -5,7 +5,7 @@ from typing import List
 from metabolights_utils.models.isa.assay_file import AssayFile
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
 from metabolights_utils.models.isa.investigation_file import (
-    OntologyAnnotation,
+    ParameterDefinition,
     Protocol,
 )
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
@@ -41,7 +41,7 @@ class MetadataAssayMapper(BaseMapper):
                 for parameter in protocol.parameters:
                     if parameter.term == parameter_name:
                         return False, "Already exists"
-                protocol.parameters.append(OntologyAnnotation(term=parameter_name))
+                protocol.parameters.append(ParameterDefinition(term=parameter_name))
                 return True, parameter_name
         return False, "Not found"
 
