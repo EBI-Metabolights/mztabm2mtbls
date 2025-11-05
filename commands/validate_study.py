@@ -65,7 +65,7 @@ from mztabm2mtbls import converter
 )
 @click.option(
     "--mztabm_validation_level",
-    default="Info",
+    default="Error",
     help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
 )
 @click.option(
@@ -91,7 +91,7 @@ from mztabm2mtbls import converter
     required=False,
     help="A flag to enable remote validation of the study. "
     "You can download the latest one on https://github.com/EBI-Metabolights/mtbls-validation/raw/main/bundle/bundle.tar.gz",
-    default="bundle.tar.gz",
+    default="./bundle.tar.gz",
 )
 @click.option(
     "--opa_executable_path",
@@ -105,6 +105,12 @@ from mztabm2mtbls import converter
     help="Temporary folder for intermediate outputs.",
     default=None,
 )
+@click.option("--container_engine", default="docker", help="Container run engine.")
+@click.option(
+    "--mztab2m_json_convertor_image",
+    default="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
+    help="Container image name to convert the mzTab-M file to mzTab-M json.",
+)
 def convert_and_validate_submission(
     mtbls_api_token: str,
     mtbls_provisional_study_id: str,
@@ -114,12 +120,14 @@ def convert_and_validate_submission(
     data_files_path: Union[None, str] = None,
     config_file: Union[None, str] = None,
     mztabm_file_path: Union[None, str] = None,
-    mztabm_validation_level: str = "Info",
+    mztabm_validation_level: str = "Error",
     mztabm_mapping_file: Union[None, str] = None,
     mtbls_remote_validation: bool = False,
     opa_executable_path: str = "opa",
-    mtbls_validation_bundle_path: str = "bundle.tar.gz",
-    temp_folder: str = None,
+    mtbls_validation_bundle_path: str = "./bundle.tar.gz",
+    temp_folder: str = "output/temp",
+    container_engine: str = "docker",
+    mztab2m_json_convertor_image: str = "quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
 ):
     if not data_files_path:
         data_files_path = "FILES"
@@ -140,8 +148,8 @@ def convert_and_validate_submission(
         input_file=mztabm_file_path,
         output_dir=study_path,
         mtbls_accession_number=mtbls_provisional_study_id,
-        container_engine="docker",
-        mztab2m_json_convertor_image="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
+        container_engine=container_engine,
+        mztab2m_json_convertor_image=mztab2m_json_convertor_image,
         override_mztab2m_json_file="True",
         mztabm_validation_level=mztabm_validation_level,
         mztabm_mapping_file=mztabm_mapping_file,

@@ -34,7 +34,7 @@ def run_jmztabm_docker(
     dirname: str = ".",
     filename: str = None,
     # Info, Warn or Error
-    mztabm_validation_level: str = "Info",
+    mztabm_validation_level: str = "Error",
     mztabm_mapping_file: str = None,
 ):
     task = None
@@ -154,7 +154,7 @@ def convert(
     mztab2m_json_convertor_image: str,
     override_mztab2m_json_file: str,
     # Info, Warn or Error
-    mztabm_validation_level: str = "Info",
+    mztabm_validation_level: str = "Error",
     mztabm_mapping_file: Union[None, str] = None,
     temp_folder: Union[None, str] = None,
 ):

@@ -212,6 +212,7 @@ def save_metabolights_study_model(
     mtbls_model: MetabolightsStudyModel, output_dir: str = "output"
 ):
     os.makedirs(output_dir, exist_ok=True)
+    print(f"Writing to {output_dir}/i_Investigation.txt")
     Writer.get_investigation_file_writer().write(
         mtbls_model.investigation,
         f"{output_dir}/i_Investigation.txt",

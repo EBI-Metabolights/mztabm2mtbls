@@ -137,11 +137,23 @@ Install following requirements before running local validation
 ```bash
 rm -rf bundle.tar.gz
 curl -L -o bundle.tar.gz https://github.com/EBI-Metabolights/mtbls-validation/raw/test/bundle/bundle.tar.gz
+
 PYTHONPATH=. uv run python commands/validate_study.py \
         --mtbls_provisional_study_id=MTBLS263 \
         --target_metadata_files_path=output/MTBLS263 \
         --data_files_path=test/data/MTBLS263/FILES \
         --mztabm_file_path=test/data/MTBLS263/mztabm/MTBLS263.mztab \
+        --config_file=test/data/configurations/mztabm2mtbls_config.json \
+        --temp_folder=output/temp
+
+# run convertor with custom tool paths
+PYTHONPATH=. uv run python commands/validate_study.py \
+        --mtbls_provisional_study_id=MTBLS263 \
+        --target_metadata_files_path=output/MTBLS263 \
+        --data_files_path=test/data/MTBLS263/FILES \
+        --mztabm_file_path=test/data/MTBLS263/mztabm/MTBLS263.mztab \
+        --container_engine=docker \
+        --mztab2m_json_convertor_image=quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1 \
         --mztabm_validation_level=Error \
         --mtbls_validation_bundle_path=./bundle.tar.gz \
         --opa_executable_path=./opa \
