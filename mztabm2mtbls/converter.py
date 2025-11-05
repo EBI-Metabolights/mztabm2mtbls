@@ -1,8 +1,9 @@
 import hashlib
 import json
 import os
+import shutil
 import subprocess
-from typing import List
+from typing import List, Union
 
 import click
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
@@ -63,7 +64,9 @@ def run_jmztabm_docker(
         f"{mztabm_validation_level}",
     ]
     if mztabm_mapping_file:
-        jmztab_m_command.extend(["-s", f"/home/configuration/{mztabm_mapping_filename}"])
+        jmztab_m_command.extend(
+            ["-s", f"/home/configuration/{mztabm_mapping_filename}"]
+        )
     local_command.extend(jmztab_m_command)
     print(f"Running command: {' '.join(local_command)}")
     try:
@@ -75,7 +78,9 @@ def run_jmztabm_docker(
             print(task.stdout)
             print(task.stderr)
             return False
+
         return True
+        
     except subprocess.TimeoutExpired as exc:
         print("The conversion of the mzTab file to mzTab json format timed out.")
         print(exc.stderr)
@@ -135,6 +140,12 @@ def run_jmztabm_docker(
     help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
     type=click.Path(exists=True),
 )
+@click.option(
+    "--temp-folder",
+    required=False,
+    help="Temporary folder for intermediate outputs.",
+    default="opa",
+)
 def convert(
     input_file: str,
     output_dir: str,
@@ -144,8 +155,12 @@ def convert(
     override_mztab2m_json_file: str,
     # Info, Warn or Error
     mztabm_validation_level: str = "Info",
-    mztabm_mapping_file: str = None,
+    mztabm_mapping_file: Union[None, str] = None,
+    temp_folder: Union[None, str] = None,
 ):
+    if not temp_folder:
+        temp_folder = "output/temp"
+        os.makedirs(temp_folder, exist_ok=True)
     # check that input_file is not None and not ""
     if input_file is None or input_file == "":
         ctx = click.get_current_context()
@@ -171,12 +186,20 @@ def convert(
         if not override_mztab2m_json_file and os.path.exists(input_json_file):
             print(f"{input_json_file} file exists, it will be used as an input.")
         else:
+            
+            input_basename = os.path.basename(input_file)
             abs_path = os.path.realpath(input_file)
-            dirname = os.path.dirname(abs_path)
-            filename = os.path.basename(abs_path)
+            temp_abs_path = os.path.realpath(temp_folder)
+            os.makedirs(temp_abs_path, exist_ok=True)
+            temp_input_file_path = os.path.join(temp_abs_path, input_basename)
+            shutil.copy(abs_path, temp_input_file_path)
+            # dirname = os.path.dirname(abs_path)
+            
+            filename = os.path.basename(temp_input_file_path)
+            
             # if mapping_file:
             #     abs_mapping_file = os.path.realpath(mapping_file)
-
+            input_json_file = temp_input_file_path + ".json"
             print(
                 "Converting mzTab file to mzTab json format.",
                 "Please check container management tool (docker, podman, etc.) is installed and runnig.",
@@ -184,7 +207,7 @@ def convert(
             jmztabm_success = run_jmztabm_docker(
                 container_engine=container_engine,
                 mztab2m_json_convertor_image=mztab2m_json_convertor_image,
-                dirname=dirname,
+                dirname=temp_abs_path,
                 filename=filename,
                 mztabm_validation_level=mztabm_validation_level,
                 mztabm_mapping_file=mztabm_mapping_file,

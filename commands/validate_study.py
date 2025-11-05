@@ -47,10 +47,9 @@ from mztabm2mtbls import converter
     default="https://www-test.ebi.ac.uk/metabolights/ws3",
 )
 @click.option(
-    "--base_study_path",
+    "--target_metadata_files_path",
     required=True,
-    help="The base path of the local study directory.",
-    type=click.Path(exists=True),
+    help="Target local metadata files path.",
 )
 @click.option(
     "--data_files_path",
@@ -76,6 +75,12 @@ from mztabm2mtbls import converter
     type=click.Path(exists=True),
 )
 @click.option(
+    "--config-file",
+    required=False,
+    help="Configuration file to convert mzTab-M file and run MetaboLights validation.",
+    type=click.Path(exists=True),
+)
+@click.option(
     "--mtbls_remote_validation",
     required=False,
     help="A flag to enable remote validation of the study.",
@@ -94,19 +99,27 @@ from mztabm2mtbls import converter
     help="OPA executable path.",
     default="opa",
 )
+@click.option(
+    "--temp-folder",
+    required=False,
+    help="Temporary folder for intermediate outputs.",
+    default=None,
+)
 def convert_and_validate_submission(
     mtbls_api_token: str,
     mtbls_provisional_study_id: str,
     mtbls_rest_api_base_url: str,
     mtbls_validation_api_base_url: str,
-    base_study_path: str,
+    target_metadata_files_path: str,
     data_files_path: Union[None, str] = None,
+    config_file: Union[None, str] = None,
     mztabm_file_path: Union[None, str] = None,
     mztabm_validation_level: str = "Info",
     mztabm_mapping_file: Union[None, str] = None,
     mtbls_remote_validation: bool = False,
     opa_executable_path: str = "opa",
     mtbls_validation_bundle_path: str = "bundle.tar.gz",
+    temp_folder: str = None,
 ):
     if not data_files_path:
         data_files_path = "FILES"
@@ -115,9 +128,9 @@ def convert_and_validate_submission(
         validation_api_base_url=mtbls_validation_api_base_url,
     )
 
-    study_path = os.path.join(base_study_path, "studies", mtbls_provisional_study_id)
-    data_files_path = os.path.join(study_path, "FILES")
-    mztabm_folder_path = os.path.dirname(mztabm_file_path)
+    study_path = target_metadata_files_path
+    # data_files_path = os.path.join(study_path, "FILES")
+    # mztabm_folder_path = os.path.dirname(mztabm_file_path)
     # mztabm_file_path = os.path.join(
     #     mztabm_folder_path, mtbls_provisional_study_id + ".mztab"
     # )
@@ -132,6 +145,7 @@ def convert_and_validate_submission(
         override_mztab2m_json_file="True",
         mztabm_validation_level=mztabm_validation_level,
         mztabm_mapping_file=mztabm_mapping_file,
+        temp_folder=temp_folder,
     )
     if not success:
         return
@@ -184,7 +198,7 @@ def convert_and_validate_submission(
         )
         json_validation_input = model.model_dump(by_alias=True)
         relative_validation_input_path = os.path.join(
-            mztabm_folder_path,
+            temp_folder,
             f"{mtbls_provisional_study_id}_validation_input.json",
         )
         validation_input_path = os.path.realpath(relative_validation_input_path)
@@ -218,16 +232,33 @@ def convert_and_validate_submission(
                 .get("value")
             )
             validation_output_path = os.path.join(
-                mztabm_folder_path,
+                temp_folder,
                 f"{mtbls_provisional_study_id}_validation_output.json",
             )
             with open(validation_output_path, "w") as f:
                 json.dump(validation_result, f, indent=2)
             violation_results = OpaValidationResult.model_validate(validation_result)
+            overrides = []
+            if config_file:
+                with open(config_file) as f:
+                    config = json.load(f)
+                    overrides = config.get("validation", {}).get("overrides", [])
+            overridden_rule_ids = []
+            if overrides:
+                overridden_rule_ids = [
+                    x.get("ruleId") for x in overrides if x.get("ruleId")
+                ]
             errors = [
                 x
                 for x in violation_results.violations
                 if x.type == PolicyMessageType.ERROR
+                and x.identifier not in overridden_rule_ids
+            ]
+            overridden_errors = [
+                x.identifier
+                for x in violation_results.violations
+                if x.type == PolicyMessageType.ERROR
+                and x.identifier in overridden_rule_ids
             ]
             for idx, x in enumerate(errors):
                 print(idx + 1, x.identifier, x.title, x.description, x.violation)
@@ -239,6 +270,8 @@ def convert_and_validate_submission(
                 print(
                     f"SUCCESS. Validation result is stored on {validation_output_path}"
                 )
+                if overridden_errors:
+                    print(f"The following validation rules are overridden: {', '.join(overridden_errors)}", )
             return True
         except subprocess.TimeoutExpired as exc:
             print("The validation process timed out.")
@@ -256,6 +289,7 @@ def convert_and_validate_submission(
             else:
                 print(str(exc))
             return False
+
 
 if __name__ == "__main__":
     convert_and_validate_submission()

@@ -333,7 +333,7 @@ class SmallMoleculeSummary(MzTabBaseModel):
         ),
     ] = []
     theoretical_neutral_mass: Annotated[
-        Optional[List[float]],
+        Optional[List[float | None]],
         Field(
             description="The small molecule’s precursor’s theoretical neutral mass.\n\nThe number of values provided MUST match the number of entities reported under “database_identifier”, and the validation software will throw an error if the number of “|” symbols does not match. “null” values (in general and between bars) are allowed for molecules that have not been identified only, or for molecules where the neutral mass cannot be calculated. In these cases, the SML entry SHOULD reference features in which exp_mass_to_charge values are captured.\n"
         ),
@@ -358,19 +358,19 @@ class SmallMoleculeSummary(MzTabBaseModel):
         ),
     ] = None
     abundance_assay: Annotated[
-        Optional[List[float]],
+        Optional[List[float | None]],
         Field(
             description='The small molecule’s abundance in every assay described in the metadata section MUST be reported. Null or zero values may be reported as appropriate. "null" SHOULD be used to report missing quantities, while zero SHOULD be used to indicate a present but not reliably quantifiable value (e.g. below a minimum noise threshold).'
         ),
     ] = []
     abundance_study_variable: Annotated[
-        Optional[List[float]],
+        Optional[List[float | None]],
         Field(
             description='The small molecule’s abundance in all the study variables described in the metadata section (study_variable[1-n]_average_function), calculated using the method as described in the Metadata section (default = arithmetic mean across assays). Null or zero values may be reported as appropriate. "null" SHOULD be used to report missing quantities, while zero SHOULD be used to indicate a present but not reliably quantifiable value (e.g. below a minimum noise threshold).'
         ),
     ] = []
     abundance_variation_study_variable: Annotated[
-        Optional[List[float]],
+        Optional[List[float | None]],
         Field(
             description="A measure of the variability of the study variable abundance measurement, calculated using the method as described in the metadata section (study_variable[1-n]_average_function), with a default = arithmethic co-efficient of variation of the small molecule’s abundance in the given study variable."
         ),
@@ -454,7 +454,7 @@ class SmallMoleculeFeature(MzTabBaseModel):
         ),
     ] = None
     abundance_assay: Annotated[
-        Optional[List[float]],
+        Optional[List[float | None]],
         Field(
             description="The feature’s abundance in every assay described in the metadata section MUST be reported. Null or zero values may be reported as appropriate."
         ),
@@ -770,7 +770,7 @@ class SmallMoleculeEvidence(MzTabBaseModel):
     identification_method: Parameter
     ms_level: Parameter
     id_confidence_measure: Annotated[
-        Optional[List[float]],
+        Optional[List[float | None]],
         Field(
             description="Any statistical value or score for the identification. The metadata section reports the type of score used, as id_confidence_measure[1-n] of type Param."
         ),

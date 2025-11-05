@@ -1,0 +1,20 @@
+{
+    "conversion": {
+        "defaultValues": {}
+    },
+    "validation": {
+        "overrides": [
+            {
+                "ruleId": "rule_a_200_090_004_01"
+            },
+            {
+                "ruleId": "rule_i_100_340_005_02"
+                
+            },
+            {
+                "ruleId": "rule_a_200_300_003_02"
+            }
+            
+        ]
+    }
+}

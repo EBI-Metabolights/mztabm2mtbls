@@ -12,7 +12,7 @@
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "args": [
-        "--input-file=submission_validation_test/mztabm/MTBLS263.mztab"
+        "--input-file=test/data/MTBLS263/mztabm/MTBLS263.mztab"
       ],
       "env": {
         "PYTHONPATH": "${workspaceFolder}"
@@ -26,13 +26,16 @@
       "program": "${workspaceFolder}/commands/validate_study.py",
       "args": [
         "--mtbls_provisional_study_id=MTBLS263",
-        "--base_study_path=submission_validation_test/",
+        "--target_metadata_files_path=output/MTBLS263",
+        "--data_files_path=test/data/MTBLS263/FILES",
         "--mtbls_remote_validation=False",
-        "--mztabm_file_path=submission_validation_test/mztabm/MTBLS263.mztab",
-        "--mztabm_mapping_file=submission_validation_test/configurations/mzTab_2_0-M_mapping.xml",
+        "--mztabm_file_path=test/data/MTBLS263/mztabm/MTBLS263.mztab",
+        "--mztabm_mapping_file=test/data/configurations/mzTab_2_0-M_mapping.xml",
         "--mztabm_validation_level=Error",
         "--mtbls_validation_bundle_path=${workspaceFolder}/bundle.tar.gz",
-        "--opa_executable_path=opa"
+        "--opa_executable_path=opa",
+        "--temp-folder=output/temp",
+        "--config-file=test/data/configurations/mztabm2mtbls_config.json"
       ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",

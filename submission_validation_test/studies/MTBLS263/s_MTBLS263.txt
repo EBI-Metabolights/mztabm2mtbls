@@ -1,5 +1,0 @@
-Source Name	Characteristics[Organism]	Term Source REF	Term Accession Number	Characteristics[Organism part]	Term Source REF	Term Accession Number	Characteristics[Variant]	Term Source REF	Term Accession Number	Characteristics[Sample type]	Term Source REF	Term Accession Number	Protocol REF	Sample Name	Comment[mztab:metadata:sample:id]	Comment[mztab:metadata:sample:description]	Factor Value[Replicate]	Term Source REF	Term Accession Number
-3injections_POS	Homo sapiens	NCBITAXON	NCBITaxon:9606	blood	BTO	BTO:0000089							Sample collection	3injections_POS	1		1		
-3samples_sampl1_POS	Homo sapiens	NCBITAXON	NCBITaxon:9606	blood	BTO	BTO:0000089							Sample collection	3samples_sampl1_POS	2		2		
-3samples_sampl2_POS	Homo sapiens	NCBITAXON	NCBITaxon:9606	blood	BTO	BTO:0000089							Sample collection	3samples_sampl2_POS	3		2		
-3samples_sampl3_POS	Homo sapiens	NCBITAXON	NCBITaxon:9606	blood	BTO	BTO:0000089							Sample collection	3samples_sampl3_POS	4		2		
