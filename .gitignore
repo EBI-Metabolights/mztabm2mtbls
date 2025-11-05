@@ -173,3 +173,5 @@ cython_debug/
 
 .mtbls/
 MTBLS_TEST/
+validation.txt
+.gitignore

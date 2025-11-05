@@ -56,4 +56,4 @@ class MetadataSoftwareMapper(BaseMapper):
                 software_settings_comment.value.append("")
             software_settings_comment.value.extend(software_settings_list)
             selected_protocol.components.extend(software_list)
-            selected_protocol.description = f"Data transformation software List: {', '.join([x.type for x in software_list])}"
+            selected_protocol.description += f" Data transformation software List: {', '.join([x.type for x in software_list])}"

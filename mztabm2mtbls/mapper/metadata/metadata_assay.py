@@ -89,7 +89,7 @@ class MetadataAssayMapper(BaseMapper):
                 )
                 for instrument in mztab_model.metadata.instrument:
                     analyzers.update([x.name for x in instrument.analyzer if x.name])
-                protocol.description = ". ".join(
+                protocol.description += ". ".join(
                     [
                         "Mass spectrometry instruments: ",
                         names,
@@ -107,7 +107,7 @@ class MetadataAssayMapper(BaseMapper):
                     species.update([x.name for x in x.species])
                     tissues.update([x.name for x in x.tissue])
 
-                protocol.description = ". ".join(
+                protocol.description += ". ".join(
                     [
                         "Species: ",
                         ", ".join({x for x in species}),
