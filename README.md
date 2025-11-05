@@ -137,28 +137,39 @@ Install following requirements before running local validation
 ```bash
 rm -rf bundle.tar.gz
 curl -L -o bundle.tar.gz https://github.com/EBI-Metabolights/mtbls-validation/raw/test/bundle/bundle.tar.gz
-PYTHONPATH=. uv run python commands/validate_study.py --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error --mtbls_validation_bundle_path bundle.tar.gz --opa_executable_path ./opa
+PYTHONPATH=. uv run python commands/validate_study.py \
+        --mtbls_provisional_study_id=MTBLS263 \
+        --target_metadata_files_path=output/MTBLS263 \
+        --data_files_path=test/data/MTBLS263/FILES \
+        --mztabm_file_path=test/data/MTBLS263/mztabm/MTBLS263.mztab \
+        --mztabm_validation_level=Error \
+        --mtbls_validation_bundle_path=./bundle.tar.gz \
+        --opa_executable_path=./opa \
+        --temp_folder=output/temp \
+        --config_file=test/data/configurations/mztabm2mtbls_config.json
 ```
 
-### Run converter with remote validation
-
-```bash
-PYTHONPATH=. uv run python commands/validate_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True
-```
 
 ### Run converter with mapping file
 
 ```bash
-PYTHONPATH=. uv run python  commands/validate_study.py --mtbls_api_token MTBLS_API_TOKEN_FROM_YOUR_PROFILE --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/mzTab_2_0-M_mapping.xml
+PYTHONPATH=. uv run python commands/validate_study.py \
+        --mtbls_provisional_study_id=MTBLS263 \
+        --target_metadata_files_path=output/MTBLS263 \
+        --data_files_path=test/data/MTBLS263/FILES \
+        --mztabm_file_path=test/data/MTBLS263/mztabm/MTBLS263.mztab \
+        --mztabm_mapping_file=test/data/configurations/mzTab_2_0-M_mapping.xml \
+        --mztabm_validation_level=Error \
+        --mtbls_validation_bundle_path=./bundle.tar.gz \
+        --opa_executable_path=./opa \
+        --temp_folder=output/temp \
+        --config_file=test/data/configurations/mztabm2mtbls_config.json
 ```
 
 ### Setting the validation level for the mzTab-M validation
 
 Use the `--mztabm_validation_level` parameter to set the validation level for the mzTab-M validation. The default value is `Info`, if the argument is not provided. The possible values are `Error`, `Warning`, and `Info`. If set to `Info`, any info, warning or error level validation messages will lead to a failure of the validation. If set to `Warning`, only warning and error level validation messages will lead to a failure of the validation. If set to `Error`, only error level validation messages will lead to a failure of the validation. Generally, it is recommended to set the validation level to `Warning` to ensure that the mzTab-M file is at least compliant with the MetaboLights minimal profile. However, using `Info` will provide more detailed information about potential improvements of the mzTab-M file metadata. Please note that these levels apply to both the basic validation performed by the jmztab-m tool and the semantic validation performed when an [Mapping file](https://github.com/HUPO-PSI/mzTab/blob/master/specification_document-releases/2_0-Metabolomics-Release/mzTab_2_0-M_mapping.xml) is provided with the `--mztabm_mapping_file` parameter.
 
-```bash
-PYTHONPATH=. uv run python commands/validate_study.py --mtbls_api_token d5487ecf-3c13-438f-ba10-a21daa0baea3 --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation True --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error
-```
 
 # Conversion, Validation and Upload Process
 

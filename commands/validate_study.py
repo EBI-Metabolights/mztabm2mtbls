@@ -75,7 +75,7 @@ from mztabm2mtbls import converter
     type=click.Path(exists=True),
 )
 @click.option(
-    "--config-file",
+    "--config_file",
     required=False,
     help="Configuration file to convert mzTab-M file and run MetaboLights validation.",
     type=click.Path(exists=True),
@@ -100,7 +100,7 @@ from mztabm2mtbls import converter
     default="opa",
 )
 @click.option(
-    "--temp-folder",
+    "--temp_folder",
     required=False,
     help="Temporary folder for intermediate outputs.",
     default=None,
@@ -271,7 +271,9 @@ def convert_and_validate_submission(
                     f"SUCCESS. Validation result is stored on {validation_output_path}"
                 )
                 if overridden_errors:
-                    print(f"The following validation rules are overridden: {', '.join(overridden_errors)}", )
+                    print(
+                        f"The following validation rules are overridden: {', '.join(overridden_errors)}",
+                    )
             return True
         except subprocess.TimeoutExpired as exc:
             print("The validation process timed out.")

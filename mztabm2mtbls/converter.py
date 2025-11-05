@@ -141,10 +141,10 @@ def run_jmztabm_docker(
     type=click.Path(exists=True),
 )
 @click.option(
-    "--temp-folder",
+    "--temp_folder",
     required=False,
     help="Temporary folder for intermediate outputs.",
-    default="opa",
+    default=None,
 )
 def convert(
     input_file: str,
@@ -169,11 +169,11 @@ def convert(
 
     input_json_file = input_file
     # print disclaimer that we currently do not fully validate neither the mzTab-M file, nor the ISA-Tab files
-    print(
-        "Please note that the mzTab-M file is not fully validated by this tool.",
-        "The ISA-Tab files are not validated either at the moment.",
-    )
-
+    # print(
+    #     "Please note that the mzTab-M file is not fully validated by this tool.",
+    #     "The ISA-Tab files are not validated either at the moment.",
+    # )
+    print(f"'{input_file}' will be converted MetaboLights ISA-TAB metadata files.")
     _, extension = os.path.splitext(input_file)
     mztab_sourcefile_location = input_file
     with open(input_file, "rb", buffering=0) as f:
@@ -202,8 +202,9 @@ def convert(
             input_json_file = temp_input_file_path + ".json"
             print(
                 "Converting mzTab file to mzTab json format.",
-                "Please check container management tool (docker, podman, etc.) is installed and runnig.",
+                f"Please check container management tool ({container_engine}) is installed and running.",
             )
+            print("Converting mzTab-M to mzTab-M json file...")
             jmztabm_success = run_jmztabm_docker(
                 container_engine=container_engine,
                 mztab2m_json_convertor_image=mztab2m_json_convertor_image,

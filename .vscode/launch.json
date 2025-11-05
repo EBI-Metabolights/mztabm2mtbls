@@ -34,8 +34,8 @@
         "--mztabm_validation_level=Error",
         "--mtbls_validation_bundle_path=${workspaceFolder}/bundle.tar.gz",
         "--opa_executable_path=opa",
-        "--temp-folder=output/temp",
-        "--config-file=test/data/configurations/mztabm2mtbls_config.json"
+        "--temp_folder=output/temp",
+        "--config_file=test/data/configurations/mztabm2mtbls_config.json"
       ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
