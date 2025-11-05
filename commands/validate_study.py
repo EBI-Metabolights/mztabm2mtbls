@@ -53,6 +53,18 @@ from mztabm2mtbls import converter
     type=click.Path(exists=True),
 )
 @click.option(
+    "--data_files_path",
+    required=False,
+    help="The data files root path.",
+    type=click.Path(exists=True),
+)
+@click.option(
+    "--mztabm_file_path",
+    required=False,
+    help="The mzTabM file path.",
+    type=click.Path(exists=True),
+)
+@click.option(
     "--mztabm_validation_level",
     default="Info",
     help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
@@ -88,22 +100,31 @@ def convert_and_validate_submission(
     mtbls_rest_api_base_url: str,
     mtbls_validation_api_base_url: str,
     base_study_path: str,
+    data_files_path: Union[None, str] = None,
+    mztabm_file_path: Union[None, str] = None,
     mztabm_validation_level: str = "Info",
     mztabm_mapping_file: Union[None, str] = None,
     mtbls_remote_validation: bool = False,
     opa_executable_path: str = "opa",
     mtbls_validation_bundle_path: str = "bundle.tar.gz",
 ):
+    if not data_files_path:
+        data_files_path = "FILES"
     submission_repo = MetabolightsSubmissionRepository(
         rest_api_base_url=mtbls_rest_api_base_url,
         validation_api_base_url=mtbls_validation_api_base_url,
     )
 
-    study_path = base_study_path + mtbls_provisional_study_id
+    study_path = os.path.join(base_study_path, "studies", mtbls_provisional_study_id)
+    data_files_path = os.path.join(study_path, "FILES")
+    mztabm_folder_path = os.path.dirname(mztabm_file_path)
+    # mztabm_file_path = os.path.join(
+    #     mztabm_folder_path, mtbls_provisional_study_id + ".mztab"
+    # )
     ctx = click.Context(converter.convert)
-    ctx.forward(
+    success = ctx.forward(
         converter.convert,
-        input_file=study_path + "/" + mtbls_provisional_study_id + ".mztab",
+        input_file=mztabm_file_path,
         output_dir=study_path,
         mtbls_accession_number=mtbls_provisional_study_id,
         container_engine="docker",
@@ -112,7 +133,8 @@ def convert_and_validate_submission(
         mztabm_validation_level=mztabm_validation_level,
         mztabm_mapping_file=mztabm_mapping_file,
     )
-
+    if not success:
+        return
     if mtbls_remote_validation:
         mtbls_converted_study_path = study_path + "/" + mtbls_provisional_study_id
         validation_result_file_path = (
@@ -144,12 +166,12 @@ def convert_and_validate_submission(
             db_metadata_collector=None,
             folder_metadata_collector=LocalFolderMetadataCollector(),
         )
-        target_path = os.path.join(
-            base_study_path, mtbls_provisional_study_id, mtbls_provisional_study_id
-        )
+        # target_path = os.path.join(
+        #     base_study_path, mtbls_provisional_study_id, mtbls_provisional_study_id
+        # )
         model: MetabolightsStudyModel = provider.load_study(
             mtbls_provisional_study_id,
-            study_path=target_path,
+            study_path=study_path,
             connection=None,
             load_assay_files=True,
             load_sample_file=True,
@@ -157,11 +179,12 @@ def convert_and_validate_submission(
             load_folder_metadata=True,
             calculate_data_folder_size=False,
             calculate_metadata_size=False,
+            data_files_path=data_files_path,
+            data_files_mapping_folder_name="FILES",
         )
         json_validation_input = model.model_dump(by_alias=True)
         relative_validation_input_path = os.path.join(
-            base_study_path,
-            mtbls_provisional_study_id,
+            mztabm_folder_path,
             f"{mtbls_provisional_study_id}_validation_input.json",
         )
         validation_input_path = os.path.realpath(relative_validation_input_path)
@@ -195,8 +218,7 @@ def convert_and_validate_submission(
                 .get("value")
             )
             validation_output_path = os.path.join(
-                base_study_path,
-                mtbls_provisional_study_id,
+                mztabm_folder_path,
                 f"{mtbls_provisional_study_id}_validation_output.json",
             )
             with open(validation_output_path, "w") as f:
@@ -208,7 +230,7 @@ def convert_and_validate_submission(
                 if x.type == PolicyMessageType.ERROR
             ]
             for idx, x in enumerate(errors):
-                print(idx + 1, x.title, x.description, x.violation)
+                print(idx + 1, x.identifier, x.title, x.description, x.violation)
             if errors:
                 print(
                     f"Number of errors: {len(errors)}. Validation results are stored on {validation_output_path}"
@@ -234,14 +256,6 @@ def convert_and_validate_submission(
             else:
                 print(str(exc))
             return False
-        finally:
-            # if task and task.stdout:
-            #     print(task.stdout)
-
-            print(
-                "Remote validation is disabled. Please run with '--mtbls_remote_validation True' flag to enable remote validation!"
-            )
-
 
 if __name__ == "__main__":
     convert_and_validate_submission()

@@ -108,9 +108,9 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
         Assay(
             file_name=f"a_{study_id}_metabolite_profiling.txt",
             measurement_type=OntologyAnnotation(
-                term="metabolite profiling",
-                term_source_ref="OBI",
-                term_accession_number="http://purl.obolibrary.org/obo/OBI_0000366",
+                term="untargeted metabolite profiling",
+                term_source_ref="MSIO",
+                term_accession_number="http://purl.obolibrary.org/obo/MSIO_0000101",
             ),
             technology_type=OntologyAnnotation(
                 term="mass spectrometry assay",

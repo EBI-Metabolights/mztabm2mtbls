@@ -21,7 +21,7 @@ Changelog:
     <CvReference cvName="DOID" cvIdentifier="DOID"/>
     <CvReference cvName="CL" cvIdentifier="CL"/>
     <CvReference cvName="BTO" cvIdentifier="BTO"/>
-    <CvReference cvName="NCBITaxon" cvIdentifier="NCBITaxon"/>
+    <CvReference cvName="NCBITAXON" cvIdentifier="NCBITAXON"/>
     <CvReference cvName="UO" cvIdentifier="UO"/>
     <CvReference cvName="PRIDE" cvIdentifier="PRIDE"/>
     <CvReference cvName="MSIO" cvIdentifier="MSIO"/>
@@ -91,7 +91,7 @@ Changelog:
     <!-- sample -->
     <CvMappingRule id="sample_species_may" cvElementPath="/metadata/sample/@species" requirementLevel="MAY"  scopePath="/metadata/sample" cvTermsCombinationLogic="OR">
       <CvTerm termAccession="PRIDE:0000033" useTerm="false" termName="NEWT" isRepeatable="false" allowChildren="true" cvIdentifierRef="PRIDE"></CvTerm>
-      <CvTerm termAccession="NCBITaxon:1" useTerm="false" termName="root" isRepeatable="false" allowChildren="true" cvIdentifierRef="NCBITaxon"></CvTerm>
+      <CvTerm termAccession="NCBITAXON:1" useTerm="false" termName="root" isRepeatable="false" allowChildren="true" cvIdentifierRef="NCBITAXON"></CvTerm>
     </CvMappingRule>
         
     <CvMappingRule id="sample_tissue_may" cvElementPath="/metadata/sample/@tissue" requirementLevel="MAY"  scopePath="/metadata/sample" cvTermsCombinationLogic="OR">

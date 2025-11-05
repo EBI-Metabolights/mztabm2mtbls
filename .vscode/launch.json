@@ -12,7 +12,7 @@
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "args": [
-        "--input-file=submission_validation_test/MTBLS263/MTBLS263.mztab"
+        "--input-file=submission_validation_test/mztabm/MTBLS263.mztab"
       ],
       "env": {
         "PYTHONPATH": "${workspaceFolder}"
@@ -28,7 +28,8 @@
         "--mtbls_provisional_study_id=MTBLS263",
         "--base_study_path=submission_validation_test/",
         "--mtbls_remote_validation=False",
-        "--mztabm_mapping_file=submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml",
+        "--mztabm_file_path=submission_validation_test/mztabm/MTBLS263.mztab",
+        "--mztabm_mapping_file=submission_validation_test/configurations/mzTab_2_0-M_mapping.xml",
         "--mztabm_validation_level=Error",
         "--mtbls_validation_bundle_path=${workspaceFolder}/bundle.tar.gz",
         "--opa_executable_path=opa"

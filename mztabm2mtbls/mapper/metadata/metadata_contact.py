@@ -1,5 +1,5 @@
 from metabolights_utils.models.isa.common import Comment
-from metabolights_utils.models.isa.investigation_file import Person
+from metabolights_utils.models.isa.investigation_file import OntologyAnnotation, Person
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
@@ -22,7 +22,7 @@ class MetadataContactMapper(BaseMapper):
 
         comments = mtbls_model.investigation.studies[0].study_contacts.comments
         comments.append(id_comment)
-        for contact in mztab_model.metadata.contact:
+        for idx, contact in enumerate(mztab_model.metadata.contact):
             first_name = ""
             mid_initials = ""
             last_name = ""
@@ -42,7 +42,25 @@ class MetadataContactMapper(BaseMapper):
                 last_name=last_name,
                 email=contact.email,
                 affiliation=contact.affiliation,
+                roles=[],
             )
+            # define first contact as PI
+            if idx == 0:
+                person.roles.append(
+                    OntologyAnnotation(
+                        term="Principal Investigator",
+                        term_source_ref="NCIT",
+                        term_accession_number="http://purl.obolibrary.org/obo/NCIT_C19924",
+                    )
+                )
+            else:
+                person.roles.append(
+                    OntologyAnnotation(
+                        term="Author",
+                        term_source_ref="NCIT",
+                        term_accession_number="http://purl.obolibrary.org/obo/NCIT_C42781",
+                    )
+                )
             mtbls_contacts = mtbls_model.investigation.studies[0].study_contacts.people
             mtbls_contacts.append(person)
             id_comment.value.append(

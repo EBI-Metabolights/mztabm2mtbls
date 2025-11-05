@@ -18,26 +18,23 @@ class MetadataSampleProcessingMapper(BaseMapper):
         if not selected_protocol:
             return
         process_list = []
+        protocol_definitions = {}
+
         if mztab_model.metadata.sample_processing:
-            for process in mztab_model.metadata.sample_processing:
-                if process.sampleProcessing:
-                    for param in process.sampleProcessing:
-                        item = copy_parameter(param)
+            for sample_process in mztab_model.metadata.sample_processing:
+                if sample_process.sampleProcessing:
+                    for protocol_desc in sample_process.sampleProcessing:
+                        item = copy_parameter(protocol_desc)
 
                         onto = OntologyAnnotation(
                             term=item.name,
                             term_source_ref=item.cv_label,
                             term_accession_number=item.cv_accession,
                         )
+                        protocol_definitions[item.name.lower()] = protocol_desc
                         process_list.append(onto)
-        if process_list:
+        if process_list and "sample preparation" in protocol_definitions:
+            desc = protocol_definitions["sample preparation"].value
             selected_protocol.description += (
-                "Sample processing: <br> - "
-                + "<br> - ".join(
-                    [
-                        f"{x.term} [{x.term_source_ref}  {x.term_accession_number} ]"
-                        for x in process_list
-                    ]
-                )
-                + "<br>"
+                "Sample processing: <br> - " + desc + "<br>"
             )

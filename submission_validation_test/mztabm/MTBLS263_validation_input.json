@@ -6,18 +6,20 @@
     "identifier": "MTBLS263",
     "title": "",
     "description": "",
-    "submissionDate": "2025-11-01",
-    "publicReleaseDate": "2025-11-01",
+    "submissionDate": "2025-11-05",
+    "publicReleaseDate": "2025-11-05",
     "ontologySourceReferences": {
       "comments": [
         {
           "name": "mztab.metadata.cv:id",
           "value": [
-            "",
+            "6",
             "2",
             "1",
             "3",
-            "4"
+            "4",
+            "5",
+            "7"
           ]
         }
       ],
@@ -51,6 +53,18 @@
           "sourceFile": "http://purl.obolibrary.org/obo/chmo.owl",
           "sourceVersion": "1.2",
           "sourceDescription": "Chemical Methods Ontology"
+        },
+        {
+          "sourceName": "NCBITAXON",
+          "sourceFile": "http://purl.obolibrary.org/obo/NCBITaxon.owl",
+          "sourceVersion": "1.2",
+          "sourceDescription": "NCBITAXON"
+        },
+        {
+          "sourceName": "BTO",
+          "sourceFile": "http://purl.obolibrary.org/obo/bto.owl",
+          "sourceVersion": "1.2",
+          "sourceDescription": "BTO"
         }
       ]
     },
@@ -68,13 +82,13 @@
           {
             "name": "mztab:source_file:location",
             "value": [
-              "submission_validation_test/MTBLS263/MTBLS263.mztab"
+              "submission_validation_test/mztabm/MTBLS263.mztab"
             ]
           },
           {
             "name": "mztab:source_file:hash:sha256",
             "value": [
-              "662ca07c1e5bec497a6f78763fd1dae93ab6abcbddbc953647346c99a56b962a"
+              "298f47a88bde409a5bf3070761f454686111e79872d85470a4fcd9cf45c3056d"
             ]
           },
           {
@@ -93,8 +107,8 @@
         "identifier": "MTBLS263",
         "title": "Individual variability in human blood metabolites identifies age-related differences",
         "description": "Metabolites present in human blood document individual physiological states influenced by genetic, epigenetic, and lifestyle factors. Using high-resolution liquid chromatography-mass spectrometry (LC-MS), we performed nontargeted, quantitative metabolomics analysis in blood of 15 young (29 \u00b1 4 y of age) and 15 elderly (81 \u00b1 7 y of age) individuals. Coefficients of variation (CV = SD/mean) were obtained for 126 blood metabolites of all 30 donors. Fifty-five RBC-enriched metabolites, for which metabolomics studies have been scarce, are highlighted here. We found 14 blood compounds that show remarkable age-related increases or decreases; they include 1,5-anhydroglucitol, dimethyl-guanosine, acetyl-carnosine, carnosine, ophthalmic acid, UDP-acetyl-glucosamine, N-acetyl-arginine, N6-acetyl-lysine, pantothenate, citrulline, leucine, isoleucine, NAD+, and NADP+. Six of them are RBC-enriched, suggesting that RBC metabolomics is highly valuable for human aging research. Age differences are partly explained by a decrease in antioxidant production or increasing inefficiency of urea metabolism among the elderly. Pearson\u2019s coefficients demonstrated that some age-related compounds are correlated, suggesting that aging affects them concomitantly. Although our CV values are mostly consistent with those CVs previously published, we here report previously unidentified CVs of 51 blood compounds. Compounds having moderate to high CV values (0.4\u20132.5) are often modified. Compounds having low CV values, such as ATP and glutathione, may be related to various diseases because their concentrations are strictly controlled, and changes in them would compromise health. Thus, human blood is a rich source of information about individual metabolic differences",
-        "submissionDate": "2025-11-01",
-        "publicReleaseDate": "2025-11-01",
+        "submissionDate": "2025-11-05",
+        "publicReleaseDate": "2025-11-05",
         "fileName": "s_MTBLS263.txt",
         "studyCategory": "",
         "templateVersion": "",
@@ -160,8 +174,8 @@
             {
               "pubMedId": "",
               "doi": "10.1073/pnas.1603023113",
-              "authorList": "",
-              "title": "",
+              "authorList": "Romanas Chaleckis",
+              "title": "Individual variability in human blood metabolites identifies age-related differences",
               "status": {
                 "term": "published",
                 "termAccessionNumber": "http://www.ebi.ac.uk/efo/EFO_0001796",
@@ -172,7 +186,17 @@
         },
         "studyFactors": {
           "comments": [],
-          "factors": []
+          "factors": [
+            {
+              "name": "Replicate",
+              "type": {
+                "term": "Replicate",
+                "termAccessionNumber": "",
+                "termSourceRef": ""
+              },
+              "valueFormat": ""
+            }
+          ]
         },
         "studyAssays": {
           "comments": [],
@@ -180,9 +204,9 @@
             {
               "fileName": "a_MTBLS263_metabolite_profiling.txt",
               "measurementType": {
-                "term": "metabolite profiling",
-                "termAccessionNumber": "http://purl.obolibrary.org/obo/OBI_0000366",
-                "termSourceRef": "OBI"
+                "term": "untargeted metabolite profiling",
+                "termAccessionNumber": "http://purl.obolibrary.org/obo/MSIO_0000101",
+                "termSourceRef": "MSIO"
               },
               "technologyType": {
                 "term": "mass spectrometry assay",
@@ -257,7 +281,7 @@
                 "termAccessionNumber": "",
                 "termSourceRef": ""
               },
-              "description": "",
+              "description": "Sample processing: <br> - Extraction protocol content is defined. Describe more details<br>",
               "uri": "",
               "version": "",
               "parameters": [
@@ -400,7 +424,13 @@
               "fax": "",
               "address": "",
               "affiliation": "Okinawa Institute of Science and Technology Graduate University",
-              "roles": [],
+              "roles": [
+                {
+                  "term": "Principal Investigator",
+                  "termAccessionNumber": "http://purl.obolibrary.org/obo/NCIT_C19924",
+                  "termSourceRef": "NCIT"
+                }
+              ],
               "orcid": "",
               "additionalEmails": [],
               "affiliationRorId": ""
@@ -413,7 +443,7 @@
   "samples": {
     "s_MTBLS263.txt": {
       "filePath": "s_MTBLS263.txt",
-      "sha256Hash": "800de6da4fe7133a4f68ccd9f330a98374ba1e368ea01087f30e8a842f8b15c7",
+      "sha256Hash": "4e39643d87b1d8a02597506429f7ebf3b4d3218eee3ce4319ec18fe7b865f585",
       "table": {
         "columns": [
           "Source Name",
@@ -432,7 +462,10 @@
           "Protocol REF",
           "Sample Name",
           "Comment[mztab:metadata:sample:id]",
-          "Comment[mztab:metadata:sample:description]"
+          "Comment[mztab:metadata:sample:description]",
+          "Factor Value[Replicate]",
+          "Term Source REF.4",
+          "Term Accession Number.4"
         ],
         "headers": [
           {
@@ -616,6 +649,39 @@
             "columnStructure": "SINGLE_COLUMN",
             "columnPrefix": "Comment",
             "columnSearchPattern": "^Comment\\b\\[(\\w{1}[ -~]*)\\](\\.\\d+)?$"
+          },
+          {
+            "columnIndex": 17,
+            "columnName": "Factor Value[Replicate]",
+            "columnHeader": "Factor Value[Replicate]",
+            "additionalColumns": [
+              "Term Source REF",
+              "Term Accession Number"
+            ],
+            "columnCategory": "Factor Value",
+            "columnStructure": "ONTOLOGY_COLUMN",
+            "columnPrefix": "Factor Value",
+            "columnSearchPattern": "^Factor Value\\[(\\w[ -~]*)\\](\\.\\d+)?$"
+          },
+          {
+            "columnIndex": 18,
+            "columnName": "Term Source REF.4",
+            "columnHeader": "Term Source REF",
+            "additionalColumns": [],
+            "columnCategory": "Linked Column",
+            "columnStructure": "LINKED_COLUMN",
+            "columnPrefix": "",
+            "columnSearchPattern": ""
+          },
+          {
+            "columnIndex": 19,
+            "columnName": "Term Accession Number.4",
+            "columnHeader": "Term Accession Number",
+            "additionalColumns": [],
+            "columnCategory": "Linked Column",
+            "columnStructure": "LINKED_COLUMN",
+            "columnPrefix": "",
+            "columnSearchPattern": ""
           }
         ],
         "data": {
@@ -632,10 +698,10 @@
             "Homo sapiens"
           ],
           "Term Source REF": [
-            "NCBITaxon",
-            "NCBITaxon",
-            "NCBITaxon",
-            "NCBITaxon"
+            "NCBITAXON",
+            "NCBITAXON",
+            "NCBITAXON",
+            "NCBITAXON"
           ],
           "Term Accession Number": [
             "NCBITaxon:9606",
@@ -720,6 +786,24 @@
             "",
             "",
             ""
+          ],
+          "Factor Value[Replicate]": [
+            "1",
+            "2",
+            "2",
+            "2"
+          ],
+          "Term Source REF.4": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "Term Accession Number.4": [
+            "",
+            "",
+            "",
+            ""
           ]
         },
         "rowIndices": [
@@ -745,27 +829,30 @@
           13,
           14,
           15,
-          16
+          16,
+          17,
+          18,
+          19
         ],
         "filteredTotalRowCount": 4,
         "rowOffset": 0,
         "rowCount": 4,
         "totalRowCount": 4,
         "selectedColumnCount": 0,
-        "totalColumnCount": 17,
+        "totalColumnCount": 20,
         "filterOptions": [],
         "sortOptions": []
       },
       "sampleNames": [
-        "3samples_sampl2_POS",
         "3samples_sampl1_POS",
-        "3injections_POS",
-        "3samples_sampl3_POS"
+        "3samples_sampl3_POS",
+        "3samples_sampl2_POS",
+        "3injections_POS"
       ],
       "organisms": [
         {
           "term": "Homo sapiens",
-          "termSourceRef": "NCBITaxon",
+          "termSourceRef": "NCBITAXON",
           "termAccessionNumber": "NCBITaxon:9606"
         }
       ],
@@ -780,7 +867,7 @@
         {
           "organism": {
             "term": "Homo sapiens",
-            "termSourceRef": "NCBITaxon",
+            "termSourceRef": "NCBITAXON",
             "termAccessionNumber": "NCBITaxon:9606"
           },
           "organismPart": {
@@ -807,7 +894,7 @@
   "assays": {
     "a_MTBLS263_metabolite_profiling.txt": {
       "filePath": "a_MTBLS263_metabolite_profiling.txt",
-      "sha256Hash": "157d7831c907dcd8c4ba51cb64c32566d0f93fd398b586746fa8ed4080276185",
+      "sha256Hash": "98de0a390b39ae469e3c69a373da2aa3260addd92e14bb37162771f6b7c9eb12",
       "table": {
         "columns": [
           "Comment[mztab:metadata:assay:id]",
@@ -831,17 +918,21 @@
           "Term Source REF.1",
           "Term Accession Number.1",
           "Parameter Value[Ion source]",
+          "Term Source REF.2",
+          "Term Accession Number.2",
           "Parameter Value[Mass analyzer]",
+          "Term Source REF.3",
+          "Term Accession Number.3",
           "MS Assay Name",
           "Raw Spectral Data File",
           "Protocol REF.2",
           "Normalization Name",
           "Parameter Value[Native spectrum identifier format]",
-          "Term Source REF.2",
-          "Term Accession Number.2",
+          "Term Source REF.4",
+          "Term Accession Number.4",
           "Parameter Value[Raw data file format]",
-          "Term Source REF.3",
-          "Term Accession Number.3",
+          "Term Source REF.5",
+          "Term Accession Number.5",
           "Derived Spectral Data File",
           "Protocol REF.3",
           "Data Transformation Name",
@@ -1058,24 +1149,70 @@
             "columnIndex": 20,
             "columnName": "Parameter Value[Ion source]",
             "columnHeader": "Parameter Value[Ion source]",
-            "additionalColumns": [],
+            "additionalColumns": [
+              "Term Source REF",
+              "Term Accession Number"
+            ],
             "columnCategory": "Parameter Value",
-            "columnStructure": "SINGLE_COLUMN",
+            "columnStructure": "ONTOLOGY_COLUMN",
             "columnPrefix": "Parameter Value",
             "columnSearchPattern": "^[ ]*Parameter[ ]+Value[ ]*\\[[ ]*(\\w[ -~]*)[ ]*\\](\\.\\d+)?$"
           },
           {
             "columnIndex": 21,
+            "columnName": "Term Source REF.2",
+            "columnHeader": "Term Source REF",
+            "additionalColumns": [],
+            "columnCategory": "Linked Column",
+            "columnStructure": "LINKED_COLUMN",
+            "columnPrefix": "",
+            "columnSearchPattern": ""
+          },
+          {
+            "columnIndex": 22,
+            "columnName": "Term Accession Number.2",
+            "columnHeader": "Term Accession Number",
+            "additionalColumns": [],
+            "columnCategory": "Linked Column",
+            "columnStructure": "LINKED_COLUMN",
+            "columnPrefix": "",
+            "columnSearchPattern": ""
+          },
+          {
+            "columnIndex": 23,
             "columnName": "Parameter Value[Mass analyzer]",
             "columnHeader": "Parameter Value[Mass analyzer]",
-            "additionalColumns": [],
+            "additionalColumns": [
+              "Term Source REF",
+              "Term Accession Number"
+            ],
             "columnCategory": "Parameter Value",
-            "columnStructure": "SINGLE_COLUMN",
+            "columnStructure": "ONTOLOGY_COLUMN",
             "columnPrefix": "Parameter Value",
             "columnSearchPattern": "^[ ]*Parameter[ ]+Value[ ]*\\[[ ]*(\\w[ -~]*)[ ]*\\](\\.\\d+)?$"
           },
           {
-            "columnIndex": 22,
+            "columnIndex": 24,
+            "columnName": "Term Source REF.3",
+            "columnHeader": "Term Source REF",
+            "additionalColumns": [],
+            "columnCategory": "Linked Column",
+            "columnStructure": "LINKED_COLUMN",
+            "columnPrefix": "",
+            "columnSearchPattern": ""
+          },
+          {
+            "columnIndex": 25,
+            "columnName": "Term Accession Number.3",
+            "columnHeader": "Term Accession Number",
+            "additionalColumns": [],
+            "columnCategory": "Linked Column",
+            "columnStructure": "LINKED_COLUMN",
+            "columnPrefix": "",
+            "columnSearchPattern": ""
+          },
+          {
+            "columnIndex": 26,
             "columnName": "MS Assay Name",
             "columnHeader": "MS Assay Name",
             "additionalColumns": [],
@@ -1085,7 +1222,7 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 23,
+            "columnIndex": 27,
             "columnName": "Raw Spectral Data File",
             "columnHeader": "Raw Spectral Data File",
             "additionalColumns": [],
@@ -1095,7 +1232,7 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 24,
+            "columnIndex": 28,
             "columnName": "Protocol REF.2",
             "columnHeader": "Protocol REF",
             "additionalColumns": [],
@@ -1105,7 +1242,7 @@
             "columnSearchPattern": "^(Protocol REF)(\\.\\d+)?$"
           },
           {
-            "columnIndex": 25,
+            "columnIndex": 29,
             "columnName": "Normalization Name",
             "columnHeader": "Normalization Name",
             "additionalColumns": [],
@@ -1115,7 +1252,7 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 26,
+            "columnIndex": 30,
             "columnName": "Parameter Value[Native spectrum identifier format]",
             "columnHeader": "Parameter Value[Native spectrum identifier format]",
             "additionalColumns": [
@@ -1128,8 +1265,8 @@
             "columnSearchPattern": "^[ ]*Parameter[ ]+Value[ ]*\\[[ ]*(\\w[ -~]*)[ ]*\\](\\.\\d+)?$"
           },
           {
-            "columnIndex": 27,
-            "columnName": "Term Source REF.2",
+            "columnIndex": 31,
+            "columnName": "Term Source REF.4",
             "columnHeader": "Term Source REF",
             "additionalColumns": [],
             "columnCategory": "Linked Column",
@@ -1138,8 +1275,8 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 28,
-            "columnName": "Term Accession Number.2",
+            "columnIndex": 32,
+            "columnName": "Term Accession Number.4",
             "columnHeader": "Term Accession Number",
             "additionalColumns": [],
             "columnCategory": "Linked Column",
@@ -1148,7 +1285,7 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 29,
+            "columnIndex": 33,
             "columnName": "Parameter Value[Raw data file format]",
             "columnHeader": "Parameter Value[Raw data file format]",
             "additionalColumns": [
@@ -1161,8 +1298,8 @@
             "columnSearchPattern": "^[ ]*Parameter[ ]+Value[ ]*\\[[ ]*(\\w[ -~]*)[ ]*\\](\\.\\d+)?$"
           },
           {
-            "columnIndex": 30,
-            "columnName": "Term Source REF.3",
+            "columnIndex": 34,
+            "columnName": "Term Source REF.5",
             "columnHeader": "Term Source REF",
             "additionalColumns": [],
             "columnCategory": "Linked Column",
@@ -1171,8 +1308,8 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 31,
-            "columnName": "Term Accession Number.3",
+            "columnIndex": 35,
+            "columnName": "Term Accession Number.5",
             "columnHeader": "Term Accession Number",
             "additionalColumns": [],
             "columnCategory": "Linked Column",
@@ -1181,7 +1318,7 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 32,
+            "columnIndex": 36,
             "columnName": "Derived Spectral Data File",
             "columnHeader": "Derived Spectral Data File",
             "additionalColumns": [],
@@ -1191,7 +1328,7 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 33,
+            "columnIndex": 37,
             "columnName": "Protocol REF.3",
             "columnHeader": "Protocol REF",
             "additionalColumns": [],
@@ -1201,7 +1338,7 @@
             "columnSearchPattern": "^(Protocol REF)(\\.\\d+)?$"
           },
           {
-            "columnIndex": 34,
+            "columnIndex": 38,
             "columnName": "Data Transformation Name",
             "columnHeader": "Data Transformation Name",
             "additionalColumns": [],
@@ -1211,7 +1348,7 @@
             "columnSearchPattern": ""
           },
           {
-            "columnIndex": 35,
+            "columnIndex": 39,
             "columnName": "Metabolite Assignment File",
             "columnHeader": "Metabolite Assignment File",
             "additionalColumns": [],
@@ -1390,6 +1527,22 @@
             "ESI",
             "ESI"
           ],
+          "Term Source REF.2": [
+            "MS",
+            "MS",
+            "MS",
+            "MS",
+            "MS",
+            "MS"
+          ],
+          "Term Accession Number.2": [
+            "http://purl.obolibrary.org/obo/MS_1000073",
+            "http://purl.obolibrary.org/obo/MS_1000073",
+            "http://purl.obolibrary.org/obo/MS_1000073",
+            "http://purl.obolibrary.org/obo/MS_1000073",
+            "http://purl.obolibrary.org/obo/MS_1000073",
+            "http://purl.obolibrary.org/obo/MS_1000073"
+          ],
           "Parameter Value[Mass analyzer]": [
             "orbitrap",
             "orbitrap",
@@ -1398,13 +1551,29 @@
             "orbitrap",
             "orbitrap"
           ],
+          "Term Source REF.3": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "Term Accession Number.3": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
           "MS Assay Name": [
-            "http://purl.obolibrary.org/obo/MS_1000073",
-            "http://purl.obolibrary.org/obo/MS_1000073",
-            "http://purl.obolibrary.org/obo/MS_1000073",
-            "http://purl.obolibrary.org/obo/MS_1000073",
-            "http://purl.obolibrary.org/obo/MS_1000073",
-            "http://purl.obolibrary.org/obo/MS_1000073"
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
           ],
           "Raw Spectral Data File": [
             "",
@@ -1438,7 +1607,7 @@
             "",
             ""
           ],
-          "Term Source REF.2": [
+          "Term Source REF.4": [
             "",
             "",
             "",
@@ -1446,7 +1615,7 @@
             "",
             ""
           ],
-          "Term Accession Number.2": [
+          "Term Accession Number.4": [
             "",
             "",
             "",
@@ -1462,7 +1631,7 @@
             "mzML file",
             "mzML file"
           ],
-          "Term Source REF.3": [
+          "Term Source REF.5": [
             "MS",
             "MS",
             "MS",
@@ -1470,7 +1639,7 @@
             "MS",
             "MS"
           ],
-          "Term Accession Number.3": [
+          "Term Accession Number.5": [
             "http://purl.obolibrary.org/obo/MS_1000584",
             "http://purl.obolibrary.org/obo/MS_1000584",
             "http://purl.obolibrary.org/obo/MS_1000584",
@@ -1555,25 +1724,34 @@
           32,
           33,
           34,
-          35
+          35,
+          36,
+          37,
+          38,
+          39
         ],
         "filteredTotalRowCount": 6,
         "rowOffset": 0,
         "rowCount": 6,
         "totalRowCount": 6,
         "selectedColumnCount": 0,
-        "totalColumnCount": 36,
+        "totalColumnCount": 40,
         "filterOptions": [],
         "sortOptions": []
       },
       "sampleNames": [
-        "3samples_sampl2_POS",
         "3samples_sampl1_POS",
-        "3injections_POS",
-        "3samples_sampl3_POS"
+        "3samples_sampl3_POS",
+        "3samples_sampl2_POS",
+        "3injections_POS"
       ],
       "assayNames": [
-        "http://purl.obolibrary.org/obo/MS_1000073"
+        "6",
+        "5",
+        "1",
+        "4",
+        "2",
+        "3"
       ],
       "referencedAssignmentFiles": [
         "m_MTBLS263_metabolite_profiling_v2_maf.tsv"
@@ -1581,11 +1759,11 @@
       "referencedRawFiles": [],
       "referencedDerivedFiles": [
         "FILES/3samples_sampl1_POS.mzML",
-        "FILES/3samples_sampl3_POS.mzML",
-        "FILES/3injections_inj3_POS.mzML",
         "FILES/3injections_inj1_POS.mzML",
+        "FILES/3injections_inj3_POS.mzML",
         "FILES/3samples_sampl2_POS.mzML",
-        "FILES/3injections_inj2_POS.mzML"
+        "FILES/3injections_inj2_POS.mzML",
+        "FILES/3samples_sampl3_POS.mzML"
       ],
       "referencedRawFileExtensions": [],
       "referencedDerivedFileExtensions": [
@@ -1611,11 +1789,11 @@
   ],
   "referencedRawFiles": [],
   "referencedDerivedFiles": [
-    "FILES/3injections_inj1_POS.mzML",
-    "FILES/3samples_sampl3_POS.mzML",
-    "FILES/3samples_sampl1_POS.mzML",
     "FILES/3samples_sampl2_POS.mzML",
+    "FILES/3samples_sampl1_POS.mzML",
+    "FILES/3injections_inj1_POS.mzML",
     "FILES/3injections_inj2_POS.mzML",
+    "FILES/3samples_sampl3_POS.mzML",
     "FILES/3injections_inj3_POS.mzML"
   ],
   "foldersInHierarchy": [
@@ -2531,23 +2709,23 @@
         "sortOptions": []
       },
       "identifiedMetaboliteNames": [
-        "Creatinine",
-        "Methionine",
-        "Lysine",
-        "Valine",
-        "Hypoxanthine",
+        "Proline",
         "Urate",
         "Threonine",
-        "PIPES [M-H]-",
-        "Proline",
         "Glycerol-2-phosphate",
-        "Leucine",
-        "myo-Inositol",
-        "UMP",
-        "Taurine",
         "Glutamine",
+        "Methionine",
+        "PIPES [M-H]-",
+        "UMP",
+        "myo-Inositol",
+        "Lysine",
+        "Creatinine",
+        "Taurine",
+        "Hypoxanthine",
+        "Asparagine",
         "GDP",
-        "Asparagine"
+        "Leucine",
+        "Valine"
       ],
       "metaboliteAssignments": {
         "Creatinine": "CHEBI:16737",
@@ -2625,8 +2803,8 @@
         "sizeInBytes": 0,
         "isDirectory": true,
         "isLink": false,
-        "modifiedAt": 1761980560,
-        "createdAt": 1761980560,
+        "modifiedAt": 0,
+        "createdAt": 1762326099,
         "mode": "755",
         "tags": []
       }
@@ -2637,11 +2815,11 @@
         "baseName": "s_MTBLS263.txt",
         "parentDirectory": "",
         "extension": ".txt",
-        "sizeInBytes": 877,
+        "sizeInBytes": 955,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1761983203,
-        "createdAt": 1761983203,
+        "modifiedAt": 1762326098,
+        "createdAt": 1762326098,
         "mode": "644",
         "tags": [
           "type:isatab_file/samples"
@@ -2655,17 +2833,47 @@
         "sizeInBytes": 3151,
         "isDirectory": false,
         "isLink": false,
-        "modifiedAt": 1761983203,
-        "createdAt": 1761983203,
+        "modifiedAt": 1762326098,
+        "createdAt": 1762326098,
         "mode": "644",
         "tags": [
           "type:isatab_file/assignments"
         ]
       },
+      "i_Investigation.txt": {
+        "filePath": "i_Investigation.txt",
+        "baseName": "i_Investigation.txt",
+        "parentDirectory": "",
+        "extension": ".txt",
+        "sizeInBytes": 7762,
+        "isDirectory": false,
+        "isLink": false,
+        "modifiedAt": 1762326098,
+        "createdAt": 1762326098,
+        "mode": "644",
+        "tags": [
+          "type:isatab_file/investigation"
+        ]
+      },
+      "a_MTBLS263_metabolite_profiling.txt": {
+        "filePath": "a_MTBLS263_metabolite_profiling.txt",
+        "baseName": "a_MTBLS263_metabolite_profiling.txt",
+        "parentDirectory": "",
+        "extension": ".txt",
+        "sizeInBytes": 3317,
+        "isDirectory": false,
+        "isLink": false,
+        "modifiedAt": 1762326098,
+        "createdAt": 1762326098,
+        "mode": "644",
+        "tags": [
+          "type:isatab_file/assay"
+        ]
+      },
       "FILES/3injections_inj2_POS.mzML": {
         "filePath": "FILES/3injections_inj2_POS.mzML",
         "baseName": "3injections_inj2_POS.mzML",
-        "parentDirectory": "FILES",
+        "parentDirectory": "FILES/3injections_inj2_POS.mzML",
         "extension": ".mzML",
         "sizeInBytes": 1,
         "isDirectory": false,
@@ -2678,7 +2886,7 @@
       "FILES/3injections_inj3_POS.mzML": {
         "filePath": "FILES/3injections_inj3_POS.mzML",
         "baseName": "3injections_inj3_POS.mzML",
-        "parentDirectory": "FILES",
+        "parentDirectory": "FILES/3injections_inj3_POS.mzML",
         "extension": ".mzML",
         "sizeInBytes": 1,
         "isDirectory": false,
@@ -2691,7 +2899,7 @@
       "FILES/3samples_sampl2_POS.mzML": {
         "filePath": "FILES/3samples_sampl2_POS.mzML",
         "baseName": "3samples_sampl2_POS.mzML",
-        "parentDirectory": "FILES",
+        "parentDirectory": "FILES/3samples_sampl2_POS.mzML",
         "extension": ".mzML",
         "sizeInBytes": 1,
         "isDirectory": false,
@@ -2704,7 +2912,7 @@
       "FILES/3samples_sampl3_POS.mzML": {
         "filePath": "FILES/3samples_sampl3_POS.mzML",
         "baseName": "3samples_sampl3_POS.mzML",
-        "parentDirectory": "FILES",
+        "parentDirectory": "FILES/3samples_sampl3_POS.mzML",
         "extension": ".mzML",
         "sizeInBytes": 1,
         "isDirectory": false,
@@ -2717,7 +2925,7 @@
       "FILES/3injections_inj1_POS.mzML": {
         "filePath": "FILES/3injections_inj1_POS.mzML",
         "baseName": "3injections_inj1_POS.mzML",
-        "parentDirectory": "FILES",
+        "parentDirectory": "FILES/3injections_inj1_POS.mzML",
         "extension": ".mzML",
         "sizeInBytes": 1,
         "isDirectory": false,
@@ -2730,7 +2938,7 @@
       "FILES/3samples_sampl1_POS.mzML": {
         "filePath": "FILES/3samples_sampl1_POS.mzML",
         "baseName": "3samples_sampl1_POS.mzML",
-        "parentDirectory": "FILES",
+        "parentDirectory": "FILES/3samples_sampl1_POS.mzML",
         "extension": ".mzML",
         "sizeInBytes": 1,
         "isDirectory": false,
@@ -2739,36 +2947,6 @@
         "createdAt": 1761980560,
         "mode": "644",
         "tags": []
-      },
-      "i_Investigation.txt": {
-        "filePath": "i_Investigation.txt",
-        "baseName": "i_Investigation.txt",
-        "parentDirectory": "",
-        "extension": ".txt",
-        "sizeInBytes": 7348,
-        "isDirectory": false,
-        "isLink": false,
-        "modifiedAt": 1761983203,
-        "createdAt": 1761983203,
-        "mode": "644",
-        "tags": [
-          "type:isatab_file/investigation"
-        ]
-      },
-      "a_MTBLS263_metabolite_profiling.txt": {
-        "filePath": "a_MTBLS263_metabolite_profiling.txt",
-        "baseName": "a_MTBLS263_metabolite_profiling.txt",
-        "parentDirectory": "",
-        "extension": ".txt",
-        "sizeInBytes": 3199,
-        "isDirectory": false,
-        "isLink": false,
-        "modifiedAt": 1761983203,
-        "createdAt": 1761983203,
-        "mode": "644",
-        "tags": [
-          "type:isatab_file/assay"
-        ]
       }
     }
   },

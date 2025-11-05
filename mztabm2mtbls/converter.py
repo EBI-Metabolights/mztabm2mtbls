@@ -41,12 +41,12 @@ def run_jmztabm_docker(
     docker_volume_mounts = ["-v", f"{dirname}:/home/data"]
     if mztabm_mapping_file:
         abs_mztabm_mapping_file = os.path.realpath(mztabm_mapping_file)
-        abs_mztabm_mapping_file_dir = os.path.dirname(abs_mztabm_mapping_file)
+        # abs_mztabm_mapping_file_dir = os.path.dirname(abs_mztabm_mapping_file)
         mztabm_mapping_filename = os.path.basename(abs_mztabm_mapping_file)
         docker_volume_mounts.extend(
             [
                 "-v",
-                f"{abs_mztabm_mapping_file_dir}/{mztabm_mapping_filename}:/home/data/{mztabm_mapping_filename}",
+                f"{abs_mztabm_mapping_file}:/home/configuration/{mztabm_mapping_filename}",
             ]
         )
     local_command.extend(docker_volume_mounts)
@@ -63,7 +63,7 @@ def run_jmztabm_docker(
         f"{mztabm_validation_level}",
     ]
     if mztabm_mapping_file:
-        jmztab_m_command.extend(["-s", f"/home/data/{mztabm_mapping_filename}"])
+        jmztab_m_command.extend(["-s", f"/home/configuration/{mztabm_mapping_filename}"])
     local_command.extend(jmztab_m_command)
     print(f"Running command: {' '.join(local_command)}")
     try:
@@ -197,8 +197,10 @@ def convert(
                 print(
                     f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' failed. Please check the logs for further details!"
                 )
-                # return False
-
+                return False
+    if not os.path.exists(input_json_file):
+        print("mzTabM to mztabM json conversion failed.")
+        return False
     with open(input_json_file) as f:
         mztab_json_data = json.load(f)
     utils.replace_null_string_with_none(mztab_json_data)
@@ -226,7 +228,7 @@ def convert(
 
     for mapper in mappers:
         mapper.update(mztab_model, mtbls_model)
-    study_metadata_output_path = os.path.join(output_dir, mtbls_accession_number)
+    study_metadata_output_path = output_dir
     utils.save_metabolights_study_model(
         mtbls_model, output_dir=study_metadata_output_path
     )

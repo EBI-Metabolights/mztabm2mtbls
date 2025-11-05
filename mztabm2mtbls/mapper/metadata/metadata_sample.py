@@ -67,18 +67,20 @@ class MetadataSampleMapper(BaseMapper):
         factor_value_names = []
         factor_value_parameters = {}
         sample_factors: Dict[str, Set[Any]] = {}
+        factors = {}
         for sv in mztab_model.metadata.study_variable:
             if sv.factors:
                 for factor in sv.factors:
+                    factors[factor.name] = factor
                     if factor.name:
                         if factor.name not in factor_value_names:
                             factor_value_parameters[factor.name] = factor
                             factor_value_names.append(factor.name)
                         factor_tuple = (
-                            factor.cv_label,
-                            factor.cv_accession,
-                            factor.name,
-                            factor.value,
+                            factor.cv_label or "",
+                            factor.cv_accession or "",
+                            factor.name or "",
+                            factor.value or "",
                         )
                         if sv.assay_refs:
                             assay_refs = [
@@ -93,12 +95,13 @@ class MetadataSampleMapper(BaseMapper):
                                 for sample_id in sample_ref_ids:
                                     if sample_id not in sample_factors:
                                         sample_factors[sample_id] = set()
-                                    sample_factors[sample_id].add(factor_tuple)
+                                    sample_factors[sample_id].add((factor_tuple, sv.name))
 
         for factor_value_name in factor_value_names:
             add_isa_table_ontology_columns(
                 samples_file, f"Factor Value[{factor_value_name}]"
             )
+            factor = factors[factor_value_name]
             item = copy_parameter(factor)
             study.study_factors.factors.append(
                 Factor(
@@ -185,16 +188,16 @@ class MetadataSampleMapper(BaseMapper):
                             )
 
             if sample.id in sample_factors:
-                for factor_tuple in sample_factors[sample.id]:
+                for factor_tuple, factor_val in sample_factors[sample.id]:
                     header = f"Factor Value[{factor_tuple[2]}]"
                     if header in selected_column_headers:
                         definition = selected_column_headers[header]
                         column_name = definition.target_column_name
-                        val = sanitise_data(factor_tuple[3])
-                        if val:
+                        # val = sanitise_data(factor_tuple[3])
+                        if factor_val:
                             if samples_file.table.data[column_name][row_idx]:
                                 samples_file.table.data[column_name][row_idx] += (
-                                    f";{val}"
+                                    f";{factor_val}"
                                 )
                             else:
-                                samples_file.table.data[column_name][row_idx] = val
+                                samples_file.table.data[column_name][row_idx] = factor_val

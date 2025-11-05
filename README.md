@@ -136,7 +136,7 @@ Install following requirements before running local validation
 
 ```bash
 rm -rf bundle.tar.gz
-curl -L -o bundle.tar.gz https://github.com/EBI-Metabolights/mtbls-validation/raw/main/bundle/bundle.tar.gz
+curl -L -o bundle.tar.gz https://github.com/EBI-Metabolights/mtbls-validation/raw/test/bundle/bundle.tar.gz
 PYTHONPATH=. uv run python commands/validate_study.py --mtbls_provisional_study_id MTBLS263 --base_study_path submission_validation_test/ --mtbls_remote_validation False --mztabm_mapping_file submission_validation_test/MTBLS263/mzTab_2_0-M_mapping.xml --mztabm_validation_level Error --mtbls_validation_bundle_path bundle.tar.gz --opa_executable_path ./opa
 ```
 

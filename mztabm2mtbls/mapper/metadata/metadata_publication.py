@@ -25,7 +25,7 @@ class MetadataPublicationMapper(BaseMapper):
         )
         comments = mtbls_model.investigation.studies[0].study_publications.comments
         comments.append(id_comment)
-
+        study = mtbls_model.investigation.studies[0]
         status_updated = False
         for mztab_publication in mztab_model.metadata.publication:
             doi = ""
@@ -53,10 +53,16 @@ class MetadataPublicationMapper(BaseMapper):
                     term_accession_number="http://www.ebi.ac.uk/efo/EFO_0001795",
                 )
             status_updated = True
-            publications = mtbls_model.investigation.studies[
-                0
-            ].study_publications.publications
+            publications = study.study_publications.publications
             publications.append(pub)
+            # use study title as publication title
+            pub.title = mztab_model.metadata.title or ""
+            # use contact names as publication author list
+            if mztab_model.metadata.contact:
+                pub.author_list = ", ".join(
+                    [x.name for x in mztab_model.metadata.contact]
+                )
+
             uri_comment.value.append(sanitise_data(uri))
             id_comment.value.append(
                 sanitise_data(mztab_publication.id)

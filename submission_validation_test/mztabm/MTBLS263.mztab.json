@@ -58,7 +58,7 @@
       "custom" : null,
       "species" : [ {
         "id" : null,
-        "cv_label" : "NCBITaxon",
+        "cv_label" : "NCBITAXON",
         "cv_accession" : "NCBITaxon:9606",
         "name" : "Homo sapiens",
         "value" : null
@@ -79,7 +79,7 @@
       "custom" : null,
       "species" : [ {
         "id" : null,
-        "cv_label" : "NCBITaxon",
+        "cv_label" : "NCBITAXON",
         "cv_accession" : "NCBITaxon:9606",
         "name" : "Homo sapiens",
         "value" : null
@@ -100,7 +100,7 @@
       "custom" : null,
       "species" : [ {
         "id" : null,
-        "cv_label" : "NCBITaxon",
+        "cv_label" : "NCBITAXON",
         "cv_accession" : "NCBITaxon:9606",
         "name" : "Homo sapiens",
         "value" : null
@@ -121,7 +121,7 @@
       "custom" : null,
       "species" : [ {
         "id" : null,
-        "cv_label" : "NCBITaxon",
+        "cv_label" : "NCBITAXON",
         "cv_accession" : "NCBITaxon:9606",
         "name" : "Homo sapiens",
         "value" : null
@@ -137,7 +137,16 @@
       "disease" : null,
       "description" : null
     } ],
-    "sample_processing" : null,
+    "sample_processing" : [ {
+      "id" : 1,
+      "sampleProcessing" : [ {
+        "id" : null,
+        "cv_label" : "MS",
+        "cv_accession" : "MS:1000831",
+        "name" : "sample preparation",
+        "value" : "Extraction protocol content is defined. Describe more details"
+      } ]
+    } ],
     "software" : [ {
       "id" : 1,
       "parameter" : {
@@ -370,20 +379,32 @@
     } ],
     "study_variable" : [ {
       "id" : 1,
-      "name" : "Replicates",
+      "name" : "1",
       "assay_refs" : [ 1, 2, 3 ],
       "average_function" : null,
       "variation_function" : null,
-      "description" : "Replicates",
-      "factors" : null
+      "description" : "Replicate 1",
+      "factors" : [ {
+        "id" : null,
+        "cv_label" : "",
+        "cv_accession" : "",
+        "name" : "Replicate",
+        "value" : null
+      } ]
     }, {
       "id" : 2,
-      "name" : "Samples",
+      "name" : "2",
       "assay_refs" : [ 4, 5, 6 ],
       "average_function" : null,
       "variation_function" : null,
-      "description" : "Samples",
-      "factors" : null
+      "description" : "Replicate 2",
+      "factors" : [ {
+        "id" : null,
+        "cv_label" : "",
+        "cv_accession" : "",
+        "name" : "Replicate",
+        "value" : null
+      } ]
     } ],
     "custom" : [ {
       "id" : 1,
@@ -428,6 +449,24 @@
       "full_name" : "Chemical Methods Ontology",
       "version" : "1.2",
       "uri" : "http://purl.obolibrary.org/obo/chmo.owl"
+    }, {
+      "id" : 5,
+      "label" : "NCBITAXON",
+      "full_name" : "NCBITAXON",
+      "version" : "1.2",
+      "uri" : "http://purl.obolibrary.org/obo/NCBITaxon.owl"
+    }, {
+      "id" : 6,
+      "label" : "OBI",
+      "full_name" : "OBI",
+      "version" : "1.2",
+      "uri" : "http://purl.obolibrary.org/obo/obi.owl"
+    }, {
+      "id" : 7,
+      "label" : "BTO",
+      "full_name" : "BTO",
+      "version" : "1.2",
+      "uri" : "http://purl.obolibrary.org/obo/bto.owl"
     } ],
     "small_molecule-quantification_unit" : {
       "id" : null,

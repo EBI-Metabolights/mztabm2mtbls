@@ -7,7 +7,7 @@ license = "Apache 2.0"
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "click>=8.3.0",
-    "metabolights-utils>=1.4.9",
+    "metabolights-utils>=1.4.11",
 ]
 
 [dependency-groups]

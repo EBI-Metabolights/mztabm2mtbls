@@ -1,4 +1,28 @@
 {
+  "errors": [
+    {
+      "description": "All required column values should be defined in assay file.",
+      "hasMoreViolations": false,
+      "identifier": "rule_a_200_090_004_01",
+      "priority": "HIGH",
+      "section": "assays.general",
+      "sourceColumnHeader": "Parameter Value[Scan m/z range]",
+      "sourceColumnIndex": 17,
+      "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
+      "title": "Required columns have empty values in assay file.",
+      "totalViolations": 6,
+      "type": "ERROR",
+      "values": [
+        "[row 1]",
+        "[row 2]",
+        "[row 3]",
+        "[row 4]",
+        "[row 5]",
+        "[row 6]"
+      ],
+      "violation": "Violation on 'Parameter Value[Scan m/z range]' header [at column index 17] in 'a_MTBLS263_metabolite_profiling.txt': [row 1], [row 2], [row 3], [row 4], [row 5], [row 6]"
+    }
+  ],
   "summary": [
     {
       "description": "Input data has valid JSON schema.",
@@ -16,17 +40,17 @@
       "violation": ""
     },
     {
-      "description": "There are error messages.",
-      "hasMoreViolations": true,
+      "description": "There is no parser error for Investigation.txt file.",
+      "hasMoreViolations": false,
       "identifier": "rule___100_100",
-      "priority": "CRITICAL",
+      "priority": "HIGH",
       "section": "input",
       "sourceColumnHeader": "",
       "sourceColumnIndex": "",
       "sourceFile": "input",
       "title": "Validation summary for parser messages of Investigation.txt file.",
-      "totalViolations": 1,
-      "type": "ERROR",
+      "totalViolations": 0,
+      "type": "SUCCESS",
       "values": [],
       "violation": ""
     },
@@ -76,17 +100,17 @@
       "violation": ""
     },
     {
-      "description": "There are error messages.",
-      "hasMoreViolations": true,
+      "description": "There is no assay file column or row error.",
+      "hasMoreViolations": false,
       "identifier": "rule_a_100_100",
-      "priority": "CRITICAL",
+      "priority": "HIGH",
       "section": "assays.general",
       "sourceColumnHeader": "",
       "sourceColumnIndex": "",
       "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
       "title": "Validation summary for file columns and rows of assay file.",
-      "totalViolations": 1,
-      "type": "ERROR",
+      "totalViolations": 0,
+      "type": "SUCCESS",
       "values": [],
       "violation": ""
     },
@@ -136,8 +160,8 @@
       "violation": ""
     },
     {
-      "description": "There are critical error messages.",
-      "hasMoreViolations": true,
+      "description": "There is no error in study publications section of i_Investigation.txt.",
+      "hasMoreViolations": false,
       "identifier": "rule_i_100_320",
       "priority": "HIGH",
       "section": "investigation.studyPublications",
@@ -145,23 +169,23 @@
       "sourceColumnIndex": "",
       "sourceFile": "i_Investigation.txt",
       "title": "Validation summary for study publications section of i_Investigation.txt.",
-      "totalViolations": 2,
-      "type": "ERROR",
+      "totalViolations": 0,
+      "type": "SUCCESS",
       "values": [],
       "violation": ""
     },
     {
-      "description": "There are error messages.",
-      "hasMoreViolations": true,
+      "description": "There is no error in study factors section of i_Investigation.txt.",
+      "hasMoreViolations": false,
       "identifier": "rule_i_100_330",
-      "priority": "CRITICAL",
+      "priority": "HIGH",
       "section": "investigation.studyFactors",
       "sourceColumnHeader": "",
       "sourceColumnIndex": "",
       "sourceFile": "i_Investigation.txt",
       "title": "Validation summary for study factors section of i_Investigation.txt.",
-      "totalViolations": 1,
-      "type": "ERROR",
+      "totalViolations": 0,
+      "type": "SUCCESS",
       "values": [],
       "violation": ""
     },
@@ -181,8 +205,8 @@
       "violation": ""
     },
     {
-      "description": "There are critical error messages.",
-      "hasMoreViolations": true,
+      "description": "There is no error in study protocols section of i_Investigation.txt.",
+      "hasMoreViolations": false,
       "identifier": "rule_i_100_350",
       "priority": "HIGH",
       "section": "investigation.studyProtocols",
@@ -190,23 +214,23 @@
       "sourceColumnIndex": "",
       "sourceFile": "i_Investigation.txt",
       "title": "Validation summary for study protocols section of i_Investigation.txt.",
-      "totalViolations": 1,
-      "type": "ERROR",
+      "totalViolations": 0,
+      "type": "SUCCESS",
       "values": [],
       "violation": ""
     },
     {
-      "description": "There are error messages.",
-      "hasMoreViolations": true,
+      "description": "There is no error in study protocols section of i_Investigation.txt.",
+      "hasMoreViolations": false,
       "identifier": "rule_i_100_360",
-      "priority": "CRITICAL",
+      "priority": "HIGH",
       "section": "investigation.studyContacts",
       "sourceColumnHeader": "",
       "sourceColumnIndex": "",
       "sourceFile": "i_Investigation.txt",
       "title": "Validation summary for study contacts section of i_Investigation.txt.",
-      "totalViolations": 1,
-      "type": "ERROR",
+      "totalViolations": 0,
+      "type": "SUCCESS",
       "values": [],
       "violation": ""
     },
@@ -226,8 +250,8 @@
       "violation": ""
     },
     {
-      "description": "There are critical error messages.",
-      "hasMoreViolations": true,
+      "description": "There is no sample file column or row error.",
+      "hasMoreViolations": false,
       "identifier": "rule_s_100_100",
       "priority": "HIGH",
       "section": "samples.general",
@@ -235,8 +259,8 @@
       "sourceColumnIndex": "",
       "sourceFile": "s_MTBLS263.txt",
       "title": "Validation summary for sample file columns and rows for sample file.",
-      "totalViolations": 1,
-      "type": "ERROR",
+      "totalViolations": 0,
+      "type": "SUCCESS",
       "values": [],
       "violation": ""
     },
@@ -468,169 +492,53 @@
   ],
   "violations": [
     {
-      "description": "Input data must have valid schema.",
-      "hasMoreViolations": true,
-      "identifier": "rule___100_100_001_02",
-      "priority": "CRITICAL",
-      "section": "input",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "input",
-      "title": "Input data format is not valid.",
-      "totalViolations": 41,
-      "type": "ERROR",
-      "values": [],
-      "violation": "investigation.studies.0: Additional property datasetLicense is not allowed, investigation.studies.0: Additional property mhdAccession is not allowed, investigation.studies.0: Additional property mhdModelVersion is not allowed, investigation.studies.0: Additional property funders is not allowed, investigation.studies.0: Additional property templateVersion is not allowed, investigation.studies.0: Additional property revisionNumber is not allowed, investigation.studies.0: Additional property sampleTemplate is not allowed, investigation.studies.0: Additional property revisionComment is not allowed, investigation.studies.0: Additional property revisionDate is not allowed, investigation.studies.0: Additional property studyCategory is not allowed"
-    },
-    {
-      "description": "Column header structure is not correct in assay file. Any ontology and unit column should have the leading columns, Term Source REF and Term Accession Number. Single columns must not have leading columns.",
+      "description": "Study Design Type value MUST be selected from the prioritised ontologies.",
       "hasMoreViolations": false,
-      "identifier": "rule_a_100_100_001_13",
-      "priority": "CRITICAL",
-      "section": "assays.columns",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
-      "title": "Column header structure is not correct in assay file.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "[Column Index: 21: structure of 'Parameter Value[Ion source]' column is 'SINGLE_COLUMN', but expected structure is 'ONTOLOGY_COLUMN']"
-    },
-    {
-      "description": "Column header structure is not correct in assay file. Any ontology and unit column should have the leading columns, Term Source REF and Term Accession Number. Single columns must not have leading columns.",
-      "hasMoreViolations": false,
-      "identifier": "rule_a_100_100_001_13",
-      "priority": "CRITICAL",
-      "section": "assays.columns",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
-      "title": "Column header structure is not correct in assay file.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "[Column Index: 22: structure of 'Parameter Value[Mass analyzer]' column is 'SINGLE_COLUMN', but expected structure is 'ONTOLOGY_COLUMN']"
-    },
-    {
-      "description": "A prioritised control list is defined. Review and select from the prioritised control list if possible.",
-      "hasMoreViolations": false,
-      "identifier": "rule_i_100_310_004_03",
-      "priority": "MEDIUM",
+      "identifier": "rule_i_100_310_003_02",
+      "priority": "HIGH",
       "section": "investigation.studyDesignDescriptors",
       "sourceColumnHeader": "",
       "sourceColumnIndex": "",
       "sourceFile": "i_Investigation.txt",
-      "title": "Study Design Type Term Source REF not in prioritised control list.",
+      "title": "Study Design Type Term Accession Number is empty.",
       "totalViolations": 1,
       "type": "WARNING",
-      "values": [],
-      "violation": "Study design type source reference at index 2, 'MSIO', is not in Metabolights control list for study: MTBLS263, expected: [CHEBI, CHMO, EFO, GO, MESH, MONDO, MTBLS, NCIT, PRIDE] "
+      "values": [
+        "Term Source REF (of Study Design Type [2]): [untargeted metabolite profiling, MSIO, MSIO:0000101]"
+      ],
+      "violation": "'i_Investigation.txt', Rule Study Design Type-01: Term Source REF of Study Design Type [2]. Select valid ontologies  CHEBI, CHMO, EFO, GO, MESH, MONDO, MTBLS, NCIT, PRIDE, violated values: Term Source REF (of Study Design Type [2]): [untargeted metabolite profiling, MSIO, MSIO:0000101]"
     },
     {
-      "description": "A prioritised control list is defined. Review and select from the prioritised control list if possible.",
+      "description": "Study Design Type value MUST be selected from the prioritised ontologies.",
       "hasMoreViolations": false,
-      "identifier": "rule_i_100_310_004_03",
-      "priority": "MEDIUM",
+      "identifier": "rule_i_100_310_003_02",
+      "priority": "HIGH",
       "section": "investigation.studyDesignDescriptors",
       "sourceColumnHeader": "",
       "sourceColumnIndex": "",
       "sourceFile": "i_Investigation.txt",
-      "title": "Study Design Type Term Source REF not in prioritised control list.",
+      "title": "Study Design Type Term Accession Number is empty.",
       "totalViolations": 1,
       "type": "WARNING",
-      "values": [],
-      "violation": "Study design type source reference at index 4, 'MS', is not in Metabolights control list for study: MTBLS263, expected: [CHEBI, CHMO, EFO, GO, MESH, MONDO, MTBLS, NCIT, PRIDE] "
+      "values": [
+        "Term Source REF (of Study Design Type [4]): [LC-MS label-free quantitation analysis, MS, http://purl.obolibrary.org/obo/MS_1001834]"
+      ],
+      "violation": "'i_Investigation.txt', Rule Study Design Type-01: Term Source REF of Study Design Type [4]. Select valid ontologies  CHEBI, CHMO, EFO, GO, MESH, MONDO, MTBLS, NCIT, PRIDE, violated values: Term Source REF (of Study Design Type [4]): [LC-MS label-free quantitation analysis, MS, http://purl.obolibrary.org/obo/MS_1001834]"
     },
     {
-      "description": "Study Publication Title must be defined with length equal or greater than 25 characters.",
+      "description": "Study Person Roles Term Source REFs should be referenced in the ONTOLOGY SOURCE REFERENCE section in i_Investigation.txt.",
       "hasMoreViolations": false,
-      "identifier": "rule_i_100_320_005_01",
-      "priority": "HIGH",
-      "section": "investigation.studyPublications",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "i_Investigation.txt",
-      "title": "Study Publication Title length less than 25 characters.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "Study MTBLS263 publication title should be at least 25 characters long. Please use the abstract of the publication. Current value ''"
-    },
-    {
-      "description": "Study Publication Author List must be defined.",
-      "hasMoreViolations": false,
-      "identifier": "rule_i_100_320_006_01",
-      "priority": "HIGH",
-      "section": "investigation.studyPublications",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "i_Investigation.txt",
-      "title": "Study Publication Author List is empty.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "Author name should be greater than 3 character for the study MTBLS263. Publication: ''. Author name(s): ''"
-    },
-    {
-      "description": "At least one study factors must be defined in i_Investigation.txt.",
-      "hasMoreViolations": false,
-      "identifier": "rule_i_100_330_001_01",
-      "priority": "CRITICAL",
-      "section": "investigation.studyFactors",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "i_Investigation.txt",
-      "title": "No study factors referenced in investigation file.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "At least 1 factor should be defined for study: MTBLS263"
-    },
-    {
-      "description": "Study Protocol Description should be defined with length equal or greater than 40 characters.",
-      "hasMoreViolations": false,
-      "identifier": "rule_i_100_350_003_01",
-      "priority": "HIGH",
-      "section": "investigation.studyProtocols",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "i_Investigation.txt",
-      "title": "Study Protocol Description length less than 40 characters.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "Description of study protocol 'Extraction' is too short for the study MTBLS263. Min length: 40 current length: 0, protocol index: 2"
-    },
-    {
-      "description": "At least one role should be defined for a study contact.",
-      "hasMoreViolations": false,
-      "identifier": "rule_i_100_360_007_01",
+      "identifier": "rule_i_100_360_010_01",
       "priority": "HIGH",
       "section": "investigation.studyContacts",
       "sourceColumnHeader": "",
       "sourceColumnIndex": "",
       "sourceFile": "i_Investigation.txt",
-      "title": "Study Person Roles is empty.",
+      "title": "Study Person Roles Term Source REF not referenced in investigation file.",
       "totalViolations": 1,
       "type": "WARNING",
       "values": [],
-      "violation": "At least 1 role should be defined for study: MTBLS263, contact index: 1, email: romanas.chaleckis@gmail.com"
-    },
-    {
-      "description": "At least one study contact must have Principal Investigator role.",
-      "hasMoreViolations": false,
-      "identifier": "rule_i_100_360_011_01",
-      "priority": "CRITICAL",
-      "section": "investigation.studyContacts",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "i_Investigation.txt",
-      "title": "There is no study contact with Principal Investigator role.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "There is no study contact with Principal Investigator role for study: MTBLS263"
+      "violation": "Study person role source reference is not in ontology source reference list. Study: MTBLS263, index: '1', current value 'NCIT'"
     },
     {
       "description": "Sample Name columns must exist in metabolite assignment file.",
@@ -650,19 +558,26 @@
       "violation": "'m_MTBLS263_metabolite_profiling_v2_maf.tsv': 3injections_POS"
     },
     {
-      "description": "There should be at least one Factor Value column in sample file.",
+      "description": "Term Accession Number of ontology terms should be defined with length equal or greater than 3 characters.",
       "hasMoreViolations": false,
-      "identifier": "rule_s_100_100_001_06",
+      "identifier": "rule_a_200_090_003_01",
       "priority": "HIGH",
-      "section": "samples.columns",
-      "sourceColumnHeader": "",
-      "sourceColumnIndex": "",
-      "sourceFile": "s_MTBLS263.txt",
-      "title": "There is no Factor Value column in sample file.",
-      "totalViolations": 1,
-      "type": "ERROR",
-      "values": [],
-      "violation": "Define at least one factor in i_Investigation.txt file and add Factor Value columns in sample file."
+      "section": "assays.general",
+      "sourceColumnHeader": "Term Accession Number (of Parameter Value[Mass analyzer])",
+      "sourceColumnIndex": 26,
+      "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
+      "title": "Term Accession Number length of ontology terms less than 3 characters.",
+      "totalViolations": 6,
+      "type": "WARNING",
+      "values": [
+        "[row: 1, value: 'orbitrap', 'accession number': '']",
+        "[row: 2, value: 'orbitrap', 'accession number': '']",
+        "[row: 3, value: 'orbitrap', 'accession number': '']",
+        "[row: 4, value: 'orbitrap', 'accession number': '']",
+        "[row: 5, value: 'orbitrap', 'accession number': '']",
+        "[row: 6, value: 'orbitrap', 'accession number': '']"
+      ],
+      "violation": "Violation on 'Term Accession Number (of Parameter Value[Mass analyzer])' header [at column index 26] in 'a_MTBLS263_metabolite_profiling.txt': [row: 1, value: 'orbitrap', 'accession number': ''], [row: 2, value: 'orbitrap', 'accession number': ''], [row: 3, value: 'orbitrap', 'accession number': ''], [row: 4, value: 'orbitrap', 'accession number': ''], [row: 5, value: 'orbitrap', 'accession number': ''], [row: 6, value: 'orbitrap', 'accession number': '']"
     },
     {
       "description": "All required column values should be defined in assay file.",
@@ -710,7 +625,7 @@
       "priority": "HIGH",
       "section": "assays.mass_spectrometry",
       "sourceColumnHeader": "Raw Spectral Data File",
-      "sourceColumnIndex": 24,
+      "sourceColumnIndex": 28,
       "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
       "title": "Derived Spectral Data File' is defined but 'Raw Spectral Data File' is empty in assay file.",
       "totalViolations": 6,
@@ -723,24 +638,7 @@
         "[row: 005]",
         "[row: 006]"
       ],
-      "violation": "Violation on 'Raw Spectral Data File' header [at column index 24] in 'a_MTBLS263_metabolite_profiling.txt': [row: 001], [row: 002], [row: 003], [row: 004], [row: 005], [row: 006]"
-    },
-    {
-      "description": "All MS Assay Name column values should be unique.",
-      "hasMoreViolations": false,
-      "identifier": "rule_a_200_300_002_01",
-      "priority": "CRITICAL",
-      "section": "assays.mass_spectrometry",
-      "sourceColumnHeader": "MS Assay Name",
-      "sourceColumnIndex": 23,
-      "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
-      "title": "Values for MS Assay Name column not unique in assay file.",
-      "totalViolations": 1,
-      "type": "WARNING",
-      "values": [
-        "MS Assay Name values are not unique in the assay file. Number of assay names: 1, row count: 6"
-      ],
-      "violation": "Violation on 'MS Assay Name' header [at column index 23] in 'a_MTBLS263_metabolite_profiling.txt': MS Assay Name values are not unique in the assay file. Number of assay names: 1, row count: 6"
+      "violation": "Violation on 'Raw Spectral Data File' header [at column index 28] in 'a_MTBLS263_metabolite_profiling.txt': [row: 001], [row: 002], [row: 003], [row: 004], [row: 005], [row: 006]"
     },
     {
       "description": "Values for Scan Polarity column is not same as assay file name.",
@@ -757,41 +655,87 @@
       "values": [
         "positive"
       ],
-      "violation": "'a_MTBLS263_metabolite_profiling.txt', Expected scan polarity value in assay filename: positive"
+      "violation": "'a_MTBLS263_metabolite_profiling.txt', Assay scan polarity values are 'positive' but it does not match with assay filename, violated values: positive"
     },
     {
-      "description": "All ontology Term Source REFs should be referenced in ONTOLOGY SOURCE REFERENCE section in i_Investigation.txt. Current ontology reference sources: CHMO, EFO, MS, MSIO, OBI",
+      "description": "Select a term from one of the prioritised sources where possible. Characteristics[Sample type]-01: Prioritised ontologies: CHMO, MSIO, MTBLS, WoRMs",
       "hasMoreViolations": false,
-      "identifier": "rule_s_200_090_002_03",
+      "identifier": "rule_s_200_090_002_01",
       "priority": "HIGH",
       "section": "samples.general",
-      "sourceColumnHeader": "Term Source REF (of Characteristics[Organism part])",
-      "sourceColumnIndex": 6,
+      "sourceColumnHeader": "Term Source REF (of Characteristics[Sample type])",
+      "sourceColumnIndex": 12,
       "sourceFile": "s_MTBLS263.txt",
-      "title": "Ontology Term Source REF not referenced in investigation file.",
-      "totalViolations": 1,
+      "title": "Ontology Term Source REF is not selected from the prioritised ontologies.",
+      "totalViolations": 4,
       "type": "WARNING",
       "values": [
-        "BTO"
+        "Row: 1, column: Term Source REF of Characteristics[Sample type], value: ",
+        "Row: 2, column: Term Source REF of Characteristics[Sample type], value: ",
+        "Row: 3, column: Term Source REF of Characteristics[Sample type], value: ",
+        "Row: 4, column: Term Source REF of Characteristics[Sample type], value: "
       ],
-      "violation": "Violated values on 'Term Source REF (of Characteristics[Organism part])' column [at column index 6] in 's_MTBLS263.txt': BTO"
+      "violation": "Violated values on 'Term Source REF (of Characteristics[Sample type])' column [at column index 12] in 's_MTBLS263.txt': Row: 1, column: Term Source REF of Characteristics[Sample type], value: , Row: 2, column: Term Source REF of Characteristics[Sample type], value: , Row: 3, column: Term Source REF of Characteristics[Sample type], value: , Row: 4, column: Term Source REF of Characteristics[Sample type], value: "
     },
     {
-      "description": "All ontology Term Source REFs should be referenced in ONTOLOGY SOURCE REFERENCE section in i_Investigation.txt. Current ontology reference sources: CHMO, EFO, MS, MSIO, OBI",
+      "description": "Term Accession Number of ontology terms should be defined with length equal or greater than 3 characters.",
       "hasMoreViolations": false,
-      "identifier": "rule_s_200_090_002_03",
+      "identifier": "rule_s_200_090_003_01",
       "priority": "HIGH",
       "section": "samples.general",
-      "sourceColumnHeader": "Term Source REF (of Characteristics[Organism])",
-      "sourceColumnIndex": 3,
+      "sourceColumnHeader": "Term Accession Number (of Factor Value[Replicate])",
+      "sourceColumnIndex": 20,
       "sourceFile": "s_MTBLS263.txt",
-      "title": "Ontology Term Source REF not referenced in investigation file.",
-      "totalViolations": 1,
+      "title": "Term Accession Number length of ontology terms less than 3 characters.",
+      "totalViolations": 4,
       "type": "WARNING",
       "values": [
-        "NCBITaxon"
+        "[row: 1, value: '1', 'accession number': '']",
+        "[row: 2, value: '2', 'accession number': '']",
+        "[row: 3, value: '2', 'accession number': '']",
+        "[row: 4, value: '2', 'accession number': '']"
       ],
-      "violation": "Violated values on 'Term Source REF (of Characteristics[Organism])' column [at column index 3] in 's_MTBLS263.txt': NCBITaxon"
+      "violation": "Violation on 'Term Accession Number (of Factor Value[Replicate])' header [at column index 20] in 's_MTBLS263.txt': [row: 1, value: '1', 'accession number': ''], [row: 2, value: '2', 'accession number': ''], [row: 3, value: '2', 'accession number': ''], [row: 4, value: '2', 'accession number': '']"
+    },
+    {
+      "description": "We highly recommend to use the prioritised ontologies for the characteristics ontology term. default-sample-file-rule-01: Prioritised characteristic value ontologies: BAO, BTO, CHEBI, CHMO, CL, CLO, EDAM, EFO, ENVO, GO, HP, MESH, MI, MONDO, MP, MS, MSIO, NCBITAXON, NCIT, OBI, OMIT, PO, SNOMED, UBERON, UO",
+      "hasMoreViolations": false,
+      "identifier": "rule_s_200_100_002_02",
+      "priority": "MEDIUM",
+      "section": "samples.source",
+      "sourceColumnHeader": "Term Source REF (of Characteristics[Variant])",
+      "sourceColumnIndex": 9,
+      "sourceFile": "s_MTBLS263.txt",
+      "title": "Term Source REF of the user defined characteristics ontology term is not in the priotirised control list.",
+      "totalViolations": 4,
+      "type": "WARNING",
+      "values": [
+        "Row: 1, column: Term Source REF of Characteristics[Variant], value: ",
+        "Row: 2, column: Term Source REF of Characteristics[Variant], value: ",
+        "Row: 3, column: Term Source REF of Characteristics[Variant], value: ",
+        "Row: 4, column: Term Source REF of Characteristics[Variant], value: "
+      ],
+      "violation": "Violated values on 'Term Source REF (of Characteristics[Variant])' column [at column index 9] in 's_MTBLS263.txt': Row: 1, column: Term Source REF of Characteristics[Variant], value: , Row: 2, column: Term Source REF of Characteristics[Variant], value: , Row: 3, column: Term Source REF of Characteristics[Variant], value: , Row: 4, column: Term Source REF of Characteristics[Variant], value: "
+    },
+    {
+      "description": "We highly recommend to use the prioritised Ontology Source Refs for the factor ontology term. default-sample-file-rule-01: Prioritised factor value ontologies: BAO, BTO, CHEBI, CHMO, CL, CLO, EDAM, EFO, ENVO, GO, HP, MESH, MI, MONDO, MP, MS, MSIO, NCBITAXON, NCIT, OBI, OMIT, PO, SNOMED, UBERON, UO",
+      "hasMoreViolations": false,
+      "identifier": "rule_s_200_200_003_01",
+      "priority": "LOW",
+      "section": "samples.sampleCollection",
+      "sourceColumnHeader": "Term Source REF (of Factor Value[Replicate])",
+      "sourceColumnIndex": 19,
+      "sourceFile": "s_MTBLS263.txt",
+      "title": "Term Source REF of the factor value ontology term is not in the priotirised control list.",
+      "totalViolations": 4,
+      "type": "WARNING",
+      "values": [
+        "Row: 1, column: Term Source REF of Factor Value[Replicate], value: ",
+        "Row: 2, column: Term Source REF of Factor Value[Replicate], value: ",
+        "Row: 3, column: Term Source REF of Factor Value[Replicate], value: ",
+        "Row: 4, column: Term Source REF of Factor Value[Replicate], value: "
+      ],
+      "violation": "Violated values on 'Term Source REF (of Factor Value[Replicate])' column [at column index 19] in 's_MTBLS263.txt': Row: 1, column: Term Source REF of Factor Value[Replicate], value: , Row: 2, column: Term Source REF of Factor Value[Replicate], value: , Row: 3, column: Term Source REF of Factor Value[Replicate], value: , Row: 4, column: Term Source REF of Factor Value[Replicate], value: "
     },
     {
       "description": "Reference your derived file DERIVED_FILES/(sub folder if exists}/(file name} and upload your data to appropriate folder.",
@@ -800,7 +744,7 @@
       "priority": "LOW",
       "section": "files.general",
       "sourceColumnHeader": "Derived Spectral Data File",
-      "sourceColumnIndex": 33,
+      "sourceColumnIndex": 37,
       "sourceFile": "a_MTBLS263_metabolite_profiling.txt",
       "title": "Referenced derived data files not within DERIVED_FILES folder.",
       "totalViolations": 6,
@@ -813,7 +757,7 @@
         "[row: 005, file name: 'FILES/3samples_sampl2_POS.mzML']",
         "[row: 006, file name: 'FILES/3samples_sampl3_POS.mzML']"
       ],
-      "violation": "Violation on 'Derived Spectral Data File' header [at column index 33] in 'a_MTBLS263_metabolite_profiling.txt': [row: 001, file name: 'FILES/3injections_inj1_POS.mzML'], [row: 002, file name: 'FILES/3injections_inj2_POS.mzML'], [row: 003, file name: 'FILES/3injections_inj3_POS.mzML'], [row: 004, file name: 'FILES/3samples_sampl1_POS.mzML'], [row: 005, file name: 'FILES/3samples_sampl2_POS.mzML'], [row: 006, file name: 'FILES/3samples_sampl3_POS.mzML']"
+      "violation": "Violation on 'Derived Spectral Data File' header [at column index 37] in 'a_MTBLS263_metabolite_profiling.txt': [row: 001, file name: 'FILES/3injections_inj1_POS.mzML'], [row: 002, file name: 'FILES/3injections_inj2_POS.mzML'], [row: 003, file name: 'FILES/3injections_inj3_POS.mzML'], [row: 004, file name: 'FILES/3samples_sampl1_POS.mzML'], [row: 005, file name: 'FILES/3samples_sampl2_POS.mzML'], [row: 006, file name: 'FILES/3samples_sampl3_POS.mzML']"
     }
   ]
 }

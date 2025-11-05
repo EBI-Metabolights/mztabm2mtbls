@@ -7,7 +7,8 @@ MTD	publication[1]	doi:10.1073/pnas.1603023113
 COM	the following two lines are currently not part of the mzTab-M model and are added for compatibility with the MetaboLights model.
 COM	MTD	publication[1]-title	Individual variability in human blood metabolites identifies age-related differences																						
 COM	MTD	publication[1]-author_list	authors																						
-COM	MTD	publication[1]-status	[EFO, EFO:0001796, published, ]				
+COM	MTD	publication[1]-status	[EFO, EFO:0001796, published, ]	
+MTD	sample_processing[1]	[MS, MS:1000831, sample preparation, Extraction protocol content is defined. Describe more details]				
 MTD	contact[1]-name	Romanas Chaleckis
 MTD	instrument[1]-name	[MS, MS:1000449, LTQ Orbitrap,]
 MTD	instrument[1]-source	[MS, MS:1000073, ESI,]
@@ -45,17 +46,17 @@ MTD	ms_run[6]-format	[MS, MS:1000584, mzML file, ]
 MTD	ms_run[6]-id_format	[MS, MS:1000768, Thermo nativeID format, ]
 MTD	ms_run[6]-instrument_ref	instrument[1]																						
 MTD	sample[1]	3injections_POS
-MTD	sample[1]-species[1]	[NCBITaxon, NCBITaxon:9606, Homo sapiens, ]
+MTD	sample[1]-species[1]	[NCBITAXON, NCBITaxon:9606, Homo sapiens, ]
 MTD	sample[1]-tissue[1]	[BTO, BTO:0000089, blood, ]				
 MTD	sample[2]	3samples_sampl1_POS		
 MTD	sample[2]-tissue[1]	[BTO, BTO:0000089, blood, ]				
-MTD	sample[2]-species[1]	[NCBITaxon, NCBITaxon:9606, Homo sapiens, ]																	
+MTD	sample[2]-species[1]	[NCBITAXON, NCBITaxon:9606, Homo sapiens, ]																	
 MTD	sample[3]	3samples_sampl2_POS					
 MTD	sample[3]-tissue[1]	[BTO, BTO:0000089, blood, ]			
-MTD	sample[3]-species[1]	[NCBITaxon, NCBITaxon:9606, Homo sapiens, ]															
+MTD	sample[3]-species[1]	[NCBITAXON, NCBITaxon:9606, Homo sapiens, ]															
 MTD	sample[4]	3samples_sampl3_POS					
 MTD	sample[4]-tissue[1]	[BTO, BTO:0000089, blood, ]		
-MTD	sample[4]-species[1]	[NCBITaxon, NCBITaxon:9606, Homo sapiens, ]																
+MTD	sample[4]-species[1]	[NCBITAXON, NCBITaxon:9606, Homo sapiens, ]																
 MTD	assay[1]	3injections_inj1_POS																						
 MTD	assay[1]-sample_ref	sample[1]																						
 MTD	assay[1]-ms_run_ref	ms_run[1]																						
@@ -74,12 +75,14 @@ MTD	assay[5]-ms_run_ref	ms_run[5]
 MTD	assay[6]	3samples_sampl3_POS																						
 MTD	assay[6]-sample_ref	sample[4]																						
 MTD	assay[6]-ms_run_ref	ms_run[6]																						
-MTD	study_variable[1]	Replicates																						
-MTD	study_variable[1]-description	Replicates																						
-MTD	study_variable[1]-assay_refs	assay[1] | assay[2] | assay[3]																						
-MTD	study_variable[2]	Samples																						
-MTD	study_variable[2]-description	Samples																						
-MTD	study_variable[2]-assay_refs	assay[4] | assay[5] | assay[6]		
+MTD	study_variable[1]	1																						
+MTD	study_variable[1]-description	Replicate 1																						
+MTD	study_variable[1]-assay_refs	assay[1] | assay[2] | assay[3]																	
+MTD	study_variable[1]-factors	[,,Replicate,]																								
+MTD	study_variable[2]	2																						
+MTD	study_variable[2]-description	Replicate 2																						
+MTD	study_variable[2]-assay_refs	assay[4] | assay[5] | assay[6]	
+MTD	study_variable[2]-factors	[,,Replicate,]																								
 MTD	custom[1]	[EFO, EFO:0030056, tandem mass spectrometry, ]
 MTD	custom[2]	[MSIO, MSIO:0000101, untargeted metabolite profiling, ]
 MTD	custom[3]	[CHMO, CHMO:0000796, high-performance liquid chromatography-mass spectrometry, ]																				
@@ -98,7 +101,19 @@ MTD	cv[3]-uri	http://purl.obolibrary.org/obo/msio.owl
 MTD	cv[4]-label	CHMO																						
 MTD	cv[4]-full_name	Chemical Methods Ontology			
 MTD	cv[4]-version	1.2																		
-MTD	cv[4]-uri	http://purl.obolibrary.org/obo/chmo.owl							
+MTD	cv[4]-uri	http://purl.obolibrary.org/obo/chmo.owl	
+MTD	cv[5]-label	NCBITAXON																						
+MTD	cv[5]-full_name	NCBITAXON			
+MTD	cv[5]-version	1.2																		
+MTD	cv[5]-uri	http://purl.obolibrary.org/obo/NCBITaxon.owl			
+MTD	cv[6]-label	OBI																						
+MTD	cv[6]-full_name	OBI			
+MTD	cv[6]-version	1.2																		
+MTD	cv[6]-uri	http://purl.obolibrary.org/obo/obi.owl		
+MTD	cv[7]-label	BTO																						
+MTD	cv[7]-full_name	BTO			
+MTD	cv[7]-version	1.2																		
+MTD	cv[7]-uri	http://purl.obolibrary.org/obo/bto.owl					
 MTD	database[1]	[, , no database, null]																						
 MTD	database[1]-prefix	null																						
 MTD	database[1]-version	Unknown																						
