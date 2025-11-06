@@ -12,6 +12,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest>=8.4.2",
     "ruff>=0.11.2",
 ]
 
@@ -19,3 +20,7 @@ dev = [
 extend-select = ["E4", "E7", "E9", "F", "I"]
 ignore= ["F401", "F403", "F541", "F841", "F405", "G003" ]
 fixable = ["ALL"]
+
+[tool.pytest.ini_options]
+addopts = "-v -s --log-cli-level=INFO"
+testpaths = ["test", "tests"]

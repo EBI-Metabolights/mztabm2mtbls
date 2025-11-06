@@ -80,7 +80,7 @@ def run_jmztabm_docker(
             return False
 
         return True
-        
+
     except subprocess.TimeoutExpired as exc:
         print("The conversion of the mzTab file to mzTab json format timed out.")
         print(exc.stderr)
@@ -186,7 +186,6 @@ def convert(
         if not override_mztab2m_json_file and os.path.exists(input_json_file):
             print(f"{input_json_file} file exists, it will be used as an input.")
         else:
-            
             input_basename = os.path.basename(input_file)
             abs_path = os.path.realpath(input_file)
             temp_abs_path = os.path.realpath(temp_folder)
@@ -194,9 +193,9 @@ def convert(
             temp_input_file_path = os.path.join(temp_abs_path, input_basename)
             shutil.copy(abs_path, temp_input_file_path)
             # dirname = os.path.dirname(abs_path)
-            
+
             filename = os.path.basename(temp_input_file_path)
-            
+
             # if mapping_file:
             #     abs_mapping_file = os.path.realpath(mapping_file)
             input_json_file = temp_input_file_path + ".json"
@@ -215,11 +214,14 @@ def convert(
             )
             if jmztabm_success:
                 print(
-                    f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' was successful!"
+                    f"The conversion and validation of the mzTab-M file to mzTab-M json format "
+                    f"on level '{mztabm_validation_level}' was successful!"
                 )
             else:
                 print(
-                    f"The conversion and validation of the mzTab-M file to mzTab-M json format on level '{mztabm_validation_level}' failed. Please check the logs for further details!"
+                    "The conversion and validation of the mzTab-M file to mzTab-M json format "
+                    f"on level '{mztabm_validation_level}' failed. "
+                    "Please check the logs for further details!"
                 )
                 return False
     if not os.path.exists(input_json_file):

@@ -145,21 +145,6 @@ Changelog:
       <CvTerm termAccession="MS:1000043" useTerm="false" termName="intensity unit" isRepeatable="false" allowChildren="true" cvIdentifierRef="MS"></CvTerm>
       <CvTerm termAccession="UO:0000006" useTerm="false" termName="substance unit" isRepeatable="false" allowChildren="true" cvIdentifierRef="UO"></CvTerm>
     </CvMappingRule>
-        
-    <!-- small_molecule-identification_reliability -->
-    <CvMappingRule id="small_molecule_identification_reliability_may" cvElementPath="/metadata/@smallMoleculeIdentificationReliability" requirementLevel="MAY"  scopePath="/metadata" cvTermsCombinationLogic="AND">
-      <CvTerm termAccession="MS:1002895" useTerm="false" termName="small molecule identification attribute" isRepeatable="false" allowChildren="true" cvIdentifierRef="MS"></CvTerm>
-    </CvMappingRule>
-        
-    <!-- id confidence measure --> 
-    <CvMappingRule id="id_confidence_measure_must" cvElementPath="/metadata/@idConfidenceMeasure" requirementLevel="MUST"  scopePath="/metadata" cvTermsCombinationLogic="OR">
-      <CvTerm termAccession="MS:1002888" useTerm="false" termName="small molecule confidence measure" isRepeatable="true" allowChildren="true" cvIdentifierRef="MS"></CvTerm>
-    </CvMappingRule>
-        
-    <!-- best id confidence measure --> 
-    <CvMappingRule id="best_id_confidence_measure_must" cvElementPath="/smallMoleculeSummary/@bestIdConfidenceMeasure" requirementLevel="MUST"  scopePath="/smallMoleculeSummary" cvTermsCombinationLogic="AND">
-      <CvTerm termAccession="MS:1002888" useTerm="false" termName="small molecule confidence measure" isRepeatable="false" allowChildren="true" cvIdentifierRef="MS"></CvTerm>
-    </CvMappingRule>
 
     <!-- derivatized form -->
     <CvMappingRule id="derivatized_form_may" cvElementPath="/smallMoleculeEvidence/@derivatizedForm" requirementLevel="MAY"  scopePath="/smallMoleculeEvidence" cvTermsCombinationLogic="AND">

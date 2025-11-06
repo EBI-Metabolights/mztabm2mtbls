@@ -243,8 +243,6 @@ def convert_and_validate_submission(
                 temp_folder,
                 f"{mtbls_provisional_study_id}_validation_output.json",
             )
-            with open(validation_output_path, "w") as f:
-                json.dump(validation_result, f, indent=2)
             violation_results = OpaValidationResult.model_validate(validation_result)
             overrides = []
             if config_file:
@@ -268,8 +266,31 @@ def convert_and_validate_submission(
                 if x.type == PolicyMessageType.ERROR
                 and x.identifier in overridden_rule_ids
             ]
+            overridden_errors_list = [
+                x
+                for x in violation_results.violations
+                if x.type == PolicyMessageType.ERROR
+                and x.identifier in overridden_rule_ids
+            ]
+            with open(validation_output_path, "w") as f:
+                json.dump(
+                    {
+                        "status": "failed" if errors else "success",
+                        "errors": [x.model_dump(by_alias=True) for x in errors],
+                        "overrides": [
+                            x.model_dump(by_alias=True) for x in overridden_errors_list
+                        ],
+                    },
+                    f,
+                    indent=2,
+                )
+
             for idx, x in enumerate(errors):
                 print(idx + 1, x.identifier, x.title, x.description, x.violation)
+            if overridden_errors:
+                print(
+                    f"The following validation rules are overridden: {', '.join(overridden_errors)}",
+                )
             if errors:
                 print(
                     f"Number of errors: {len(errors)}. Validation results are stored on {validation_output_path}"
@@ -278,10 +299,6 @@ def convert_and_validate_submission(
                 print(
                     f"SUCCESS. Validation result is stored on {validation_output_path}"
                 )
-                if overridden_errors:
-                    print(
-                        f"The following validation rules are overridden: {', '.join(overridden_errors)}",
-                    )
             return True
         except subprocess.TimeoutExpired as exc:
             print("The validation process timed out.")

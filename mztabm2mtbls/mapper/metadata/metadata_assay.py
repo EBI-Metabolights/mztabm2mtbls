@@ -104,8 +104,10 @@ class MetadataAssayMapper(BaseMapper):
                 tissues = set()
 
                 for x in mztab_model.metadata.sample:
-                    species.update([x.name for x in x.species])
-                    tissues.update([x.name for x in x.tissue])
+                    if x.species:
+                        species.update([x.name for x in x.species])
+                    if x.tissue:
+                        tissues.update([x.name for x in x.tissue])
 
                 protocol.description += ". ".join(
                     [

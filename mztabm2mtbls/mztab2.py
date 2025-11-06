@@ -528,21 +528,21 @@ class Metadata(MzTabBaseModel):
         Field(
             alias="mzTab-ID",
             description="The ID of the mzTab file, this could be supplied by the repository from which it is downloaded or a local identifier from the lab producing the file. It is not intended to be a globally unique ID but carry some locally useful meaning.\n",
-            example="MTD mzTab-ID MTBLS214",
+            examples=["MTD mzTab-ID MTBLS214"],
         ),
     ]
     title: Annotated[
         Optional[str],
         Field(
             description="The file's human readable title.\n",
-            example="MTD title My first test experiment",
+            examples=["MTD title My first test experiment"],
         ),
     ] = None
     description: Annotated[
         Optional[str],
         Field(
             description="The file's human readable description.\n",
-            example="MTD description An experiment investigating the effects of Il-6.",
+            examples=["MTD description An experiment investigating the effects of Il-6."],
         ),
     ] = None
     contact: Annotated[

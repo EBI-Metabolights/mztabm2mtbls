@@ -1,0 +1,20 @@
+Running jmztabm-cli
+ version: '1.0.6'
+ build-date: '2021-01-02T17:21:49.058Z'
+ scm-location: 'https://github.com/lifs-tools/jmztab-m/tree/master/jmztabm-cli'
+ commit: '5fee003a3c97695b422bf556f4b5d9eb24080a3c'
+ branch: '1.0.6'
+
+Validator set to level 'Error'
+Beginning validation of mztab file: /home/data/manual_null_null_minimal_example.mztab
+[Info-2041] line 79: The metadata section should contain a small_molecule-identification_reliability parameter definition.
+uk.ac.ebi.pride.jmztab2.utils.errors.MZTabException: [Info-2041] line 79: The metadata section should contain a small_molecule-identification_reliability parameter definition.
+
+	at uk.ac.ebi.pride.jmztab2.utils.parser.SMHLineParser.refine(SMHLineParser.java:150)
+	at uk.ac.ebi.pride.jmztab2.utils.parser.MZTabHeaderLineParser.parse(MZTabHeaderLineParser.java:95)
+	at de.isas.mztab2.io.MzTabFileParser.check(MzTabFileParser.java:350)
+	at de.isas.mztab2.io.MzTabFileParser.parse(MzTabFileParser.java:138)
+	at de.isas.mztab2.io.MzTabFileParser.parse(MzTabFileParser.java:175)
+	at de.isas.mztab2.cli.MZTabCommandLine.handleValidation(MZTabCommandLine.java:299)
+	at de.isas.mztab2.cli.MZTabCommandLine.handleValidationOptions(MZTabCommandLine.java:251)
+	at de.isas.mztab2.cli.MZTabCommandLine.main(MZTabCommandLine.java:135)
