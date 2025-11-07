@@ -1,0 +1,101 @@
+ONTOLOGY SOURCE REFERENCE
+Term Source Name	OBI	MS
+Term Source File	http://purl.obolibrary.org/obo/obi.owl	https://raw.githubusercontent.com/HUPO-PSI/psi-ms-CV/master/psi-ms.obo
+Term Source Version	2024-06-10	4.1.199
+Term Source Description	Ontology for Biomedical Investigations	PSI-MS controlled vocabulary
+Comment[mztab.metadata.cv:id]		1
+INVESTIGATION
+Investigation Identifier	REQ2025110600007
+Investigation Title	
+Investigation Description	
+Investigation Submission Date	2025-11-07
+Investigation Public Release Date	2025-11-07
+INVESTIGATION PUBLICATIONS
+Investigation PubMed ID	
+Investigation Publication DOI	
+Investigation Publication Author List	
+Investigation Publication Title	
+Investigation Publication Status	
+Investigation Publication Status Term Accession Number	
+Investigation Publication Status Term Source REF	
+INVESTIGATION CONTACTS
+Investigation Person Last Name	
+Investigation Person First Name	
+Investigation Person Mid Initials	
+Investigation Person Email	
+Investigation Person Phone	
+Investigation Person Fax	
+Investigation Person Address	
+Investigation Person Affiliation	
+Investigation Person Roles	
+Investigation Person Roles Term Accession Number	
+Investigation Person Roles Term Source REF	
+STUDY
+Study Identifier	REQ2025110600007
+Study Title	
+Study Description	
+Study Submission Date	2025-11-07
+Study Public Release Date	2025-11-07
+Study File Name	s_REQ2025110600007.txt
+Comment[mztab:source_file:location]	test/data/examples/masster_0.5.25_null.mztab
+Comment[mztab:source_file:hash:sha256]	778a86bda39307e2ed4a570447ce6014540f73a0fbb4355b4bfa9aada4bad767
+Comment[mztab:metadata:mzTab_version]	2.2.0-M
+Comment[mztab:metadata:mzTab_ID]	D:\Data\studies\canto1\7600_masster
+STUDY DESIGN DESCRIPTORS
+Study Design Type	LC-MS label-free quantitation analysis
+Study Design Type Term Accession Number	http://purl.obolibrary.org/obo/MS_1001834
+Study Design Type Term Source REF	MS
+Comment[mztab:source_field]	mztab:metadata:quantification_method
+STUDY PUBLICATIONS
+Study PubMed ID	
+Study Publication DOI	
+Study Publication Author List	
+Study Publication Title	
+Study Publication Status	
+Study Publication Status Term Accession Number	
+Study Publication Status Term Source REF	
+STUDY FACTORS
+Study Factor Name	
+Study Factor Type	
+Study Factor Type Term Accession Number	
+Study Factor Type Term Source REF	
+STUDY ASSAYS
+Study Assay File Name	a_REQ2025110600007_metabolite_profiling.txt
+Study Assay Measurement Type	untargeted metabolite profiling
+Study Assay Measurement Type Term Accession Number	http://purl.obolibrary.org/obo/MSIO_0000101
+Study Assay Measurement Type Term Source REF	MSIO
+Study Assay Technology Type	mass spectrometry assay
+Study Assay Technology Type Term Accession Number	http://purl.obolibrary.org/obo/OBI_0000470
+Study Assay Technology Type Term Source REF	OBI
+Study Assay Technology Platform	Mass spectrometry
+STUDY PROTOCOLS
+Study Protocol Name	Sample collection	Extraction	Mass spectrometry	Data transformation	Metabolite identification
+Study Protocol Type	Sample collection	Extraction	Mass spectrometry	Data transformation	Metabolite identification
+Study Protocol Type Term Accession Number					
+Study Protocol Type Term Source REF					
+Study Protocol Description	Species: . . Organism parts:. 		Mass spectrometry instruments: . . analyzers:. . sources:. 	 Data transformation software List: OpenMS, MASSter	 Databases: compound library
+Study Protocol URI					
+Study Protocol Version					
+Study Protocol Parameters Name		Post Extraction;Derivatization	Scan polarity;Scan m/z range;Instrument;Ion source;Mass analyzer		
+Study Protocol Parameters Name Term Accession Number		;	;;;;		
+Study Protocol Parameters Name Term Source REF		;	;;;;		
+Study Protocol Components Name				mztab.metadata.software.id=1;mztab.metadata.software.id=2	mztab.metadata.database.id=1
+Study Protocol Components Type				OpenMS;MASSter	compound library
+Study Protocol Components Type Term Accession Number				http://purl.obolibrary.org/obo/MS_1003430;http://purl.obolibrary.org/obo/MS_1002878	
+Study Protocol Components Type Term Source REF				MS;MS	
+Comment[mztab.metadata.software:setting]	mztab.metadata.software.id=1: {}	mztab.metadata.software.id=2: {}
+Comment[mztab.metadata.database:prefix]	mztab.metadata.database.id=1: { cmpd }
+Comment[mztab.metadata.database:version]	mztab.metadata.database.id=1: { Unknown }
+Comment[mztab.metadata.database:uri]	mztab.metadata.database.id=1: { https://pubchem.ncbi.nlm.nih.gov/ }
+STUDY CONTACTS
+Study Person Last Name	
+Study Person First Name	
+Study Person Mid Initials	
+Study Person Email	
+Study Person Phone	
+Study Person Fax	
+Study Person Address	
+Study Person Affiliation	
+Study Person Roles	
+Study Person Roles Term Accession Number	
+Study Person Roles Term Source REF	

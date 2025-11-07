@@ -5,11 +5,11 @@ Term Source Version	2024-06-10	2018-09-08	4.0.9	26/10/2021	11/9/25	1.2	1.2
 Term Source Description	Ontology for Biomedical Investigations	Experimental Factor Ontology	PSI-MS controlled vocabulary	The BRENDA Tissue Ontology	NCBI organismal classification	Chemical Methods Ontology	MI
 Comment[mztab.metadata.cv:id]	5	4	1	2	3	6	7
 INVESTIGATION
-Investigation Identifier	REQ2025110600001
+Investigation Identifier	REQ2025110600004
 Investigation Title	
 Investigation Description	
-Investigation Submission Date	2025-11-06
-Investigation Public Release Date	2025-11-06
+Investigation Submission Date	2025-11-07
+Investigation Public Release Date	2025-11-07
 INVESTIGATION PUBLICATIONS
 Investigation PubMed ID	
 Investigation Publication DOI	
@@ -31,12 +31,12 @@ Investigation Person Roles
 Investigation Person Roles Term Accession Number	
 Investigation Person Roles Term Source REF	
 STUDY
-Study Identifier	REQ2025110600001
+Study Identifier	REQ2025110600004
 Study Title	Individual variability in human blood metabolites identifies age-related differences - determination of coefficients of variation for each metabolite (3 injections of same sample, 3 independent sample preparations)
 Study Description	Metabolites present in human blood document individual physiological states influenced by genetic, epigenetic, and lifestyle factors. Using high-resolution liquid chromatography-mass spectrometry (LC-MS), we performed nontargeted, quantitative metabolomics analysis in blood of 15 young (29 ± 4 y of age) and 15 elderly (81 ± 7 y of age) individuals. Coefficients of variation (CV = SD/mean) were obtained for 126 blood metabolites of all 30 donors. Fifty-five RBC-enriched metabolites, for which metabolomics studies have been scarce, are highlighted here. We found 14 blood compounds that show remarkable age-related increases or decreases; they include 1,5-anhydroglucitol, dimethyl-guanosine, acetyl-carnosine, carnosine, ophthalmic acid, UDP-acetyl-glucosamine, N-acetyl-arginine, N6-acetyl-lysine, pantothenate, citrulline, leucine, isoleucine, NAD+, and NADP+. Six of them are RBC-enriched, suggesting that RBC metabolomics is highly valuable for human aging research. Age differences are partly explained by a decrease in antioxidant production or increasing inefficiency of urea metabolism among the elderly. Pearson’s coefficients demonstrated that some age-related compounds are correlated, suggesting that aging affects them concomitantly. Although our CV values are mostly consistent with those CVs previously published, we here report previously unidentified CVs of 51 blood compounds. Compounds having moderate to high CV values (0.4–2.5) are often modified. Compounds having low CV values, such as ATP and glutathione, may be related to various diseases because their concentrations are strictly controlled, and changes in them would compromise health. Thus, human blood is a rich source of information about individual metabolic differences. </p> Validation of experimental procedures was performed as follows. First, we evaluated the contribution of sample handling to within-sample variation. The same blood sample preparation was injected 3x into the LC-MS at 80-min intervals. We thus obtained within-sample CVs (designated as CVwi), which were less than 0.1 in 107 of 126 compounds (85%). Only 10 compounds showed CVwi of 0.1-0.2, while 9 had CVwi >0.2. Second, we also examined sample-to-sample variation caused by sample preparation. Three samples were independently prepared from the same blood sample (one person), and CVs thus determined were designated as CVss. CVss values of HEPES and PIPES in the blood samples were very small (0.06~0.08 for HEPES and 0.04~0.08 for PIPES). The great majority (116/126=92%) of CVss were <0.3. </p> Blood samples drawn from four volunteers four times within 24 h are available under accession number MTBLS264. Whole blood metabolomic data from all 30 subjects are available under accession number MTBLS265. Plasma and RBC data from all 30 subjects can be found under MTBLS266 and MTBLS267, respectively.
-Study Submission Date	2025-11-06
-Study Public Release Date	2025-11-06
-Study File Name	s_REQ2025110600001.txt
+Study Submission Date	2025-11-07
+Study Public Release Date	2025-11-07
+Study File Name	s_REQ2025110600004.txt
 Comment[mztab:source_file:location]	test/data/examples/manual_null_MTBLS263.mztab
 Comment[mztab:source_file:hash:sha256]	8e9ce4f8481a610781effbb794832baa2adfeb44cb77d1d60d3bdf40581d6a5d
 Comment[mztab:metadata:mzTab_version]	2.0.0-M
@@ -62,7 +62,7 @@ Study Factor Type
 Study Factor Type Term Accession Number	
 Study Factor Type Term Source REF	
 STUDY ASSAYS
-Study Assay File Name	a_REQ2025110600001_metabolite_profiling.txt
+Study Assay File Name	a_REQ2025110600004_metabolite_profiling.txt
 Study Assay Measurement Type	untargeted metabolite profiling
 Study Assay Measurement Type Term Accession Number	http://purl.obolibrary.org/obo/MSIO_0000101
 Study Assay Measurement Type Term Source REF	MSIO

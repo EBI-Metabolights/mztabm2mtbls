@@ -5,11 +5,11 @@ Term Source Version	2024-06-10	20-06-2018
 Term Source Description	Ontology for Biomedical Investigations	PSI-MS controlled vocabulary
 Comment[mztab.metadata.cv:id]		1
 INVESTIGATION
-Investigation Identifier	REQ2025110600004
+Investigation Identifier	REQ2025110600008
 Investigation Title	
 Investigation Description	
-Investigation Submission Date	2025-11-06
-Investigation Public Release Date	2025-11-06
+Investigation Submission Date	2025-11-07
+Investigation Public Release Date	2025-11-07
 INVESTIGATION PUBLICATIONS
 Investigation PubMed ID	
 Investigation Publication DOI	
@@ -31,12 +31,12 @@ Investigation Person Roles
 Investigation Person Roles Term Accession Number	
 Investigation Person Roles Term Source REF	
 STUDY
-Study Identifier	REQ2025110600004
+Study Identifier	REQ2025110600008
 Study Title	
 Study Description	
-Study Submission Date	2025-11-06
-Study Public Release Date	2025-11-06
-Study File Name	s_REQ2025110600004.txt
+Study Submission Date	2025-11-07
+Study Public Release Date	2025-11-07
+Study File Name	s_REQ2025110600008.txt
 Comment[mztab:source_file:location]	test/data/examples/msdial_4_gcms_tms_height_mzTab.mztab
 Comment[mztab:source_file:hash:sha256]	13ef9246df49bc0a6764ad3dec5c733ad089628d9bb88746abe7cb8f31684417
 Comment[mztab:metadata:mzTab_version]	2.0.0-M
@@ -60,7 +60,7 @@ Study Factor Type
 Study Factor Type Term Accession Number	
 Study Factor Type Term Source REF	
 STUDY ASSAYS
-Study Assay File Name	a_REQ2025110600004_metabolite_profiling.txt
+Study Assay File Name	a_REQ2025110600008_metabolite_profiling.txt
 Study Assay Measurement Type	untargeted metabolite profiling
 Study Assay Measurement Type Term Accession Number	http://purl.obolibrary.org/obo/MSIO_0000101
 Study Assay Measurement Type Term Source REF	MSIO

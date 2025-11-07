@@ -1,0 +1,14 @@
+Running jmztabm-cli
+ version: '1.0.6'
+ build-date: '2021-01-02T17:21:49.058Z'
+ scm-location: 'https://github.com/lifs-tools/jmztab-m/tree/master/jmztabm-cli'
+ commit: '5fee003a3c97695b422bf556f4b5d9eb24080a3c'
+ branch: '1.0.6'
+
+Validator set to level 'Error'
+Beginning validation of mztab file: /home/data/LDA_v2.11.1_MTBLS396.mzTab
+No structural or logical errors in file:/home/data/LDA_v2.11.1_MTBLS396.mzTab file!
+Writing mzTab object as json to /home/data/LDA_v2.11.1_MTBLS396.mzTab.json
+Beginning semantic validation of mztab file: /home/data/LDA_v2.11.1_MTBLS396.mzTab with mapping file: file:/home/configuration/mzTab_2_0-M_mapping.xml
+No errors found for semantic validation on level Error
+Finished validation!

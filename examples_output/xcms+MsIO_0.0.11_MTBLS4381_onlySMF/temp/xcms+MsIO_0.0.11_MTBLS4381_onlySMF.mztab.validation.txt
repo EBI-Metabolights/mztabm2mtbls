@@ -1,0 +1,9 @@
+Running jmztabm-cli
+ version: '1.0.6'
+ build-date: '2021-01-02T17:21:49.058Z'
+ scm-location: 'https://github.com/lifs-tools/jmztab-m/tree/master/jmztabm-cli'
+ commit: '5fee003a3c97695b422bf556f4b5d9eb24080a3c'
+ branch: '1.0.6'
+
+Validator set to level 'Error'
+Beginning validation of mztab file: /home/data/xcms+MsIO_0.0.11_MTBLS4381_onlySMF.mztab

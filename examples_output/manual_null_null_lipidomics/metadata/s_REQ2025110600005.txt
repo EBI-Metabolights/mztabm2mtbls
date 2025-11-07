@@ -1,0 +1,2 @@
+Source Name	Characteristics[Organism]	Term Source REF	Term Accession Number	Characteristics[Organism part]	Term Source REF	Term Accession Number	Characteristics[Variant]	Term Source REF	Term Accession Number	Characteristics[Sample type]	Term Source REF	Term Accession Number	Protocol REF	Sample Name	Comment[mztab:metadata:sample:id]	Comment[mztab:metadata:sample:description]
+QEx-1273-prm-sp1													Sample collection	QEx-1273-prm-sp1	1	Sphingolipids with concentration reported as picomolar per mg of protein, abundances are reported after calibration correction.

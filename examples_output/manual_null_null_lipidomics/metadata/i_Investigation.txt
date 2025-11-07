@@ -5,11 +5,11 @@ Term Source Version	2024-06-10	2018-09-08	4.0.18	1.0.1	2017-09-25
 Term Source Description	Ontology for Biomedical Investigations	Experimental Factor Ontology	PSI-MS controlled vocabulary	Metabolomics Standards Initiative Ontology (MSIO)	Units of Measurement Ontology
 Comment[mztab.metadata.cv:id]			1	2	3
 INVESTIGATION
-Investigation Identifier	REQ2025110600002
+Investigation Identifier	REQ2025110600005
 Investigation Title	
 Investigation Description	
-Investigation Submission Date	2025-11-06
-Investigation Public Release Date	2025-11-06
+Investigation Submission Date	2025-11-07
+Investigation Public Release Date	2025-11-07
 INVESTIGATION PUBLICATIONS
 Investigation PubMed ID	
 Investigation Publication DOI	
@@ -31,12 +31,12 @@ Investigation Person Roles
 Investigation Person Roles Term Accession Number	
 Investigation Person Roles Term Source REF	
 STUDY
-Study Identifier	REQ2025110600002
+Study Identifier	REQ2025110600005
 Study Title	
 Study Description	Minimal proposed sample file for identification and quantification of lipids
-Study Submission Date	2025-11-06
-Study Public Release Date	2025-11-06
-Study File Name	s_REQ2025110600002.txt
+Study Submission Date	2025-11-07
+Study Public Release Date	2025-11-07
+Study File Name	s_REQ2025110600005.txt
 Comment[mztab:source_file:location]	test/data/examples/manual_null_null_lipidomics.mztab
 Comment[mztab:source_file:hash:sha256]	ffa9d170df1d5c1289f31b0fe2406e7d88ae18120a685ac46caa2501ecae2491
 Comment[mztab:metadata:mzTab_version]	2.0.0-M
@@ -62,7 +62,7 @@ Study Factor Type
 Study Factor Type Term Accession Number	
 Study Factor Type Term Source REF	
 STUDY ASSAYS
-Study Assay File Name	a_REQ2025110600002_metabolite_profiling.txt
+Study Assay File Name	a_REQ2025110600005_metabolite_profiling.txt
 Study Assay Measurement Type	untargeted metabolite profiling
 Study Assay Measurement Type Term Accession Number	http://purl.obolibrary.org/obo/MSIO_0000101
 Study Assay Measurement Type Term Source REF	MSIO

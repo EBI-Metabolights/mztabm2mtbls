@@ -1,0 +1,422 @@
+Running jmztabm-cli
+ version: '1.0.6'
+ build-date: '2021-01-02T17:21:49.058Z'
+ scm-location: 'https://github.com/lifs-tools/jmztab-m/tree/master/jmztabm-cli'
+ commit: '5fee003a3c97695b422bf556f4b5d9eb24080a3c'
+ branch: '1.0.6'
+
+Validator set to level 'Error'
+Beginning validation of mztab file: /home/data/xcms+MsIO_0.0.11_MTBLS1820_onlySMF.mztab
+Max error count of 200 reached!
+[Error-2000] line 565: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 566: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 567: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 568: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 569: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 570: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 571: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 572: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 573: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 574: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 575: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 576: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 577: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 578: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 579: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 580: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 581: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 582: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 583: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 584: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 585: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 586: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 587: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 588: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 589: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 590: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 591: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 592: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 593: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 594: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 595: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 596: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 597: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 598: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 599: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 600: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 601: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 602: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 603: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 604: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 605: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 606: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 607: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 608: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 609: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 610: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 611: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 612: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 613: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 614: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 615: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 616: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 617: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 618: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 619: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 620: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 621: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 622: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 623: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 624: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 625: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 626: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 627: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 628: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 629: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 630: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 631: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 632: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 633: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 634: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 635: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 636: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 637: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 638: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 639: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 640: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 641: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 642: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 643: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 644: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 645: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 646: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 647: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 648: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 649: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 650: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 651: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 652: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 653: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 654: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 655: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 656: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 657: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 658: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 659: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 660: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 661: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 662: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 663: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 664: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 665: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 666: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 667: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 668: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 669: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 670: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 671: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 672: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 673: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 674: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 675: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 676: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 677: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 678: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 679: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 680: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 681: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 682: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 683: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 684: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 685: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 686: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 687: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 688: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 689: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 690: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 691: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 692: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 693: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 694: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 695: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 696: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 697: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 698: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 699: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 700: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 701: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 702: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 703: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 704: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 705: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 706: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 707: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 708: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 709: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 710: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 711: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 712: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 713: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 714: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 715: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 716: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 717: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 718: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 719: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 720: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 721: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 722: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 723: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 724: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 725: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 726: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 727: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 728: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 729: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 730: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 731: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 732: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 733: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 734: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 735: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 736: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 737: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 738: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 739: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 740: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 741: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 742: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 743: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 744: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 745: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 746: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 747: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 748: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 749: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 750: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 751: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 752: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 753: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 754: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 755: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 756: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 757: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 758: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 759: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 760: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 761: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 762: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 763: Column "charge" is an empty cell, or the current column cannot use "null".
+
+[Error-2000] line 764: Column "charge" is an empty cell, or the current column cannot use "null".
+
+
+uk.ac.ebi.pride.jmztab2.utils.errors.MZTabErrorOverflowException
+	at uk.ac.ebi.pride.jmztab2.utils.errors.MZTabErrorList.add(MZTabErrorList.java:122)
+	at uk.ac.ebi.pride.jmztab2.utils.parser.MZTabDataLineParser.checkData(MZTabDataLineParser.java:256)
+	at uk.ac.ebi.pride.jmztab2.utils.parser.SMFLineParser.checkData(SMFLineParser.java:106)
+	at uk.ac.ebi.pride.jmztab2.utils.parser.MZTabDataLineParser.parse(MZTabDataLineParser.java:138)
+	at de.isas.mztab2.io.MzTabFileParser.check(MzTabFileParser.java:410)
+	at de.isas.mztab2.io.MzTabFileParser.parse(MzTabFileParser.java:138)
+	at de.isas.mztab2.io.MzTabFileParser.parse(MzTabFileParser.java:175)
+	at de.isas.mztab2.cli.MZTabCommandLine.handleValidation(MZTabCommandLine.java:299)
+	at de.isas.mztab2.cli.MZTabCommandLine.handleValidationOptions(MZTabCommandLine.java:251)
+	at de.isas.mztab2.cli.MZTabCommandLine.main(MZTabCommandLine.java:135)

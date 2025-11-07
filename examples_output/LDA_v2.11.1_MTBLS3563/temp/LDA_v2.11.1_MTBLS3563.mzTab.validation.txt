@@ -1,0 +1,30 @@
+Running jmztabm-cli
+ version: '1.0.6'
+ build-date: '2021-01-02T17:21:49.058Z'
+ scm-location: 'https://github.com/lifs-tools/jmztab-m/tree/master/jmztabm-cli'
+ commit: '5fee003a3c97695b422bf556f4b5d9eb24080a3c'
+ branch: '1.0.6'
+
+Validator set to level 'Error'
+Beginning validation of mztab file: /home/data/LDA_v2.11.1_MTBLS3563.mzTab
+No structural or logical errors in file:/home/data/LDA_v2.11.1_MTBLS3563.mzTab file!
+Writing mzTab object as json to /home/data/LDA_v2.11.1_MTBLS3563.mzTab.json
+Beginning semantic validation of mztab file: /home/data/LDA_v2.11.1_MTBLS3563.mzTab with mapping file: file:/home/configuration/mzTab_2_0-M_mapping.xml
+class ValidationMessage {
+    code: [Error-3010] line -1: The object "/smallMoleculeEvidence/@msLevel" accessed by ms_level_must is required, but was null or empty. Allowed terms are defined in REQUIRED rule 'ms_level_must' for path '/smallMoleculeEvidence/@msLevel' and with scope '/smallMoleculeSummary'  matching  ALL of the terms [ 'MS:1000511' with name 'ms level' excluding itself but including any children.'].
+    
+    category: cross_check
+    messageType: error
+    message: The object "/smallMoleculeEvidence/@msLevel" accessed by ms_level_must is required, but was null or empty. Allowed terms are defined in REQUIRED rule 'ms_level_must' for path '/smallMoleculeEvidence/@msLevel' and with scope '/smallMoleculeSummary'  matching  ALL of the terms [ 'MS:1000511' with name 'ms level' excluding itself but including any children.'].
+    lineNumber: -1
+}
+class ValidationMessage {
+    code: [Error-3010] line -1: The object "/smallMoleculeEvidence/@identificationMethod" accessed by identification_method_must is required, but was null or empty. Allowed terms are defined in REQUIRED rule 'identification_method_must' for path '/smallMoleculeEvidence/@identificationMethod' and with scope '/smallMoleculeEvidence'  matching  EXACTLY ONE of the terms [ 'MS:1001058' with name 'quality estimation by manual validation' exactly.'| 'MS:1001060' with name 'search type' excluding itself but including any children.'].
+    
+    category: cross_check
+    messageType: error
+    message: The object "/smallMoleculeEvidence/@identificationMethod" accessed by identification_method_must is required, but was null or empty. Allowed terms are defined in REQUIRED rule 'identification_method_must' for path '/smallMoleculeEvidence/@identificationMethod' and with scope '/smallMoleculeEvidence'  matching  EXACTLY ONE of the terms [ 'MS:1001058' with name 'quality estimation by manual validation' exactly.'| 'MS:1001060' with name 'search type' excluding itself but including any children.'].
+    lineNumber: -1
+}
+There were 2 validation messages including 2 warnings or errors during semantic validation of your file, please check the output for details!
+Finished validation!
