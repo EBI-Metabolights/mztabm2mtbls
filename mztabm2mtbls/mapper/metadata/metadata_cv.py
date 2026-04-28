@@ -1,13 +1,13 @@
 from metabolights_utils.models.isa.investigation_file import OntologySourceReference
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mztab2 import MzTab
 from mztabm2mtbls.utils import get_ontology_source_comment, sanitise_data
 
 
 class MetadataCvMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         if not mztab_model.metadata.cv:
             return
 

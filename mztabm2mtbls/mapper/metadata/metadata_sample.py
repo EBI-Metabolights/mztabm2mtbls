@@ -1,8 +1,10 @@
+from mztab_m_io.model.common import StudyVariable
 from typing import Any, Dict, Set
 
 from metabolights_utils.models.isa.investigation_file import Factor, OntologyAnnotation
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.map_model import FieldMapDescription
@@ -13,12 +15,11 @@ from mztabm2mtbls.mapper.utils import (
     find_first_header_column_index,
     update_isa_table_row,
 )
-from mztabm2mtbls.mztab2 import MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataSampleMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         study = mtbls_model.investigation.studies[0]
         samples_file: SamplesFile = mtbls_model.samples[list(mtbls_model.samples)[0]]
 
@@ -64,55 +65,55 @@ class MetadataSampleMapper(BaseMapper):
             add_isa_table_ontology_columns(samples_file, header_name, current_index)
             current_index += 3
 
-        factor_value_names = []
+        # factor_value_names = []
         factor_value_parameters = {}
         sample_factors: Dict[str, Set[Any]] = {}
         factors = {}
-        for sv in mztab_model.metadata.study_variable:
-            if sv.factors:
-                for factor in sv.factors:
-                    factors[factor.name] = factor
-                    if factor.name:
-                        if factor.name not in factor_value_names:
-                            factor_value_parameters[factor.name] = factor
-                            factor_value_names.append(factor.name)
-                        factor_tuple = (
-                            factor.cv_label or "",
-                            factor.cv_accession or "",
-                            factor.name or "",
-                            factor.value or "",
+        assays_dict = {x.id: x for x in mztab_model.metadata.assay or {}}
+        groups_dict = {x.id: x for x in mztab_model.metadata.study_variable_group or {}}
+        study_variables: Dict[str, StudyVariable] = {
+            x.id: x for x in mztab_model.metadata.study_variable or {}
+        }
+        study_variable_assays: Dict[str, list[str]] = {
+            x.id: [assays_dict[a] for a in x.assay_refs if a in assays_dict]
+            for x in mztab_model.metadata.study_variable or {}
+        }
+        study_variable_groups: Dict[str, list[str]] = {
+            x.id: [groups_dict[a] for a in x.group_refs if a in groups_dict]
+            for x in mztab_model.metadata.study_variable or {}
+        }
+        sample_id_study_variable_id: Dict[str, list[str]] = {}
+        for k, assays in study_variable_assays.items():
+            for assay in assays:
+                if assay.sample_ref:
+                    sample_id = assay.sample_ref
+                    if sample_id not in sample_id_study_variable_id:
+                        sample_id_study_variable_id[sample_id] = []
+                    if study_variables[k] not in sample_id_study_variable_id[sample_id]:
+                        sample_id_study_variable_id[sample_id].append(
+                            study_variables[k]
                         )
-                        if sv.assay_refs:
-                            assay_refs = [
-                                assays_map[x] for x in sv.assay_refs if x in assays_map
-                            ]
-                            if assay_refs:
-                                sample_ref_ids = [
-                                    x.sample_ref
-                                    for x in assay_refs
-                                    if x.sample_ref in samples_map
-                                ]
-                                for sample_id in sample_ref_ids:
-                                    if sample_id not in sample_factors:
-                                        sample_factors[sample_id] = set()
-                                    sample_factors[sample_id].add((factor_tuple, sv.name))
 
-        for factor_value_name in factor_value_names:
-            add_isa_table_ontology_columns(
-                samples_file, f"Factor Value[{factor_value_name}]"
-            )
-            factor = factors[factor_value_name]
-            item = copy_parameter(factor)
-            study.study_factors.factors.append(
-                Factor(
-                    name=factor.name,
-                    type=OntologyAnnotation(
-                        term=item.name,
-                        term_source_ref=item.cv_label,
-                        term_accession_number=item.cv_accession,
-                    ),
-                )
-            )
+        groups = {x.id: x for x in mztab_model.metadata.study_variable_group}
+        for sv in mztab_model.metadata.study_variable:
+            if sv.group_refs:
+                group_refs = [groups[x] for x in sv.group_refs if x in groups]
+                for group in group_refs:
+                    if group.name.name.lower() not in factors:
+                        factor = Factor(
+                            name=group.name.name,
+                            type=OntologyAnnotation(
+                                term=group.type.name,
+                                term_source_ref=group.type.cv_label,
+                                term_accession_number=group.type.cv_accession,
+                            ),
+                        )
+                        study.study_factors.factors.append(factor)
+
+                        factors[group.name.name.lower()] = factor
+
+        for factor_name, factor in factors.items():
+            add_isa_table_ontology_columns(samples_file, f"Factor Value[{factor.name}]")
 
         # Find column indices of sample name, organism and organism part columns
         # mzTab2-M  Metabolights sample sheet
@@ -144,8 +145,8 @@ class MetadataSampleMapper(BaseMapper):
                     field_name=name, map_from="name"
                 )
 
-        for factor_value_name in factor_value_names:
-            name = f"Factor Value[{factor_value_name}]"
+        for factor_name, factor in factors.items():
+            name = f"Factor Value[{factor.name}]"
             selected_column_headers[name] = FieldMapDescription(
                 field_name=name, map_from="value"
             )
@@ -187,17 +188,20 @@ class MetadataSampleMapper(BaseMapper):
                                 sanitise_data(param.value)
                             )
 
-            if sample.id in sample_factors:
-                for factor_tuple, factor_val in sample_factors[sample.id]:
-                    header = f"Factor Value[{factor_tuple[2]}]"
-                    if header in selected_column_headers:
-                        definition = selected_column_headers[header]
-                        column_name = definition.target_column_name
-                        # val = sanitise_data(factor_tuple[3])
+            if sample.id in sample_id_study_variable_id:
+                for study_variable in sample_id_study_variable_id[sample.id]:
+                    for group in study_variable_groups.get(study_variable.id, []):
+                        header = f"Factor Value[{group.name.name}]"
+                        if header in selected_column_headers:
+                            definition = selected_column_headers[header]
+                            column_name = definition.target_column_name
+                            # val = sanitise_data(factor_tuple[3])
+                        factor_val = samples_file.table.data[column_name][row_idx] or ""
                         if factor_val:
-                            if samples_file.table.data[column_name][row_idx]:
-                                samples_file.table.data[column_name][row_idx] += (
-                                    f";{factor_val}"
-                                )
-                            else:
-                                samples_file.table.data[column_name][row_idx] = factor_val
+                            samples_file.table.data[column_name][row_idx] += (
+                                f";{study_variable.name}"
+                            )
+                        else:
+                            samples_file.table.data[column_name][row_idx] = (
+                                study_variable.name
+                            )

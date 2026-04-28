@@ -1,14 +1,14 @@
 from metabolights_utils.models.isa.common import Comment
 from metabolights_utils.models.isa.investigation_file import OntologyAnnotation, Person
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mztab2 import MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataContactMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         if not mztab_model.metadata.contact:
             return
         id_comment = Comment(

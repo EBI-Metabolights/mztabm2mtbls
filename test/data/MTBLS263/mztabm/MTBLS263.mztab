@@ -2,15 +2,36 @@ MTD	mzTab-version	2.0.0-M
 MTD	mzTab-ID	MTBLS263_supreme																															
 MTD	title	"Individual variability in human blood metabolites identifies age-related differences - determination of coefficients of variation for each metabolite (3 injections of same sample, 3 independent sample preparations)"																															
 MTD	description	"Metabolites present in human blood document individual physiological states influenced by genetic, epigenetic, and lifestyle factors. Using high-resolution liquid chromatography-mass spectrometry (LC-MS), we performed nontargeted, quantitative metabolomics analysis in blood of 15 young (29 ± 4 y of age) and 15 elderly (81 ± 7 y of age) individuals. Coefficients of variation (CV = SD/mean) were obtained for 126 blood metabolites of all 30 donors. Fifty-five RBC-enriched metabolites, for which metabolomics studies have been scarce, are highlighted here. We found 14 blood compounds that show remarkable age-related increases or decreases; they include 1,5-anhydroglucitol, dimethyl-guanosine, acetyl-carnosine, carnosine, ophthalmic acid, UDP-acetyl-glucosamine, N-acetyl-arginine, N6-acetyl-lysine, pantothenate, citrulline, leucine, isoleucine, NAD+, and NADP+. Six of them are RBC-enriched, suggesting that RBC metabolomics is highly valuable for human aging research. Age differences are partly explained by a decrease in antioxidant production or increasing inefficiency of urea metabolism among the elderly. Pearson’s coefficients demonstrated that some age-related compounds are correlated, suggesting that aging affects them concomitantly. Although our CV values are mostly consistent with those CVs previously published, we here report previously unidentified CVs of 51 blood compounds. Compounds having moderate to high CV values (0.4–2.5) are often modified. Compounds having low CV values, such as ATP and glutathione, may be related to various diseases because their concentrations are strictly controlled, and changes in them would compromise health. Thus, human blood is a rich source of information about individual metabolic differences. </p> Validation of experimental procedures was performed as follows. First, we evaluated the contribution of sample handling to within-sample variation. The same blood sample preparation was injected 3x into the LC-MS at 80-min intervals. We thus obtained within-sample CVs (designated as CVwi), which were less than 0.1 in 107 of 126 compounds (85%). Only 10 compounds showed CVwi of 0.1-0.2, while 9 had CVwi >0.2. Second, we also examined sample-to-sample variation caused by sample preparation. Three samples were independently prepared from the same blood sample (one person), and CVs thus determined were designated as CVss. CVss values of HEPES and PIPES in the blood samples were very small (0.06~0.08 for HEPES and 0.04~0.08 for PIPES). The great majority (116/126=92%) of CVss were <0.3. </p> Blood samples drawn from four volunteers four times within 24 h are available under accession number MTBLS264. Whole blood metabolomic data from all 30 subjects are available under accession number MTBLS265. Plasma and RBC data from all 30 subjects can be found under MTBLS266 and MTBLS267, respectively."																															
+MTD	protocol[1]-name	Sample collection
+MTD	protocol[1]-type	[EFO, EFO:0005518, sample collection protocol, ]
+MTD	protocol[1]-description	For the human studies, midstream urine (~15 ml) samples were collected and frozen from each volunteer ...
+MTD	protocol[2]-name	Extraction
+MTD	protocol[2]-type	[EFO, EFO:0000490, extraction protocol, ]
+MTD	protocol[2]-description	Plant material was homogenized in liquid nitrogen using a pestle and mortar and aliquots of 100 +/- 5 mg were weighed into pre-cooled 2 ml …
+MTD	protocol[2]-parameters	[,,Post Extraction, 400 µL water] | [,,Derivatization, silylation]
+MTD	protocol[3]-name	Chromatography
+MTD	protocol[3]-type	[CHMO, CHMO:0001000, chromatography, ]
+MTD	protocol[3]-description	Plant material was homogenized in liquid nitrogen using a pestle and mortar and aliquots of 100 +/- 5 mg were weighed into pre-cooled 2 ml …
+MTD	protocol[3]-parameters	[OBI, OBI:0000485, chromatography instrument, "[MS, MS:1001763, ACQUITY UPLC H-Class Bio, ]"] | [OBI, OBI:0000038, chromatography column, "HSS T3 C18 (1.8 μm, 1.0 x 100 mm; Waters)"] | [MS, MS:1002270, chromatography separation, reversed phase chromatography] | [, , Autosampler model, Waters 2777 Sample Manager] | [, , Guard column, "ACQUITY UPLC HSS T3 VanGuard Pre-column (1.8 µm, 2.1 mm x 5 mm; Waters)"]  
+MTD	protocol[4]-name	Mass spectrometry
+MTD	protocol[4]-type	[CHMO, CHMO:0000470, mass spectrometry, ]
+MTD	protocol[4]-description	Eluting compounds were detected from m/z 100-1000 using a hybrid quadrupole …
+MTD	protocol[4]-parameters	[MSIO, MSIO:0000171, mass spectrometry instrument, "[MS, MS:1003124, timsTOF fleX, ]"] | [MS, MS:1000008, ionization type, "[MS,MS:1000073, electrospray ionization, ]"] | [MS, MS:1003761, instrument class, "[MS, MS:1003951, time-of-flight instrument, ]"] |  [, , Scan m/z range, 100-1000]
+MTD	protocol[5]-name	Data transformation
+MTD	protocol[5]-type	[, , data transformation, ]
+MTD	protocol[5]-description	Raw data files were converted to mzData format using the vendor-specific...
+MTD	protocol[6]-name	Metabolite identification
+MTD	protocol[6]-type	[, , metabolite identification, ]
+MTD	protocol[6]-description	Initial features detected in narrow retention time windows displaying a high chromatogram correlation were grouped …
 MTD	sample_processing[1]	[EFO, EFO:0005518, sample collection protocol, "Blood samples for metabolomic analysis were taken from vein into a 5 ml heparin tube (Terumo). Immediately, 0.2 ml blood were quenched in 1.8 ml -40 °C 55% methanol."]																															
 MTD	sample_processing[2]	[MS, MS:1000831, sample preparation, "A constant amount of two internal standards (10 nmol of HEPES, 4-(2-hydroxyethyl)-1-piperazineethanesulfonic acid, and PIPES, piperazine-N,N′-bis(2-ethanesulfonic acid) was added to each sample. After brief vortexing, samples were transferred to Amicon Ultra 10-kDa cut-off filter (Millipore, Billerica, MA, USA) to remove proteins and cell debris. Following sample concentration by vacuum evaporation, each sample was resuspended in 40 μl of 50% acetonitrile and 1 μl (equivalent to 5 μl of initial sample) was used for each injection into the LC-MS system."]																															
 MTD	sample_processing[3]	[CHMO, CHMO:0001000, chromatography, "LC-MS data were obtained using a Paradigm MS4 HPLC system (Michrom Bioresources, Auburn, CA, USA) coupled to an LTQ Orbitrap mass spectrometer (Thermo Fisher Scientific, Waltham, MA, USA), as described previously[1]. Briefly, metabolites were separated on a ZIC-pHILIC column (Merck SeQuant, Sweden; 150 x 2.1 mm, 5 µm particle size) using acetonitrile (A) and 10 mM ammonium carbonate buffer, pH 9.3 (B) as the mobile phase, with gradient elution from 80% A to 20% A in 30 min, at a flow rate of 100 µl/min. Sample injection volume was 1 µl per run. </p> Ref:</br> [1] Pluskal T, Nakamura T, Villar-Briones A, Yanagida M (2010) Metabolic profiling of the fission yeast S. pombe: quantification of compounds under different temperatures and genetic perturbation. Mol Biosyst 6:182–198. doi: 10.1039/b908784b PMID:20024080</br>"]																															
 MTD	sample_processing[4]	[CHMO, CHMO:0000470, mass spectrometry, "The LTQ Orbitrap mass spectrometer (Thermo Fisher Scientific, Waltham, MA, USA) was operated in full scan mode with the scan range of 100-1,000 m/z. Each sample was analyzed twice, once in negative and once in positive ionization mode."]																															
 MTD	sample_processing[5]	[OBI, OBI:0200000, data transform, "Peak areas of metabolites of interest, within the raw LC-MS data, were measured using the MZmine 2.10 software and normalized using the peak areas of HEPES and PIPES. The complete workflow and processing parameters are summarized in the publication."]																															
 MTD	sample_processing[6]	[MI, MI:2131, metabolite identification, "Metabolites were identified by comparing their m/z values and retention times with authentic pure standards. If no standard was available, metabolites were assigned by analysis of MS/MS spectra (MS/MS), as described in the publication. In cases where no standard compound or MS/MS spectrum was available, compounds were identified by generating chemical formulae using m/z values in MZmine 2.10 module and given MS status."]																															
-MTD	instrument[1]-name	[MS, MS:1000449, LTQ Orbitrap,]																															
+MTD	instrument[1]-name	[MS, MS:1003124, timsTOF fleX, ]																														
 MTD	instrument[1]-source	[MS, MS:1000073, ESI,]																															
-MTD	instrument[1]-analyzer	[MS, MS:1000484, orbitrap,]																															
+MTD	instrument[1]-analyzer[1]	[MS, MS:1000484, orbitrap,]																															
 MTD	software[1]	[MS,MS:1002342,mzmine,2.10]																															
 MTD	publication[1]	pubmed:27036001|doi:10.1073/pnas.1603023113																															
 MTD	contact[1]-name	Romanas Chaleckis																															
@@ -50,7 +71,9 @@ MTD	sample[6]-tissue[1]	[BTO, BTO:0000089, blood, ]
 MTD	ms_run[1]-location	https://ftp.ebi.ac.uk/pub/databases/metabolights/studies/public/MTBLS263/FILES/3injections_inj1_POS.mzML																															
 MTD	ms_run[1]-scan_polarity[1]	[MS,MS:1000130,positive scan,]																															
 MTD	ms_run[1]-format	[MS, MS:1000584, mzML file, ]																															
-MTD	ms_run[1]-id_format	[MS, MS:1000768, Thermo nativeID format, ]																															
+MTD	ms_run[1]-id_format	[MS, MS:1000768, Thermo nativeID format, ]	
+MTD	ms_run[1]-parameters	[, , Scan m/z range, 100-2000]		
+MTD	ms_run[1]-instrument_ref	instrument[1]																															
 MTD	ms_run[2]-location	https://ftp.ebi.ac.uk/pub/databases/metabolights/studies/public/MTBLS263/FILES/3injections_inj2_POS.mzML																															
 MTD	ms_run[2]-scan_polarity[1]	[MS,MS:1000130,positive scan,]																															
 MTD	ms_run[2]-format	[MS, MS:1000584, mzML file, ]																															
@@ -97,52 +120,73 @@ MTD	ms_run[12]-format	[MS, MS:1000584, mzML file, ]
 MTD	ms_run[12]-id_format	[MS, MS:1000768, Thermo nativeID format, ]																															
 MTD	assay[1]	3injections_inj1_POS																															
 MTD	assay[1]-sample_ref	sample[1]																															
-MTD	assay[1]-ms_run_ref	ms_run[1]																															
+MTD	assay[1]-ms_run_ref	ms_run[1]
+MTD	assay[1]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]
 MTD	assay[2]	3injections_inj2_POS																															
 MTD	assay[2]-sample_ref	sample[2]																															
-MTD	assay[2]-ms_run_ref	ms_run[2]																															
+MTD	assay[2]-ms_run_ref	ms_run[2]	
+MTD	assay[2]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																														
 MTD	assay[3]	3injections_inj3_POS																															
 MTD	assay[3]-sample_ref	sample[3]																															
-MTD	assay[3]-ms_run_ref	ms_run[3]																															
+MTD	assay[3]-ms_run_ref	ms_run[3]	
+MTD	assay[3]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																														
 MTD	assay[4]	3samples_sampl1_POS																															
 MTD	assay[4]-sample_ref	sample[4]																															
-MTD	assay[4]-ms_run_ref	ms_run[4]																															
+MTD	assay[4]-ms_run_ref	ms_run[4]	
+MTD	assay[4]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																													
 MTD	assay[5]	3samples_sampl2_POS																															
 MTD	assay[5]-sample_ref	sample[5]																															
-MTD	assay[5]-ms_run_ref	ms_run[5]																															
+MTD	assay[5]-ms_run_ref	ms_run[5]	
+MTD	assay[5]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																														
 MTD	assay[6]	3samples_sampl3_POS																															
 MTD	assay[6]-sample_ref	sample[6]																															
-MTD	assay[6]-ms_run_ref	ms_run[6]																															
+MTD	assay[6]-ms_run_ref	ms_run[6]	
+MTD	assay[6]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																													
 MTD	assay[7]	3injections_inj1_NEG																															
 MTD	assay[7]-sample_ref	sample[1]																															
-MTD	assay[7]-ms_run_ref	ms_run[7]																															
+MTD	assay[7]-ms_run_ref	ms_run[7]	
+MTD	assay[7]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																													
 MTD	assay[8]	3injections_inj2_NEG																															
 MTD	assay[8]-sample_ref	sample[2]																															
-MTD	assay[8]-ms_run_ref	ms_run[8]																															
+MTD	assay[8]-ms_run_ref	ms_run[8]	
+MTD	assay[8]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																													
 MTD	assay[9]	3injections_inj3_NEG																															
 MTD	assay[9]-sample_ref	sample[3]																															
-MTD	assay[9]-ms_run_ref	ms_run[9]																															
+MTD	assay[9]-ms_run_ref	ms_run[9]	
+MTD	assay[9]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																													
 MTD	assay[10]	3samples_sampl1_NEG																															
 MTD	assay[10]-sample_ref	sample[4]																															
-MTD	assay[10]-ms_run_ref	ms_run[10]																															
+MTD	assay[10]-ms_run_ref	ms_run[10]	
+MTD	assay[10]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																														
 MTD	assay[11]	3samples_sampl2_NEG																															
 MTD	assay[11]-sample_ref	sample[5]																															
-MTD	assay[11]-ms_run_ref	ms_run[11]																															
+MTD	assay[11]-ms_run_ref	ms_run[11]	
+MTD	assay[11]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																														
 MTD	assay[12]	3samples_sampl3_NEG																															
 MTD	assay[12]-sample_ref	sample[6]																															
-MTD	assay[12]-ms_run_ref	ms_run[12]																															
+MTD	assay[12]-ms_run_ref	ms_run[12]		
+MTD	assay[12]-protocol_refs	protocol[1] | protocol[2] | protocol[3] | protocol[4] | protocol[5] | protocol[6]																													
+MTD	study_variable_group[1]	[ , , treatment day, ]																												
+MTD	study_variable_group[1]-description	Time after treatment																															
+MTD	study_variable_group[1]-type	[EFO, EFO:0000724, timepoint, ]																											
+MTD	study_variable_group[1]-datatype	xsd:integer																													
+MTD	study_variable_group[1]-unit	[UO, UO:0000033, day, ]																												
 MTD	study_variable[1]	1																															
-MTD	study_variable[1]-description	Preparation replicate																															
-MTD	study_variable[1]-assay_refs	assay[1] | assay[2] | assay[3] | assay[7] | assay[8] | assay[9] | 																															
+MTD	study_variable[1]-description	Day 1																															
+MTD	study_variable[1]-assay_refs	assay[1] | assay[2] | assay[3] | assay[7] | assay[8] | assay[9] | 																				
+MTD	study_variable[1]-group_refs	study_variable_group[1]																													
 MTD	study_variable[2]	2																															
-MTD	study_variable[2]-description	Preparation replicate																															
-MTD	study_variable[2]-assay_refs	assay[4] | assay[10] 																															
+MTD	study_variable[2]-description	Day 2																															
+MTD	study_variable[2]-assay_refs	assay[4] | assay[10] 		
+MTD	study_variable[2]-group_refs	study_variable_group[1]																														
 MTD	study_variable[3]	3																															
-MTD	study_variable[3]-description	Preparation replicate																															
-MTD	study_variable[3]-assay_refs	assay[5] | assay[11]																															
+MTD	study_variable[3]-description	Day 3																															
+MTD	study_variable[3]-assay_refs	assay[5] | assay[11]	
+MTD	study_variable[3]-group_refs	study_variable_group[1]																															
 MTD	study_variable[4]	4																															
-MTD	study_variable[4]-description	Preparation replicate																															
-MTD	study_variable[4]-assay_refs	assay[6] | assay[12]																															
+MTD	study_variable[4]-description	Day 4																															
+MTD	study_variable[4]-assay_refs	assay[6] | assay[12]	
+MTD	study_variable[4]-group_refs	study_variable_group[1]																															
 MTD	cv[1]-label	MS																															
 MTD	cv[1]-full_name	PSI-MS controlled vocabulary																															
 MTD	cv[1]-version	4.0.9																															

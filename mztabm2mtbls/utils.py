@@ -19,8 +19,7 @@ from metabolights_utils.models.isa.investigation_file import (
 )
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
-
-from mztabm2mtbls.mztab2 import MzTabBaseModel
+from mztab_m_io.model.base import MzTabBaseModel
 
 
 def sanitise_data(value: Union[None, Any]) -> Union[str, list[str]]:
@@ -194,10 +193,10 @@ def create_initial_protocols(mtbls_model: MetabolightsStudyModel) -> None:
 
 
 def modify_mztab_model(model: MzTabBaseModel):
-    for field_name, field_value in model:
+    for field_name, field_value in model.__class__.model_fields.items():
         field_type = model.__annotations__[field_name]
-        pattern = r"Annotated\[.*List\[.*\],(.*)]"
-        if re.match(pattern, field_type):
+        pattern = r"Annotated\[.*list\[.*\],(.*)]"
+        if re.match(pattern, str(field_type), flags=re.IGNORECASE):
             if field_value is None:
                 setattr(model, field_name, [])
         elif isinstance(field_value, MzTabBaseModel):

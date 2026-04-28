@@ -1,12 +1,15 @@
+from mztabm2mtbls.mapper.metadata.metadata_protocol import MetadataProtocolMapper
 import hashlib
 import json
 import os
 import shutil
 import subprocess
-from typing import List, Union
+from typing import List, Union, final
 
 import click
+import mztab_m_io as mztabm
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls import utils
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
@@ -24,7 +27,6 @@ from mztabm2mtbls.mapper.metadata.metadata_software import MetadataSoftwareMappe
 from mztabm2mtbls.mapper.summary.small_molecule_summary import (
     SmallMoleculeSummaryMapper,
 )
-from mztabm2mtbls.mztab2 import MzTab
 
 
 # run the actual conversion process as a shell command, calling the jmztab-m docker container
@@ -116,12 +118,12 @@ def run_jmztabm_docker(
     default="MTBLS1000000",
     help="The MetaboLights study accession number.",
 )
-@click.option("--container_engine", default="docker", help="Container run engine.")
-@click.option(
-    "--mztab2m_json_convertor_image",
-    default="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
-    help="Container image name to convert the mzTab-M file to mzTab-M json.",
-)
+# @click.option("--container_engine", default="docker", help="Container run engine.")
+# @click.option(
+#     "--mztab2m_json_convertor_image",
+#     default="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
+#     help="Container image name to convert the mzTab-M file to mzTab-M json.",
+# )
 @click.option(
     "--override_mztab2m_json_file",
     is_flag=False,
@@ -130,16 +132,16 @@ def run_jmztabm_docker(
     " and there is a mzTab-M json formatted version of the same file on same directory,"
     " overrides the current json file.",
 )
-@click.option(
-    "--mztabm_validation_level",
-    default="Info",
-    help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
-)
-@click.option(
-    "--mztabm_mapping_file",
-    help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
-    type=click.Path(exists=True),
-)
+# @click.option(
+#     "--mztabm_validation_level",
+#     default="Info",
+#     help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
+# )
+# @click.option(
+#     "--mztabm_mapping_file",
+#     help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
+#     type=click.Path(exists=True),
+# )
 @click.option(
     "--temp_folder",
     required=False,
@@ -150,12 +152,12 @@ def convert(
     input_file: str,
     output_dir: str,
     mtbls_accession_number: str,
-    container_engine: str,
-    mztab2m_json_convertor_image: str,
+    # container_engine: str,
+    # mztab2m_json_convertor_image: str,
     override_mztab2m_json_file: str,
     # Info, Warn or Error
-    mztabm_validation_level: str = "Error",
-    mztabm_mapping_file: Union[None, str] = None,
+    # mztabm_validation_level: str = "Error",
+    # mztabm_mapping_file: Union[None, str] = None,
     temp_folder: Union[None, str] = None,
 ):
     if not temp_folder:
@@ -180,57 +182,29 @@ def convert(
         mztab_sourcefile_sha256 = hashlib.file_digest(f, "sha256").hexdigest()
 
     print(f"SHA256 digest for {input_file} = {mztab_sourcefile_sha256}")
-
+    mztab_m_model: None | MzTabM = None
     if extension.lower() != ".json":
         input_json_file = f"{input_file}.json"
         if not override_mztab2m_json_file and os.path.exists(input_json_file):
             print(f"{input_json_file} file exists, it will be used as an input.")
         else:
-            input_basename = os.path.basename(input_file)
-            abs_path = os.path.realpath(input_file)
-            temp_abs_path = os.path.realpath(temp_folder)
-            os.makedirs(temp_abs_path, exist_ok=True)
-            temp_input_file_path = os.path.join(temp_abs_path, input_basename)
-            shutil.copy(abs_path, temp_input_file_path)
-            # dirname = os.path.dirname(abs_path)
-
-            filename = os.path.basename(temp_input_file_path)
-
-            # if mapping_file:
-            #     abs_mapping_file = os.path.realpath(mapping_file)
-            input_json_file = temp_input_file_path + ".json"
-            print(
-                "Converting mzTab file to mzTab json format.",
-                f"Please check container management tool ({container_engine}) is installed and running.",
+            result: mztabm.MzTabMLoadResult = mztabm.read(
+                file_path=input_file, format="tsv", auto_complete_ids=True
             )
-            print("Converting mzTab-M to mzTab-M json file...")
-            jmztabm_success = run_jmztabm_docker(
-                container_engine=container_engine,
-                mztab2m_json_convertor_image=mztab2m_json_convertor_image,
-                dirname=temp_abs_path,
-                filename=filename,
-                mztabm_validation_level=mztabm_validation_level,
-                mztabm_mapping_file=mztabm_mapping_file,
-            )
-            if jmztabm_success:
-                print(
-                    f"The conversion and validation of the mzTab-M file to mzTab-M json format "
-                    f"on level '{mztabm_validation_level}' was successful!"
-                )
-            else:
-                print(
-                    "The conversion and validation of the mzTab-M file to mzTab-M json format "
-                    f"on level '{mztabm_validation_level}' failed. "
-                    "Please check the logs for further details!"
-                )
+            if not result.success:
+                print("mzTabM to mztabM conversion failed.")
                 return False
+            mztab_m_model: MzTabM = result.mztabm
+            with open(input_json_file, "w", encoding="utf-8") as f:
+                json.dump(mztab_m_model.model_dump(exclude_none=True), f, indent=2)
+
     if not os.path.exists(input_json_file):
         print("mzTabM to mztabM json conversion failed.")
         return False
     with open(input_json_file) as f:
         mztab_json_data = json.load(f)
     utils.replace_null_string_with_none(mztab_json_data)
-    mztab_model: MzTab = MzTab.model_validate(mztab_json_data)
+    mztab_model: MzTabM = MzTabM.model_validate(mztab_json_data)
     utils.modify_mztab_model(mztab_model)
     mtbls_model: MetabolightsStudyModel = utils.create_metabolights_study_model(
         study_id=mtbls_accession_number
@@ -245,7 +219,7 @@ def convert(
         MetadataPublicationMapper(),
         MetadataCvMapper(),
         MetadataSampleMapper(),
-        MetadataSampleProcessingMapper(),
+        MetadataProtocolMapper(),
         MetadataSoftwareMapper(),
         MetadataDatabaseMapper(),
         MetadataAssayMapper(),

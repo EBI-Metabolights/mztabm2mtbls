@@ -1,13 +1,13 @@
 from metabolights_utils.models.isa.investigation_file import OntologyAnnotation
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.utils import copy_parameter
-from mztabm2mtbls.mztab2 import MzTab
 
 
 class MetadataSDerivatizationAgentMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
 
         selected_protocol = None
@@ -26,7 +26,7 @@ class MetadataSDerivatizationAgentMapper(BaseMapper):
                 term_accession_number=item.cv_accession,
             )
             process_list.append(onto)
-        if process_list:
+        if process_list and not selected_protocol.description:
             selected_protocol.description += (
                 "Derivatization agent: <br> - "
                 + "<br> - ".join(

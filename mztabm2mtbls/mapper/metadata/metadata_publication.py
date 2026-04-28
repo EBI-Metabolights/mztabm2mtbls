@@ -5,14 +5,14 @@ from metabolights_utils.models.isa.investigation_file import (
     Publication,
 )
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
-from mztabm2mtbls.mztab2 import MzTab, Type
 from mztabm2mtbls.utils import get_ontology_source_comment, sanitise_data
 
 
 class MetadataPublicationMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         if not mztab_model.metadata.publication:
             return
         id_comment = Comment(
@@ -31,12 +31,12 @@ class MetadataPublicationMapper(BaseMapper):
             doi = ""
             pub_med_id = ""
             uri = ""
-            for item in mztab_publication.publicationItems:
-                if item.type == Type.doi:
+            for item in mztab_publication.publication_items:
+                if item.type == "doi":
                     doi = item.accession if item.accession else ""
-                elif item.type == Type.pubmed:
+                elif item.type == "pubmed":
                     pub_med_id = item.accession if item.accession else ""
-                elif item.type == Type.uri:
+                elif item.type == "uri":
                     uri = item.accession if item.accession else ""
 
             pub = Publication(pub_med_id=pub_med_id, doi=doi)

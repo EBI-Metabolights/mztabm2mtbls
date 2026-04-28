@@ -3,10 +3,10 @@ from metabolights_utils.models.isa.investigation_file import (
     ExtendedOntologyAnnotation,
 )
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.utils import copy_parameter
-from mztabm2mtbls.mztab2 import MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
@@ -16,7 +16,7 @@ class MetadataBaseMapper(BaseMapper):
         self.mztab_sourcefile_location = mztab_sourcefile_location
         self.mztab_sourcefile_hash = mztab_sourcefile_hash
 
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         comments = mtbls_model.investigation.studies[0].comments
         study = mtbls_model.investigation.studies[0]
 
@@ -42,7 +42,7 @@ class MetadataBaseMapper(BaseMapper):
             )
         )
 
-        mztab_version = mztab_model.metadata.mzTab_version
+        mztab_version = mztab_model.metadata.mztab_version
         comments.append(
             Comment(
                 name="mztab:metadata:mzTab_version",
@@ -59,7 +59,7 @@ class MetadataBaseMapper(BaseMapper):
                         term_source_ref=item.cv_label,
                     )
                 )
-        mztab_id = mztab_model.metadata.mzTab_ID
+        mztab_id = mztab_model.metadata.mztab_id
         comments.append(
             Comment(
                 name="mztab:metadata:mzTab_ID",

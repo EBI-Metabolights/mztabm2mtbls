@@ -1,5 +1,6 @@
 from metabolights_utils.models.isa.assignment_file import AssignmentFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.map_model import FieldMapDescription
@@ -8,12 +9,11 @@ from mztabm2mtbls.mapper.utils import (
     find_first_header_column_index,
     update_isa_table_row,
 )
-from mztabm2mtbls.mztab2 import MzTab
 from mztabm2mtbls.utils import sanitise_data
 
 
 class SmallMoleculeSummaryMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         # study = mtbls_model.investigation.studies[0]
         assignment_file: AssignmentFile = mtbls_model.metabolite_assignments[
             list(mtbls_model.metabolite_assignments)[0]
@@ -63,7 +63,7 @@ class SmallMoleculeSummaryMapper(BaseMapper):
                     header.column_header
                 ].target_column_name = header.column_name
 
-        assignment_count = len(mztab_model.smallMoleculeSummary)
+        assignment_count = len(mztab_model.small_molecule_summary)
         # create empty assignment rows
         for column_name in assignment_file.table.columns:
             assignment_file.table.data[column_name] = [""] * assignment_count
@@ -73,9 +73,9 @@ class SmallMoleculeSummaryMapper(BaseMapper):
                 assignment_file, first_assay_header_name
             )
         sm_features_features_map = {
-            x.smf_id: x for x in mztab_model.smallMoleculeFeature
+            x.smf_id: x for x in mztab_model.small_molecule_feature or []
         }
-        for row_idx, sms in enumerate(mztab_model.smallMoleculeSummary):
+        for row_idx, sms in enumerate(mztab_model.small_molecule_summary):
             update_isa_table_row(assignment_file, row_idx, sms, selected_column_headers)
             if sms.smf_id_refs:
                 retention_times = [
@@ -89,7 +89,7 @@ class SmallMoleculeSummaryMapper(BaseMapper):
                 )
             # use this from the SML entry to represent the theoretical mass_to_charge of the neutral molecule / precursor
             assignment_file.table.data["mass_to_charge"][row_idx] = "|".join(
-                [str(x) for x in sms.theoretical_neutral_mass if x]
+                [str(x) for x in sms.theoretical_neutral_mass or [] if x]
             )
 
             databases = [x for x in mztab_model.metadata.database if x and x.prefix]

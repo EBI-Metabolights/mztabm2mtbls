@@ -1,14 +1,14 @@
 from metabolights_utils.models.isa.common import Comment
 from metabolights_utils.models.isa.investigation_file import ValueTypeAnnotation
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.utils import copy_parameter
-from mztabm2mtbls.mztab2 import MzTab
 
 
 class MetadataSoftwareMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
 
         selected_protocol = None
@@ -56,4 +56,5 @@ class MetadataSoftwareMapper(BaseMapper):
                 software_settings_comment.value.append("")
             software_settings_comment.value.extend(software_settings_list)
             selected_protocol.components.extend(software_list)
-            selected_protocol.description += f" Data transformation software List: {', '.join([x.type for x in software_list])}"
+            if not selected_protocol.description:
+                selected_protocol.description += f" Data transformation software List: {', '.join([x.type for x in software_list])}"

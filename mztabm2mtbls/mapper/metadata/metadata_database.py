@@ -1,14 +1,14 @@
 from metabolights_utils.models.isa.common import Comment
 from metabolights_utils.models.isa.investigation_file import ValueTypeAnnotation
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.utils import copy_parameter
-from mztabm2mtbls.mztab2 import MzTab
 
 
 class MetadataDatabaseMapper(BaseMapper):
-    def update(self, mztab_model: MzTab, mtbls_model: MetabolightsStudyModel):
+    def update(self, mztab_model: MzTabM, mtbls_model: MetabolightsStudyModel):
         if not mztab_model.metadata.database:
             return
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
@@ -57,9 +57,10 @@ class MetadataDatabaseMapper(BaseMapper):
                         term_accession_number=item.cv_accession,
                     )
                 )
-        selected_protocol.description += (
-            f" Databases: {', '.join([x.type for x in database_list])}"
-        )
+        if database_list and not selected_protocol.description:
+            selected_protocol.description += (
+                f" Databases: {', '.join([x.type for x in database_list])}"
+            )
         if database_list:
             database_prefix_comment = Comment(
                 name="mztab.metadata.database:prefix",

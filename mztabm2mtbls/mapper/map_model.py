@@ -1,8 +1,7 @@
 from typing import Literal, Union
 
+from mztab_m_io.model.common import Parameter
 from pydantic import BaseModel
-
-from mztabm2mtbls.mztab2 import Parameter
 
 
 class FieldMapDescription(BaseModel):
@@ -35,7 +34,15 @@ class AssaySheetMapFields(BaseModel):
     instrument_id: str = ""
     instrument_name: Union[None, Parameter] = None
     instrument_source: Union[None, Parameter] = None
-    # instrument_analyzer: Union[None, List[Parameter]] = None
-    instrument_analyzer: Union[None, str] = None
+    instrument_analyzer: Union[None, Parameter] = None
+    # instrument_analyzer: Union[None, str] = None
     instrument_detector: Union[None, Parameter] = None
-    assignment_filename: str = ""
+    assignment_filename: str = None
+    mz_scan_range: Union[None, str] = None
+    chromatography_instrument: Union[None, Parameter] = None
+    column_model: Union[None, str] = None
+    column_type: Union[None, str] = None
+    guard_column: Union[None, str] = None
+    autosampler_model: Union[None, str] = None
+    post_extraction: Union[None, str] = None
+    derivatization: Union[None, str] = None

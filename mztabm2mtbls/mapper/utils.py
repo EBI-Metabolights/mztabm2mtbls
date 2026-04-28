@@ -6,15 +6,17 @@ from metabolights_utils.models.isa.common import (
     IsaTableColumn,
     IsaTableFile,
 )
+from mztab_m_io.model.common import Parameter
 
 from mztabm2mtbls.mapper.map_model import FieldMapDescription, ProtocoSectionDefinition
-from mztabm2mtbls.mztab2 import Parameter
 from mztabm2mtbls.utils import sanitise_data
 
 
 def convert_accession_number(cv_label, cv_accession):
     accession = sanitise_data(cv_accession)
     if accession:
+        if accession.startswith("http://") or accession.startswith("https://"):
+            return accession
         parts = accession.split(":")
         accession_number = parts[1] if len(parts) > 1 else parts[0]
         accession = f"http://purl.obolibrary.org/obo/{sanitise_data(cv_label)}_{accession_number}"
@@ -36,6 +38,14 @@ def copy_parameter(
         return Parameter(
             id=None,
             value="",
+            name="",
+            cv_label="",
+            cv_accession="",
+        )
+    elif isinstance(value, str):
+        return Parameter(
+            id=None,
+            value=sanitise_data(value),
             name="",
             cv_label="",
             cv_accession="",
@@ -235,6 +245,11 @@ def update_isa_table_row(
     field_maps: Dict[str, FieldMapDescription],
 ):
     for definition in field_maps.values():
+        if (
+            not definition.target_column_name
+            or definition.target_column_name not in isa_table_file.table.data
+        ):
+            continue
         if hasattr(source_obj, definition.field_name):
             value = getattr(source_obj, definition.field_name)
             if value is not None:
