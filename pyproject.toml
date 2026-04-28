@@ -9,11 +9,13 @@ dependencies = [
     "click>=8.3.0",
     "metabolights-utils>=1.4.29",
     "pymztabm",
+    "python-dotenv>=1.2.2",
+    "Pygments>=2.20.0",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.2",
+    "pytest>=9.0.3",
     "ruff>=0.11.2",
 ]
 
