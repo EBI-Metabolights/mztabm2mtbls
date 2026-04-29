@@ -48,4 +48,3 @@ for mztab_file in "${mztab_files[@]}"; do
     echo "Validating the converted file with the MTBLS API"
     mtbls submission validate -c "$MTBLS_CREDENTIALS_DIR/$MTBLS_CREDENTIALS_FILE" -v "$MTBLS_OUTPUT_DIR/mtbls-validation.txt" $MTBLS_STUDY
 done
-

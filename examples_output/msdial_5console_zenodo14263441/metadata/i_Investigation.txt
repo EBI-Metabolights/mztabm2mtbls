@@ -6,34 +6,34 @@ Term Source Description	Ontology for Biomedical Investigations	PSI-MS controlled
 Comment[mztab.metadata.cv:id]		1
 INVESTIGATION
 Investigation Identifier	REQ2025110600011
-Investigation Title	
-Investigation Description	
+Investigation Title
+Investigation Description
 Investigation Submission Date	2025-11-07
 Investigation Public Release Date	2025-11-07
 INVESTIGATION PUBLICATIONS
-Investigation PubMed ID	
-Investigation Publication DOI	
-Investigation Publication Author List	
-Investigation Publication Title	
-Investigation Publication Status	
-Investigation Publication Status Term Accession Number	
-Investigation Publication Status Term Source REF	
+Investigation PubMed ID
+Investigation Publication DOI
+Investigation Publication Author List
+Investigation Publication Title
+Investigation Publication Status
+Investigation Publication Status Term Accession Number
+Investigation Publication Status Term Source REF
 INVESTIGATION CONTACTS
-Investigation Person Last Name	
-Investigation Person First Name	
-Investigation Person Mid Initials	
-Investigation Person Email	
-Investigation Person Phone	
-Investigation Person Fax	
-Investigation Person Address	
-Investigation Person Affiliation	
-Investigation Person Roles	
-Investigation Person Roles Term Accession Number	
-Investigation Person Roles Term Source REF	
+Investigation Person Last Name
+Investigation Person First Name
+Investigation Person Mid Initials
+Investigation Person Email
+Investigation Person Phone
+Investigation Person Fax
+Investigation Person Address
+Investigation Person Affiliation
+Investigation Person Roles
+Investigation Person Roles Term Accession Number
+Investigation Person Roles Term Source REF
 STUDY
 Study Identifier	REQ2025110600011
-Study Title	
-Study Description	
+Study Title
+Study Description
 Study Submission Date	2025-11-07
 Study Public Release Date	2025-11-07
 Study File Name	s_REQ2025110600011.txt
@@ -47,18 +47,18 @@ Study Design Type Term Accession Number	http://purl.obolibrary.org/obo/MS_100201
 Study Design Type Term Source REF	MS
 Comment[mztab:source_field]	mztab:metadata:quantification_method
 STUDY PUBLICATIONS
-Study PubMed ID	
-Study Publication DOI	
-Study Publication Author List	
-Study Publication Title	
-Study Publication Status	
-Study Publication Status Term Accession Number	
-Study Publication Status Term Source REF	
+Study PubMed ID
+Study Publication DOI
+Study Publication Author List
+Study Publication Title
+Study Publication Status
+Study Publication Status Term Accession Number
+Study Publication Status Term Source REF
 STUDY FACTORS
-Study Factor Name	
-Study Factor Type	
-Study Factor Type Term Accession Number	
-Study Factor Type Term Source REF	
+Study Factor Name
+Study Factor Type
+Study Factor Type Term Accession Number
+Study Factor Type Term Source REF
 STUDY ASSAYS
 Study Assay File Name	a_REQ2025110600011_metabolite_profiling.txt
 Study Assay Measurement Type	untargeted metabolite profiling
@@ -71,14 +71,14 @@ Study Assay Technology Platform	Mass spectrometry
 STUDY PROTOCOLS
 Study Protocol Name	Sample collection	Extraction	Mass spectrometry	Data transformation	Metabolite identification
 Study Protocol Type	Sample collection	Extraction	Mass spectrometry	Data transformation	Metabolite identification
-Study Protocol Type Term Accession Number					
-Study Protocol Type Term Source REF					
+Study Protocol Type Term Accession Number
+Study Protocol Type Term Source REF
 Study Protocol Description	Species: . . Organism parts:. 		Mass spectrometry instruments: . . analyzers:. . sources:. 	 Data transformation software List: MS-DIAL	 Databases: User-defined MSP library file, MS-DIAL LipidsMsMs database, User-defined rt-mz text library
-Study Protocol URI					
-Study Protocol Version					
-Study Protocol Parameters Name		Post Extraction;Derivatization	Scan polarity;Scan m/z range;Instrument;Ion source;Mass analyzer	Native spectrum identifier format;Raw data file format	
-Study Protocol Parameters Name Term Accession Number		;	;;;;	;	
-Study Protocol Parameters Name Term Source REF		;	;;;;	;	
+Study Protocol URI
+Study Protocol Version
+Study Protocol Parameters Name		Post Extraction;Derivatization	Scan polarity;Scan m/z range;Instrument;Ion source;Mass analyzer	Native spectrum identifier format;Raw data file format
+Study Protocol Parameters Name Term Accession Number		;	;;;;	;
+Study Protocol Parameters Name Term Source REF		;	;;;;	;
 Study Protocol Components Name				mztab.metadata.software.id=1	mztab.metadata.database.id=1;mztab.metadata.database.id=2;mztab.metadata.database.id=3
 Study Protocol Components Type				MS-DIAL	User-defined MSP library file;MS-DIAL LipidsMsMs database;User-defined rt-mz text library
 Study Protocol Components Type Term Accession Number				http://purl.obolibrary.org/obo/MS_1003082	;;
@@ -88,14 +88,14 @@ Comment[mztab.metadata.database:prefix]	mztab.metadata.database.id=1: { MspDB }	
 Comment[mztab.metadata.database:version]	mztab.metadata.database.id=1: { MSMS-Public_all-neg-VS19.msp }	mztab.metadata.database.id=2: { Msp20241113163720_NCDK-TUAT-FastLC_converted_dev.lbm2 }	mztab.metadata.database.id=3: { 20200121_MsdialTxtDB_Neg_EquiSPLASH_rapid.txt }
 Comment[mztab.metadata.database:uri]	mztab.metadata.database.id=1: { file://C:/Users/knishida/Desktop/MSDIALCUI_demo_lcms_lipidomics/lib/MSMS-Public_all-neg-VS19.msp }	mztab.metadata.database.id=2: { file://C:/Users/knishida/Desktop/MSDIALCUI_demo_lcms_lipidomics/lib/Msp20241113163720_NCDK-TUAT-FastLC_converted_dev.lbm2 }	mztab.metadata.database.id=3: { file://C:/Users/knishida/Desktop/MSDIALCUI_demo_lcms_lipidomics/lib/20200121_MsdialTxtDB_Neg_EquiSPLASH_rapid.txt }
 STUDY CONTACTS
-Study Person Last Name	
-Study Person First Name	
-Study Person Mid Initials	
-Study Person Email	
-Study Person Phone	
-Study Person Fax	
-Study Person Address	
-Study Person Affiliation	
-Study Person Roles	
-Study Person Roles Term Accession Number	
-Study Person Roles Term Source REF	
+Study Person Last Name
+Study Person First Name
+Study Person Mid Initials
+Study Person Email
+Study Person Phone
+Study Person Fax
+Study Person Address
+Study Person Affiliation
+Study Person Roles
+Study Person Roles Term Accession Number
+Study Person Roles Term Source REF

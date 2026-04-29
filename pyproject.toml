@@ -6,17 +6,19 @@ readme = "README.md"
 license = "Apache 2.0"
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "click>=8.3.0",
+    "click>=8.3.3",
     "metabolights-utils>=1.4.29",
     "pymztabm",
     "python-dotenv>=1.2.2",
-    "Pygments>=2.20.0",
+    "pygments>=2.20.0",
+    "opa-wasmtime>=0.1.1",
 ]
 
 [dependency-groups]
 dev = [
+    "pre-commit>=4.6.0",
     "pytest>=9.0.3",
-    "ruff>=0.11.2",
+    "ruff>=0.15.12",
 ]
 
 [tool.ruff.lint]

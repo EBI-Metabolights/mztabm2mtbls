@@ -5,13 +5,14 @@ from pathlib import Path
 
 import click
 import pytest
-
 from commands import validate_study
 
 logger = logging.getLogger(__name__)
 
 EXAMPLE_MZTABM_FILES_PATH = "test/data/examples"
-example_mztabm_files = Path(EXAMPLE_MZTABM_FILES_PATH).glob("*.mztab", case_sensitive=False)
+example_mztabm_files = Path(EXAMPLE_MZTABM_FILES_PATH).glob(
+    "*.mztab", case_sensitive=False
+)
 example_mztabm_files_list = list(example_mztabm_files)
 example_mztabm_files_list.sort(key=lambda x: str(x))
 

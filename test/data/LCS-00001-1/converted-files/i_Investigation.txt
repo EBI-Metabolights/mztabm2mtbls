@@ -6,30 +6,30 @@ Term Source Description	Ontology for Biomedical Investigations	Experimental Fact
 Comment[mztab.metadata.cv:id]			1	2	3	4	5	6
 INVESTIGATION
 Investigation Identifier	MTBLS1000000
-Investigation Title	
-Investigation Description	
+Investigation Title
+Investigation Description
 Investigation Submission Date	2026-04-28
 Investigation Public Release Date	2026-04-28
 INVESTIGATION PUBLICATIONS
-Investigation PubMed ID	
-Investigation Publication DOI	
-Investigation Publication Author List	
-Investigation Publication Title	
-Investigation Publication Status	
-Investigation Publication Status Term Accession Number	
-Investigation Publication Status Term Source REF	
+Investigation PubMed ID
+Investigation Publication DOI
+Investigation Publication Author List
+Investigation Publication Title
+Investigation Publication Status
+Investigation Publication Status Term Accession Number
+Investigation Publication Status Term Source REF
 INVESTIGATION CONTACTS
-Investigation Person Last Name	
-Investigation Person First Name	
-Investigation Person Mid Initials	
-Investigation Person Email	
-Investigation Person Phone	
-Investigation Person Fax	
-Investigation Person Address	
-Investigation Person Affiliation	
-Investigation Person Roles	
-Investigation Person Roles Term Accession Number	
-Investigation Person Roles Term Source REF	
+Investigation Person Last Name
+Investigation Person First Name
+Investigation Person Mid Initials
+Investigation Person Email
+Investigation Person Phone
+Investigation Person Fax
+Investigation Person Address
+Investigation Person Affiliation
+Investigation Person Roles
+Investigation Person Roles Term Accession Number
+Investigation Person Roles Term Source REF
 STUDY
 Study Identifier	MTBLS1000000
 Study Title	Singaporean Integrative Omics Study - Site 1
@@ -42,13 +42,13 @@ Comment[mztab:source_file:hash:sha256]	ee87ee59f2708ca1e0e498d8605ab70dbed601651
 Comment[mztab:metadata:mzTab_version]	2.1.0-M
 Comment[mztab:metadata:mzTab_ID]	LCS-00001-1
 STUDY DESIGN DESCRIPTORS
-Study Design Type	
-Study Design Type Term Accession Number	
-Study Design Type Term Source REF	
+Study Design Type
+Study Design Type Term Accession Number
+Study Design Type Term Source REF
 Comment[mztab:source_field]
 Comment[mztab:source_field]
 STUDY PUBLICATIONS
-Study PubMed ID			
+Study PubMed ID
 Study Publication DOI	10.1038/s41467-017-00413-x	10.1016/j.clinms.2017.11.002	10.1038/srep19139
 Study Publication Author List	Peter J. Meikle, Markus Wenk	Peter J. Meikle, Markus Wenk	Peter J. Meikle, Markus Wenk
 Study Publication Title	Singaporean Integrative Omics Study - Site 1	Singaporean Integrative Omics Study - Site 1	Singaporean Integrative Omics Study - Site 1
@@ -76,15 +76,15 @@ Study Protocol Type	sample collection protocol	extraction protocol	mass spectrom
 Study Protocol Type Term Accession Number	EFO:0005518	EFO:0000490	CHMO:0000470			CHMO:0001000
 Study Protocol Type Term Source REF	EFO	EFO	CHMO			CHMO
 Study Protocol Description	For the human studies, midstream urine (~15 ml) samples were collected and frozen from each volunteer ...	Plant material was homogenized in liquid nitrogen using a pestle and mortar and aliquots of 100 +/- 5 mg were weighed into pre-cooled 2 ml …	Eluting compounds were detected from m/z 100-1000 using a hybrid quadrupole …	Raw data files were converted to mzData format using the vendor-specific...	Initial features detected in narrow retention time windows displaying a high chromatogram correlation were grouped …	Plant material was homogenized in liquid nitrogen using a pestle and mortar and aliquots of 100 +/- 5 mg were weighed into pre-cooled 2 ml …
-Study Protocol URI						
-Study Protocol Version						
+Study Protocol URI
+Study Protocol Version
 Study Protocol Parameters Name		Post Extraction;Derivatization	mass spectrometry instrument;ionization type;instrument class;Scan m/z range			chromatography instrument;chromatography column;chromatography separation;Autosampler model;Guard column
 Study Protocol Parameters Name Term Accession Number		;	MSIO:0000171;MS:1000008;MS:1003761;			OBI:0000485;OBI:0000038;MS:1002270;;
 Study Protocol Parameters Name Term Source REF		;	MSIO;MS;MS;			OBI;OBI;MS;;
-Study Protocol Components Name				mztab.metadata.software.id=1;mztab.metadata.software.id=2;mztab.metadata.software.id=3	mztab.metadata.database.id=1	
-Study Protocol Components Type				MassHunter Data Acquisition";"MassHunter Qualitative Analysis";"MassHunter Quantitative Analysis	normalized lipid shorthand name	
-Study Protocol Components Type Term Accession Number				http://purl.obolibrary.org/obo/MS_1000678;http://purl.obolibrary.org/obo/MS_1000680;http://purl.obolibrary.org/obo/MS_1000681		
-Study Protocol Components Type Term Source REF				MS;MS;MS		
+Study Protocol Components Name				mztab.metadata.software.id=1;mztab.metadata.software.id=2;mztab.metadata.software.id=3	mztab.metadata.database.id=1
+Study Protocol Components Type				MassHunter Data Acquisition";"MassHunter Qualitative Analysis";"MassHunter Quantitative Analysis	normalized lipid shorthand name
+Study Protocol Components Type Term Accession Number				http://purl.obolibrary.org/obo/MS_1000678;http://purl.obolibrary.org/obo/MS_1000680;http://purl.obolibrary.org/obo/MS_1000681
+Study Protocol Components Type Term Source REF				MS;MS;MS
 Comment[mztab.metadata.software:setting]	mztab.metadata.software.id=1: {XICWindowWidth: 10ppm: }	mztab.metadata.software.id=2: {}	mztab.metadata.software.id=3: {}
 Comment[mztab.metadata.database:prefix]	mztab.metadata.database.id=1: { goslin }
 Comment[mztab.metadata.database:version]	mztab.metadata.database.id=1: { 2.2.0 }
@@ -92,11 +92,11 @@ Comment[mztab.metadata.database:uri]	mztab.metadata.database.id=1: { https://git
 STUDY CONTACTS
 Study Person Last Name	Meikle	Wenk
 Study Person First Name	Peter	Markus
-Study Person Mid Initials		
+Study Person Mid Initials
 Study Person Email	peter.meikle@baker.edu.au	bchmrw@nus.edu.sg
-Study Person Phone		
-Study Person Fax		
-Study Person Address		
+Study Person Phone
+Study Person Fax
+Study Person Address
 Study Person Affiliation	Metabolomics Laboratory, Baker IDI Heart and Diabetes Institute, 75 Commercial Road, Melbourne 3004, Australia.	Department of Biochemistry, Center for Life Sciences, 28 Medical Drive, National University of Singapore, Singapore 117456, Singapore.
 Study Person Roles	Principal Investigator	Author
 Study Person Roles Term Accession Number	http://purl.obolibrary.org/obo/NCIT_C19924	http://purl.obolibrary.org/obo/NCIT_C42781

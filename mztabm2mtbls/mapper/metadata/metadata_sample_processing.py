@@ -4,6 +4,7 @@ from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
 from mztabm2mtbls.mapper.utils import copy_parameter
+from mztabm2mtbls.utils import sanitise_data
 
 
 class MetadataSampleProcessingMapper(BaseMapper):
@@ -38,20 +39,20 @@ class MetadataSampleProcessingMapper(BaseMapper):
         if process_list and "sample collection protocol" in mztabm_protocol_definitions:
             desc = mztabm_protocol_definitions["sample collection protocol"].value
             selected_protocol = protocols_dict.get("sample collection")
-            selected_protocol.description = desc
+            selected_protocol.description = sanitise_data(desc)
         if process_list and "sample preparation" in mztabm_protocol_definitions:
             desc = mztabm_protocol_definitions["sample preparation"].value
             selected_protocol = protocols_dict.get("extraction")
-            selected_protocol.description = desc
+            selected_protocol.description = sanitise_data(desc)
         if process_list and "mass spectrometry" in mztabm_protocol_definitions:
             desc = mztabm_protocol_definitions["mass spectrometry"].value
             selected_protocol = protocols_dict.get("mass spectrometry")
-            selected_protocol.description = desc
+            selected_protocol.description = sanitise_data(desc)
         if process_list and "data transform" in mztabm_protocol_definitions:
             desc = mztabm_protocol_definitions["data transform"].value
             selected_protocol = protocols_dict.get("data transformation")
-            selected_protocol.description = desc
+            selected_protocol.description = sanitise_data(desc)
         if process_list and "metabolite identification" in mztabm_protocol_definitions:
             desc = mztabm_protocol_definitions["metabolite identification"].value
             selected_protocol = protocols_dict.get("metabolite identification")
-            selected_protocol.description = desc
+            selected_protocol.description = sanitise_data(desc)

@@ -1,30 +1,28 @@
 {
-    "conversion": {
-        "defaultValues": {}
-    },
-    "validation": {
-        "overrides": [
-            {
-                "ruleId": "rule_a_200_090_004_01"
-            },
-            {
-                "ruleId": "rule_i_100_340_005_02"
-            },
-            {
-                "ruleId": "rule_a_200_300_003_02"
-            },
-            {
-                "ruleId": "rule_i_100_330_001_01"
-            },
-            {
-                "ruleId": "rule_s_100_100_001_06"
-            },
-            {
-                "ruleId": "rule_i_100_350_003_01"
-            },
-            {
-                "ruleId": "rule_f_400_090_001_01"
-            }
-        ]
-    }
+  "conversion": {
+    "defaultValues": {}
+  },
+  "validation": {
+    "overrides": [
+      {
+        "ruleId": "rule_i_100_310_001_01"
+      },
+      {
+        "ruleId": "rule_s_200_200_002_02"
+      },
+      {
+        "ruleId": "rule_a_200_090_002_21"
+      },
+      {
+        "ruleId": "rule_m_300_100_001_01"
+      },
+      {
+        "ruleId": "rule_m_300_090_005_01"
+      },
+
+      {
+        "ruleId": "rule_m_300_100_001_02"
+      }
+    ]
+  }
 }

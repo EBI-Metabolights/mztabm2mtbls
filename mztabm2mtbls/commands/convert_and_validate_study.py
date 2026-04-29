@@ -24,110 +24,50 @@ from mztabm2mtbls import converter
 
 @click.command()
 @click.option(
-    "--mtbls_api_token",
+    "--metadata-files-path",
     required=True,
-    help="The MetaboLights REST API token to validate the study.",
-    default="ADD-YOUR-TOKEN",
+    help="The metadata files path of the local study directory.",
+    type=click.Path(exists=True),
 )
 @click.option(
-    "--mtbls_provisional_study_id",
-    required=True,
-    help="A provisional study id or the name of the local study directory.",
-)
-@click.option(
-    "--mtbls_rest_api_base_url",
-    required=False,
-    help="MetaboLights REST API base URL. Test URL https://www-test.ebi.ac.uk/metabolights/ws, Production URL https://www.ebi.ac.uk/metabolights/ws",
-    default="https://www-test.ebi.ac.uk/metabolights/ws",
-)
-@click.option(
-    "--mtbls_validation_api_base_url",
-    required=False,
-    help="MetaboLights validation REST API base URL. Test URL https://www-test.ebi.ac.uk/metabolights/ws3 , Production URL https://www.ebi.ac.uk/metabolights/ws3",
-    default="https://www-test.ebi.ac.uk/metabolights/ws3",
-)
-@click.option(
-    "--target_metadata_files_path",
-    required=True,
-    help="Target local metadata files path.",
-)
-@click.option(
-    "--data_files_path",
+    "--data-files-path",
     required=False,
     help="The data files root path.",
     type=click.Path(exists=True),
 )
 @click.option(
-    "--mztabm_file_path",
-    required=False,
-    help="The mzTabM file path.",
-    type=click.Path(exists=True),
-)
-@click.option(
-    "--mztabm_validation_level",
-    default="Error",
-    help="The validation level for the mzTab-M file. Allowed values are Info, Warn or Error.",
-)
-@click.option(
-    "--mztabm_mapping_file",
-    required=False,
-    help="An mzTab-M mapping file for semantic validation of the mzTab-M file.",
-    type=click.Path(exists=True),
-)
-@click.option(
-    "--config_file",
-    required=False,
-    help="Configuration file to convert mzTab-M file and run MetaboLights validation.",
-    type=click.Path(exists=True),
-)
-@click.option(
-    "--mtbls_remote_validation",
-    required=False,
-    help="A flag to enable remote validation of the study.",
-    default=False,
-)
-@click.option(
-    "--mtbls_validation_bundle_path",
+    "--mtbls-validation-bundle-path",
     required=False,
     help="A flag to enable remote validation of the study. "
-    "You can download the latest one on https://github.com/EBI-Metabolights/mtbls-validation/raw/main/bundle/bundle.tar.gz",
-    default="./bundle.tar.gz",
+    "You can download the latest one on "
+    "https://github.com/EBI-Metabolights/mtbls-validation/raw/test/bundle/bundle.tar.gz",
+    default="bundle.tar.gz",
 )
 @click.option(
-    "--opa_executable_path",
+    "--mtbls-validation-bundle-url",
+    required=False,
+    help="URL to download validation bundle.",
+    default="https://github.com/EBI-Metabolights/mtbls-validation/raw/test/bundle/bundle.tar.gz",
+)
+@click.option(
+    "--opa-executable-path",
     required=False,
     help="OPA executable path.",
     default="opa",
 )
-@click.option(
-    "--temp_folder",
-    required=False,
-    help="Temporary folder for intermediate outputs.",
-    default=None,
-)
-@click.option("--container_engine", default="docker", help="Container run engine.")
-@click.option(
-    "--mztab2m_json_convertor_image",
-    default="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
-    help="Container image name to convert the mzTab-M file to mzTab-M json.",
-)
-def convert_and_validate_submission(
+def validate(
     mtbls_api_token: str,
     mtbls_provisional_study_id: str,
     mtbls_rest_api_base_url: str,
     mtbls_validation_api_base_url: str,
-    target_metadata_files_path: str,
+    base_study_path: str,
     data_files_path: Union[None, str] = None,
-    config_file: Union[None, str] = None,
     mztabm_file_path: Union[None, str] = None,
     mztabm_validation_level: str = "Error",
     mztabm_mapping_file: Union[None, str] = None,
     mtbls_remote_validation: bool = False,
     opa_executable_path: str = "opa",
     mtbls_validation_bundle_path: str = "./bundle.tar.gz",
-    temp_folder: str = "output/temp",
-    container_engine: str = "docker",
-    mztab2m_json_convertor_image: str = "quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
 ):
     if not data_files_path:
         data_files_path = "FILES"
@@ -136,9 +76,9 @@ def convert_and_validate_submission(
         validation_api_base_url=mtbls_validation_api_base_url,
     )
 
-    study_path = target_metadata_files_path
-    # data_files_path = os.path.join(study_path, "FILES")
-    # mztabm_folder_path = os.path.dirname(mztabm_file_path)
+    study_path = os.path.join(base_study_path, "studies", mtbls_provisional_study_id)
+    data_files_path = os.path.join(study_path, "FILES")
+    mztabm_folder_path = os.path.dirname(mztabm_file_path)
     # mztabm_file_path = os.path.join(
     #     mztabm_folder_path, mtbls_provisional_study_id + ".mztab"
     # )
@@ -148,12 +88,11 @@ def convert_and_validate_submission(
         input_file=mztabm_file_path,
         output_dir=study_path,
         mtbls_accession_number=mtbls_provisional_study_id,
-        container_engine=container_engine,
-        mztab2m_json_convertor_image=mztab2m_json_convertor_image,
+        container_engine="docker",
+        mztab2m_json_convertor_image="quay.io/biocontainers/jmztab-m:1.0.6--hdfd78af_1",
         override_mztab2m_json_file="True",
         mztabm_validation_level=mztabm_validation_level,
         mztabm_mapping_file=mztabm_mapping_file,
-        temp_folder=temp_folder,
     )
     if not success:
         return
@@ -188,9 +127,7 @@ def convert_and_validate_submission(
             db_metadata_collector=None,
             folder_metadata_collector=LocalFolderMetadataCollector(),
         )
-        # target_path = os.path.join(
-        #     base_study_path, mtbls_provisional_study_id, mtbls_provisional_study_id
-        # )
+
         model: MetabolightsStudyModel = provider.load_study(
             mtbls_provisional_study_id,
             study_path=study_path,
@@ -206,7 +143,7 @@ def convert_and_validate_submission(
         )
         json_validation_input = model.model_dump(by_alias=True)
         relative_validation_input_path = os.path.join(
-            temp_folder,
+            mztabm_folder_path,
             f"{mtbls_provisional_study_id}_validation_input.json",
         )
         validation_input_path = os.path.realpath(relative_validation_input_path)
@@ -240,57 +177,19 @@ def convert_and_validate_submission(
                 .get("value")
             )
             validation_output_path = os.path.join(
-                temp_folder,
+                mztabm_folder_path,
                 f"{mtbls_provisional_study_id}_validation_output.json",
             )
+            with open(validation_output_path, "w") as f:
+                json.dump(validation_result, f, indent=2)
             violation_results = OpaValidationResult.model_validate(validation_result)
-            overrides = []
-            if config_file:
-                with open(config_file) as f:
-                    config = json.load(f)
-                    overrides = config.get("validation", {}).get("overrides", [])
-            overridden_rule_ids = []
-            if overrides:
-                overridden_rule_ids = [
-                    x.get("ruleId") for x in overrides if x.get("ruleId")
-                ]
             errors = [
                 x
                 for x in violation_results.violations
                 if x.type == PolicyMessageType.ERROR
-                and x.identifier not in overridden_rule_ids
             ]
-            overridden_errors = [
-                x.identifier
-                for x in violation_results.violations
-                if x.type == PolicyMessageType.ERROR
-                and x.identifier in overridden_rule_ids
-            ]
-            overridden_errors_list = [
-                x
-                for x in violation_results.violations
-                if x.type == PolicyMessageType.ERROR
-                and x.identifier in overridden_rule_ids
-            ]
-            with open(validation_output_path, "w") as f:
-                json.dump(
-                    {
-                        "status": "failed" if errors else "success",
-                        "errors": [x.model_dump(by_alias=True) for x in errors],
-                        "overrides": [
-                            x.model_dump(by_alias=True) for x in overridden_errors_list
-                        ],
-                    },
-                    f,
-                    indent=2,
-                )
-
             for idx, x in enumerate(errors):
                 print(idx + 1, x.identifier, x.title, x.description, x.violation)
-            if overridden_errors:
-                print(
-                    f"The following validation rules are overridden: {', '.join(overridden_errors)}",
-                )
             if errors:
                 print(
                     f"Number of errors: {len(errors)}. Validation results are stored on {validation_output_path}"
@@ -319,4 +218,4 @@ def convert_and_validate_submission(
 
 
 if __name__ == "__main__":
-    convert_and_validate_submission()
+    validate()

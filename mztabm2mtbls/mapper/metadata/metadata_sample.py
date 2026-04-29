@@ -1,9 +1,9 @@
-from mztab_m_io.model.common import StudyVariable
 from typing import Any, Dict, Set
 
 from metabolights_utils.models.isa.investigation_file import Factor, OntologyAnnotation
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model.common import StudyVariable
 from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
@@ -101,9 +101,9 @@ class MetadataSampleMapper(BaseMapper):
                 for group in group_refs:
                     if group.name.name.lower() not in factors:
                         factor = Factor(
-                            name=group.name.name,
+                            name=group.name.name.strip('"'),
                             type=OntologyAnnotation(
-                                term=group.type.name,
+                                term=group.type.name.strip('"'),
                                 term_source_ref=group.type.cv_label,
                                 term_accession_number=group.type.cv_accession,
                             ),

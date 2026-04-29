@@ -45,22 +45,22 @@ class MetadataContactMapper(BaseMapper):
                 roles=[],
             )
             # define first contact as PI
-            if idx == 0:
-                person.roles.append(
-                    OntologyAnnotation(
-                        term="Principal Investigator",
-                        term_source_ref="NCIT",
-                        term_accession_number="http://purl.obolibrary.org/obo/NCIT_C19924",
-                    )
+            # if idx == 0:
+            # person.roles.append(
+            #     OntologyAnnotation(
+            #         term="Principal Investigator",
+            #         term_source_ref="NCIT",
+            #         term_accession_number="http://purl.obolibrary.org/obo/NCIT_C19924",
+            #     )
+            # )
+            # else:
+            person.roles.append(
+                OntologyAnnotation(
+                    term="Author",
+                    term_source_ref="NCIT",
+                    term_accession_number="http://purl.obolibrary.org/obo/NCIT_C42781",
                 )
-            else:
-                person.roles.append(
-                    OntologyAnnotation(
-                        term="Author",
-                        term_source_ref="NCIT",
-                        term_accession_number="http://purl.obolibrary.org/obo/NCIT_C42781",
-                    )
-                )
+            )
             mtbls_contacts = mtbls_model.investigation.studies[0].study_contacts.people
             mtbls_contacts.append(person)
             id_comment.value.append(

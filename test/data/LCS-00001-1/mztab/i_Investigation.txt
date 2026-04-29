@@ -1,0 +1,111 @@
+ONTOLOGY SOURCE REFERENCE
+Term Source Name	OBI	EFO	MS	MSIO	NCIT	NCBITaxon	BTO	PRIDE
+Term Source File	http://purl.obolibrary.org/obo/obi.owl	http://www.ebi.ac.uk/efo/efo.owl	https://github.com/HUPO-PSI/psi-ms-CV/blob/master/psi-ms.obo	https://www.ebi.ac.uk/ols/ontologies/msio	http://purl.obolibrary.org/obo/ncit.owl	http://purl.obolibrary.org/obo/ncbitaxon.owl	http://purl.obolibrary.org/obo/bto/releases/2016-05-05/bto.owl	https://www.ebi.ac.uk/ols/ontologies/pride
+Term Source Version	2024-06-10	2018-09-08	4.0.18	1.0.1	03-12-2019	07-27-2018	05-05-2016	14-06-2018
+Term Source Description	Ontology for Biomedical Investigations	Experimental Factor Ontology	PSI-MS controlled vocabulary	Metabolomics Standards Initiative Ontology (MSIO)	National Cancer Institute Thesaurus	NCBI organismal classification	Brenda Tissue / Enzyme Source	PRIDE PRoteomics IDEntifications (PRIDE) database controlled vocabulary
+Comment[mztab.metadata.cv:id]			1	2	3	4	5	6
+INVESTIGATION
+Investigation Identifier	MTBLS263
+Investigation Title
+Investigation Description
+Investigation Submission Date	2026-04-29
+Investigation Public Release Date	2026-04-29
+INVESTIGATION PUBLICATIONS
+Investigation PubMed ID
+Investigation Publication DOI
+Investigation Publication Author List
+Investigation Publication Title
+Investigation Publication Status
+Investigation Publication Status Term Accession Number
+Investigation Publication Status Term Source REF
+INVESTIGATION CONTACTS
+Investigation Person Last Name
+Investigation Person First Name
+Investigation Person Mid Initials
+Investigation Person Email
+Investigation Person Phone
+Investigation Person Fax
+Investigation Person Address
+Investigation Person Affiliation
+Investigation Person Roles
+Investigation Person Roles Term Accession Number
+Investigation Person Roles Term Source REF
+STUDY
+Study Identifier	MTBLS263
+Study Title	Singaporean Integrative Omics Study - Site 1
+Study Description	Metabolites present in human blood document individual physiological states influenced by genetic, epigenetic, and lifestyle factors. Using high-resolution liquid chromatography-mass spectrometry (LC-MS), we performed nontargeted, quantitative metabolomics analysis in blood of 15 young (29 +- 4 y of age) and 15 elderly (81 +- 7 y of age) individuals. Coefficients of variation (CV = SD/mean) were obtained for 126 blood metabolites of all 30 donors. Fifty-five RBC-enriched metabolites, for which metabolomics studies have been scarce, are highlighted here. We found 14 blood compounds that show remarkable age-related increases or decreases; they include 1,5-anhydroglucitol, dimethyl-guanosine, acetyl-carnosine, carnosine, ophthalmic acid, UDP-acetyl-glucosamine, N-acetyl-arginine, N6-acetyl-lysine, pantothenate, citrulline, leucine, isoleucine, NAD+, and NADP+. Six of them are RBC-enriched, suggesting that RBC metabolomics is highly valuable for human aging research. Age differences are partly explained by a decrease in antioxidant production or increasing inefficiency of urea metabolism among the elderly. Pearson's coefficients demonstrated that some age-related compounds are correlated, suggesting that aging affects them concomitantly. Although our CV values are mostly consistent with those CVs previously published, we here report previously unidentified CVs of 51 blood compounds. Compounds having moderate to high CV values (0.4-2.5) are often modified. Compounds having low CV values, such as ATP and glutathione, may be related to various diseases because their concentrations are strictly controlled, and changes in them would compromise health. Thus, human blood is a rich source of information about individual metabolic differences. </p> Validation of experimental procedures was performed as follows. First, we evaluated the contribution of sample handling to within-sample variation. The same blood sample preparation was injected 3x into the LC-MS at 80-min intervals. We thus obtained within-sample CVs (designated as CVwi), which were less than 0.1 in 107 of 126 compounds (85%). Only 10 compounds showed CVwi of 0.1-0.2, while 9 had CVwi >0.2. Second, we also examined sample-to-sample variation caused by sample preparation. Three samples were independently prepared from the same blood sample (one person), and CVs thus determined were designated as CVss. CVss values of HEPES and PIPES in the blood samples were very small (0.06~0.08 for HEPES and 0.04~0.08 for PIPES). The great majority (116/126=92%) of CVss were <0.3. </p> Blood samples drawn from four volunteers four times within 24 h are available under accession number MTBLS264. Whole blood metabolomic data from all 30 subjects are available under accession number MTBLS265. Plasma and RBC data from all 30 subjects can be found under MTBLS266 and MTBLS267, respectively.
+Study Submission Date	2026-04-29
+Study Public Release Date	2026-04-29
+Study File Name	s_MTBLS263.txt
+Comment[Study Category]	ms-mhd-legacy
+Comment[Sample Template]	minimum
+Comment[Study Template]	minimum
+Comment[mztab:source_file:location]	test/data/LCS-00001-1/LCS-00001-1.mztabm
+Comment[mztab:source_file:hash:sha256]	ee87ee59f2708ca1e0e498d8605ab70dbed6016516a2aacafdb6fdd28c338ac9
+Comment[mztab:metadata:mzTab_version]	2.1.0-M
+Comment[mztab:metadata:mzTab_ID]	LCS-00001-1
+STUDY DESIGN DESCRIPTORS
+Study Design Type
+Study Design Type Term Accession Number
+Study Design Type Term Source REF
+Comment[mztab:source_field]
+Comment[mztab:source_field]
+STUDY PUBLICATIONS
+Study PubMed ID
+Study Publication DOI	10.1038/s41467-017-00413-x	10.1016/j.clinms.2017.11.002	10.1038/srep19139
+Study Publication Author List	Peter J. Meikle, Markus Wenk	Peter J. Meikle, Markus Wenk	Peter J. Meikle, Markus Wenk
+Study Publication Title	Singaporean Integrative Omics Study - Site 1	Singaporean Integrative Omics Study - Site 1	Singaporean Integrative Omics Study - Site 1
+Study Publication Status	published	published	published
+Study Publication Status Term Accession Number	http://www.ebi.ac.uk/efo/EFO_0001796	http://www.ebi.ac.uk/efo/EFO_0001796	http://www.ebi.ac.uk/efo/EFO_0001796
+Study Publication Status Term Source REF	EFO	EFO	EFO
+Comment[mztab.metadata.publication:id]	1	2	3
+STUDY FACTORS
+Study Factor Name	Homo sapiens	blood plasma	Body Mass Index	Age-Years	Sex	Ethnic Group	Current Smoker	Performing Laboratory	Institutional Review Board	Diastolic Blood Pressure (mmHg)	Serum Total Cholesterol Measurement (mmol/L)	Triglyceride Measurement (mmol/L)	Serum HDL Cholesterol Measurement (mmol/L)	Serum LDL Cholesterol Measurement (mmol/L)	Fasting Glucose (mmol/L)	Systolic Blood Pressure (mmHg)
+Study Factor Type	categorical variable	categorical variable	quantitative variable	quantitative variable	categorical variable	categorical variable	categorical variable	categorical variable	categorical variable	quantitative variable	quantitative variable	quantitative variable	quantitative variable	quantitative variable	quantitative variable	quantitative variable
+Study Factor Type Term Accession Number	STATO:0000252	STATO:0000252	STATO:0000722	STATO:0000722	STATO:0000252	STATO:0000252	STATO:0000252	STATO:0000252	STATO:0000252	STATO:0000722	STATO:0000722	STATO:0000722	STATO:0000722	STATO:0000722	STATO:0000722	STATO:0000722
+Study Factor Type Term Source REF	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO	STATO
+STUDY ASSAYS
+Study Assay File Name	a_MTBLS263_metabolite_profiling.txt
+Study Assay Measurement Type	untargeted analysis
+Study Assay Measurement Type Term Accession Number	http://purl.obolibrary.org/obo/MS_1003904
+Study Assay Measurement Type Term Source REF	MS
+Study Assay Technology Type	mass spectrometry assay
+Study Assay Technology Type Term Accession Number	http://purl.obolibrary.org/obo/OBI_0000470
+Study Assay Technology Type Term Source REF	OBI
+Study Assay Technology Platform	Mass spectrometry
+Comment[Assay Type]	LC-MS
+Comment[Assay Type Term Accession Number]
+Comment[Assay Type Term Source REF]
+Comment[Assay Label]	LC-MS
+STUDY PROTOCOLS
+Study Protocol Name	Sample collection	Extraction	Mass spectrometry	Data transformation	Metabolite identification	Chromatography
+Study Protocol Type	sample collection protocol	extraction protocol	mass spectrometry	data transformation	metabolite identification	chromatography
+Study Protocol Type Term Accession Number	EFO:0005518	EFO:0000490	CHMO:0000470			CHMO:0001000
+Study Protocol Type Term Source REF	EFO	EFO	CHMO			CHMO
+Study Protocol Description	For the human studies, midstream urine (~15 ml) samples were collected and frozen from each volunteer ...	Plant material was homogenized in liquid nitrogen using a pestle and mortar and aliquots of 100 +/- 5 mg were weighed into pre-cooled 2 ml ...	Eluting compounds were detected from m/z 100-1000 using a hybrid quadrupole ...	Raw data files were converted to mzData format using the vendor-specific...	Initial features detected in narrow retention time windows displaying a high chromatogram correlation were grouped ...	Plant material was homogenized in liquid nitrogen using a pestle and mortar and aliquots of 100 +/- 5 mg were weighed into pre-cooled 2 ml ...
+Study Protocol URI
+Study Protocol Version
+Study Protocol Parameters Name		Post Extraction;Derivatization	Instrument;Ion source;Mass analyzer;Scan m/z range;Scan polarity			Chromatography Instrument;Column model;Column type;Autosampler model;Guard column
+Study Protocol Parameters Name Term Accession Number		;	;;;;			;;;;
+Study Protocol Parameters Name Term Source REF		;	;;;;			;;;;
+Study Protocol Components Name				mztab.metadata.software.id=1;mztab.metadata.software.id=2;mztab.metadata.software.id=3	mztab.metadata.database.id=1
+Study Protocol Components Type				MassHunter Data Acquisition";"MassHunter Qualitative Analysis";"MassHunter Quantitative Analysis	normalized lipid shorthand name
+Study Protocol Components Type Term Accession Number				http://purl.obolibrary.org/obo/MS_1000678;http://purl.obolibrary.org/obo/MS_1000680;http://purl.obolibrary.org/obo/MS_1000681
+Study Protocol Components Type Term Source REF				MS;MS;MS
+Comment[mztab.metadata.software:setting]	mztab.metadata.software.id=1: {XICWindowWidth: 10ppm: }	mztab.metadata.software.id=2: {}	mztab.metadata.software.id=3: {}
+Comment[mztab.metadata.database:prefix]	mztab.metadata.database.id=1: { goslin }
+Comment[mztab.metadata.database:version]	mztab.metadata.database.id=1: { 2.2.0 }
+Comment[mztab.metadata.database:uri]	mztab.metadata.database.id=1: { https://github.com/lifs-tools/goslin }
+STUDY CONTACTS
+Study Person Last Name	Meikle	Wenk
+Study Person First Name	Peter	Markus
+Study Person Mid Initials
+Study Person Email	peter.meikle@baker.edu.au	bchmrw@nus.edu.sg
+Study Person Phone
+Study Person Fax
+Study Person Address
+Study Person Affiliation	Metabolomics Laboratory, Baker IDI Heart and Diabetes Institute, 75 Commercial Road, Melbourne 3004, Australia.	Department of Biochemistry, Center for Life Sciences, 28 Medical Drive, National University of Singapore, Singapore 117456, Singapore.
+Study Person Roles	Author	Author
+Study Person Roles Term Accession Number	http://purl.obolibrary.org/obo/NCIT_C42781	http://purl.obolibrary.org/obo/NCIT_C42781
+Study Person Roles Term Source REF	NCIT	NCIT
+Comment[mztab:metadata:contact:id]	1	2

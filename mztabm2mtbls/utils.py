@@ -1,6 +1,7 @@
 import datetime
 import os
 import re
+from dataclasses import replace
 from typing import Any, Union
 
 from metabolights_utils.isatab import Reader, Writer
@@ -20,6 +21,7 @@ from metabolights_utils.models.isa.investigation_file import (
 from metabolights_utils.models.isa.samples_file import SamplesFile
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
 from mztab_m_io.model.base import MzTabBaseModel
+from unidecode import unidecode
 
 
 def sanitise_data(value: Union[None, Any]) -> Union[str, list[str]]:
@@ -33,7 +35,8 @@ def sanitise_data(value: Union[None, Any]) -> Union[str, list[str]]:
 def sanitise_single_value(value: Union[None, Any]) -> str:
     if value is None:
         return ""
-    return str(value).replace("\n", " ").replace("\r", " ").replace("\t", " ").strip()
+    value = unidecode(str(value)).replace("\u2026", "...")
+    return value.replace("\n", " ").replace("\r", " ").replace("\t", " ").strip()
 
 
 def get_ontology_source_comment(investigation: Investigation, name: str):
@@ -79,6 +82,9 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
         identifier=study_id,
         public_release_date=public_release_date,
         submission_date=submisstion_date,
+        sample_template="minimum",
+        study_category="ms-mhd-legacy",
+        study_template="minimum",
     )
     mtbls_model.investigation.studies.append(study)
 
@@ -107,9 +113,9 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
         Assay(
             file_name=f"a_{study_id}_metabolite_profiling.txt",
             measurement_type=OntologyAnnotation(
-                term="untargeted metabolite profiling",
-                term_source_ref="MSIO",
-                term_accession_number="http://purl.obolibrary.org/obo/MSIO_0000101",
+                term="untargeted analysis",
+                term_source_ref="MS",
+                term_accession_number="http://purl.obolibrary.org/obo/MS_1003904",
             ),
             technology_type=OntologyAnnotation(
                 term="mass spectrometry assay",
@@ -117,8 +123,15 @@ def create_metabolights_study_model(study_id: str = "MTBLS") -> MetabolightsStud
                 term_accession_number="http://purl.obolibrary.org/obo/OBI_0000470",
             ),
             technology_platform="Mass spectrometry",
+            assay_type=OntologyAnnotation(
+                term="LC-MS",
+                term_source_ref="",
+                term_accession_number="",
+            ),
         )
     )
+    study.study_assays.comments = [Comment(name="Assay Label", value=["LC-MS"])]
+
     # Create initial onntology source referenced in assay definition
     mtbls_model.investigation.ontology_source_references.references.append(
         OntologySourceReference(

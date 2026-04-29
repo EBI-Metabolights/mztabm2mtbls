@@ -1,9 +1,6 @@
-from mztabm2mtbls.mapper.utils import convert_accession_number
-from functools import partial
-from mztab_m_io.model import common as mztab_common
-
 import os
 import re
+from functools import partial
 from typing import List
 
 from metabolights_utils.models.isa.assay_file import AssayFile
@@ -13,6 +10,7 @@ from metabolights_utils.models.isa.investigation_file import (
     Protocol,
 )
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
+from mztab_m_io.model import common as mztab_common
 from mztab_m_io.model.mztabm import MzTabM
 
 from mztabm2mtbls.mapper.base_mapper import BaseMapper
@@ -20,13 +18,13 @@ from mztabm2mtbls.mapper.map_model import AssaySheetMapFields, FieldMapDescripti
 from mztabm2mtbls.mapper.utils import (
     add_isa_table_ontology_columns,
     add_isa_table_single_column,
+    convert_accession_number,
     copy_parameter,
     find_first_header_column_index,
     get_protocol_sections,
     update_isa_table_row,
 )
 from mztabm2mtbls.utils import sanitise_data
-
 
 lc_ms_protocol_parameters_mapping = {
     "Sample collection protocol": [],

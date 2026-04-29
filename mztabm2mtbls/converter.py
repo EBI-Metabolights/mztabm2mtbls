@@ -1,4 +1,3 @@
-from mztabm2mtbls.mapper.metadata.metadata_protocol import MetadataProtocolMapper
 import hashlib
 import json
 import os
@@ -18,6 +17,7 @@ from mztabm2mtbls.mapper.metadata.metadata_base import MetadataBaseMapper
 from mztabm2mtbls.mapper.metadata.metadata_contact import MetadataContactMapper
 from mztabm2mtbls.mapper.metadata.metadata_cv import MetadataCvMapper
 from mztabm2mtbls.mapper.metadata.metadata_database import MetadataDatabaseMapper
+from mztabm2mtbls.mapper.metadata.metadata_protocol import MetadataProtocolMapper
 from mztabm2mtbls.mapper.metadata.metadata_publication import MetadataPublicationMapper
 from mztabm2mtbls.mapper.metadata.metadata_sample import MetadataSampleMapper
 from mztabm2mtbls.mapper.metadata.metadata_sample_processing import (
@@ -152,12 +152,7 @@ def convert(
     input_file: str,
     output_dir: str,
     mtbls_accession_number: str,
-    # container_engine: str,
-    # mztab2m_json_convertor_image: str,
-    override_mztab2m_json_file: str,
-    # Info, Warn or Error
-    # mztabm_validation_level: str = "Error",
-    # mztabm_mapping_file: Union[None, str] = None,
+    override_mztab2m_json_file: bool,
     temp_folder: Union[None, str] = None,
 ):
     if not temp_folder:
@@ -170,11 +165,6 @@ def convert(
         ctx.fail("Please provide at least an input file with --input-file")
 
     input_json_file = input_file
-    # print disclaimer that we currently do not fully validate neither the mzTab-M file, nor the ISA-Tab files
-    # print(
-    #     "Please note that the mzTab-M file is not fully validated by this tool.",
-    #     "The ISA-Tab files are not validated either at the moment.",
-    # )
     print(f"'{input_file}' will be converted MetaboLights ISA-TAB metadata files.")
     _, extension = os.path.splitext(input_file)
     mztab_sourcefile_location = input_file
