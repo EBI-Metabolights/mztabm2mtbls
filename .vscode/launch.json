@@ -26,10 +26,10 @@
       "request": "launch",
       "program": "${workspaceFolder}/mztabm2mtbls/commands/validate_study.py",
       "args": [
-        "--mtbls_provisional_study_id=MTBLS263",
+        "--mtbls_provisional_study_id=MTBLS10000000",
         "--mztabm_file_path=test/data/LCS-00001-1/LCS-00001-1.mztabm",
         "--data_files_path=test/data/LCS-00001-1/files",
-        "--target_metadata_files_path=test/data/LCS-00001-1/mztab",
+        "--target_metadata_files_path=test/data/LCS-00001-1/isa-tab",
         "--opa_executable_path=opa",
         "--mtbls_validation_bundle_path=${workspaceFolder}/bundle.tar.gz",
         "--mtbls_validation_wasm_path=${workspaceFolder}/mtbls-validation.wasm",

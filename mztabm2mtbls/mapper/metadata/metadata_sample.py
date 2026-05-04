@@ -57,8 +57,9 @@ class MetadataSampleMapper(BaseMapper):
         for item in mztab_model.metadata.sample:
             if item.custom:
                 for param in item.custom:
-                    if param.name and param.name not in custom_characteristics:
-                        custom_characteristics.append(param.name)
+                    name = param.name.strip('"')
+                    if name and name not in custom_characteristics:
+                        custom_characteristics.append(name)
 
         for characteristics_name in custom_characteristics:
             header_name = f"Characteristics[{characteristics_name}]"
@@ -93,27 +94,37 @@ class MetadataSampleMapper(BaseMapper):
                         sample_id_study_variable_id[sample_id].append(
                             study_variables[k]
                         )
-
+        numeric_factors = set()
         groups = {x.id: x for x in mztab_model.metadata.study_variable_group}
+        study.study_factors.factors = []
         for sv in mztab_model.metadata.study_variable:
             if sv.group_refs:
-                group_refs = [groups[x] for x in sv.group_refs if x in groups]
+                group_refs = [groups.get(x) for x in sv.group_refs]
                 for group in group_refs:
-                    if group.name.name.lower() not in factors:
+                    if not group:
+                        continue
+                    name = group.name.name.strip('"')
+                    name_lower = name.lower()
+                    if name_lower not in factors:
                         factor = Factor(
-                            name=group.name.name.strip('"'),
+                            name=name,
                             type=OntologyAnnotation(
                                 term=group.type.name.strip('"'),
                                 term_source_ref=group.type.cv_label,
                                 term_accession_number=group.type.cv_accession,
                             ),
                         )
+                        if group.datatype in {"xsd:integer", "xsd:decimal"}:
+                            numeric_factors.add(f"Factor Value[{factor.name}]")
                         study.study_factors.factors.append(factor)
-
-                        factors[group.name.name.lower()] = factor
+                        factors[name_lower] = factor
 
         for factor_name, factor in factors.items():
-            add_isa_table_ontology_columns(samples_file, f"Factor Value[{factor.name}]")
+            add_isa_table_ontology_columns(
+                samples_file,
+                f"Factor Value[{factor.name}]",
+                numeric_factors=numeric_factors,
+            )
 
         # Find column indices of sample name, organism and organism part columns
         # mzTab2-M  Metabolights sample sheet
@@ -179,8 +190,9 @@ class MetadataSampleMapper(BaseMapper):
             update_isa_table_row(samples_file, row_idx, sample, selected_column_headers)
             if sample.custom:
                 for param in sample.custom:
-                    if param.name and param.name in custom_characteristics:
-                        header = f"Characteristics[{param.name}]"
+                    name = param.name.strip('"')
+                    if name and name in custom_characteristics:
+                        header = f"Characteristics[{name}]"
                         if header in selected_column_headers:
                             definition = selected_column_headers[header]
                             column_name = definition.target_column_name

@@ -3,15 +3,15 @@ name = "mztabm2mtbls"
 version = "0.1.0"
 description = "A library and scripts to convert mzTab-M to MetaboLights ISA-tab format"
 readme = "README.md"
-license = "Apache 2.0"
+license = "Apache-2.0"
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "click>=8.3.3",
-    "metabolights-utils>=1.4.29",
     "pymztabm",
     "python-dotenv>=1.2.2",
     "pygments>=2.20.0",
     "opa-wasmtime>=0.1.1",
+    "metabolights-utils",
 ]
 
 [dependency-groups]
@@ -20,6 +20,9 @@ dev = [
     "pytest>=9.0.3",
     "ruff>=0.15.12",
 ]
+
+[project.scripts]
+mztabm2mtbls-cli = "mztabm2mtbls.commands.cli:cli"
 
 [tool.ruff.lint]
 extend-select = ["E4", "E7", "E9", "F", "I"]
@@ -32,3 +35,4 @@ testpaths = ["test", "tests"]
 
 [tool.uv.sources]
 pymztabm = { git = "https://github.com/lifs-tools/pymzTab-m.git", rev = "development" }
+metabolights-utils = { git = "https://github.com/EBI-Metabolights/metabolights-utils.git", rev = "development" }

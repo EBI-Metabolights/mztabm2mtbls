@@ -1,7 +1,7 @@
 import json
 import os
 import subprocess
-from typing import List, Union
+from typing import Union
 
 import click
 from metabolights_utils.models.metabolights.model import MetabolightsStudyModel
@@ -11,15 +11,11 @@ from metabolights_utils.provider.local_folder_metadata_collector import (
 from metabolights_utils.provider.study_provider import MetabolightsStudyProvider
 from metabolights_utils.provider.submission_model import (
     OpaValidationResult,
-    PolicyMessage,
     PolicyMessageType,
-    PolicySummaryResult,
-)
-from metabolights_utils.provider.submission_repository import (
-    MetabolightsSubmissionRepository,
 )
 
 from mztabm2mtbls import converter
+from mztabm2mtbls.commands.utils import load_from_url
 from mztabm2mtbls.opa_engine import OpaEngine
 
 
@@ -50,6 +46,7 @@ from mztabm2mtbls.opa_engine import OpaEngine
     "--config_file",
     required=False,
     help="Configuration file to convert mzTab-M file and run MetaboLights validation.",
+    default="test/data/configurations/mztabm2mtbls_config.json",
     type=click.Path(exists=True),
 )
 @click.option(
@@ -85,6 +82,18 @@ from mztabm2mtbls.opa_engine import OpaEngine
     help="Temporary folder for intermediate outputs.",
     default="output/temp",
 )
+@click.option(
+    "--mtbls_validation_wasm_url",
+    required=False,
+    help="URL to download the validation wasm file.",
+    default="https://ebi-metabolights.github.io/mtbls-validation/mtbls-validation.wasm",
+)
+@click.option(
+    "--mtbls_validation_bundle_url",
+    required=False,
+    help="URL to download the validation bundle.",
+    default="https://ebi-metabolights.github.io/mtbls-validation/bundle.tar.gz",
+)
 def convert_and_validate_submission(
     mtbls_provisional_study_id: str,
     target_metadata_files_path: str,
@@ -96,10 +105,13 @@ def convert_and_validate_submission(
     mtbls_validation_bundle_path: str = "./bundle.tar.gz",
     mtbls_validation_wasm_path: str = "./mtbls-validation.wasm",
     temp_folder: Union[None, str] = None,
+    mtbls_validation_wasm_url: str = "",
+    mtbls_validation_bundle_url: str = "",
 ):
+    if not temp_folder:
+        temp_folder = os.path.join(os.getcwd(), ".temp")
     if not data_files_path:
         data_files_path = "FILES"
-
     study_path = target_metadata_files_path
     ctx = click.Context(converter.convert)
     success = ctx.forward(
@@ -141,6 +153,9 @@ def convert_and_validate_submission(
     task = None
     try:
         if run_opa_executable:
+            if not os.path.exists(mtbls_validation_bundle_path):
+                load_from_url(mtbls_validation_bundle_url, mtbls_validation_bundle_path)
+
             local_command = [
                 opa_executable_path,
                 "eval",
@@ -165,15 +180,17 @@ def convert_and_validate_submission(
                 .get("value")
             )
         else:
-            engine = OpaEngine(
-                wasm_path=mtbls_validation_wasm_path,
-                bundle_path=mtbls_validation_bundle_path,
-            )
+            if not mtbls_validation_wasm_path:
+                mtbls_validation_wasm_path = os.path.join(
+                    temp_folder, "mtbls-validation.wasm"
+                )
+            if not os.path.exists(mtbls_validation_wasm_path):
+                load_from_url(mtbls_validation_wasm_url, mtbls_validation_wasm_path)
+
+            engine = OpaEngine(wasm_path=mtbls_validation_wasm_path)
             validation_result = None
             decision = engine.evaluate(json_validation_input)
             if decision and decision.get("violations"):
-                # print("Policy evaluation failed!")
-                # print(json.dumps(decision.get("violations"), indent=2))
                 validation_result = decision
             else:
                 print("Policy check passed.")
@@ -234,6 +251,8 @@ def convert_and_validate_submission(
                 x.violation,
                 f"... (Total: {x.total_violations})" if x.has_more_violations else "",
             )
+        else:
+            print("No errors found.")
         print(80 * "-")
         if overridden_errors:
             print(

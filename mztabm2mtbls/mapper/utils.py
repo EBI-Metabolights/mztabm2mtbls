@@ -145,7 +145,10 @@ def add_isa_table_ontology_columns(
     header_name: str,
     new_column_index: Union[int, None] = None,
     create_value_column: bool = False,
+    numeric_factors: Union[None, set[str]] = None,
 ):
+    if not numeric_factors:
+        numeric_factors = set()
     table_columns = mtbls_table_file.table.columns
     headers = mtbls_table_file.table.headers
     selected_index = len(table_columns)
@@ -155,7 +158,15 @@ def add_isa_table_ontology_columns(
         and len(table_columns) >= new_column_index
     ):
         selected_index = new_column_index
-    search_headers = [header_name, "Term Source REF", "Term Accession Number"]
+    if header_name in numeric_factors:
+        search_headers = [
+            header_name,
+            "Unit",
+            "Term Source REF",
+            "Term Accession Number",
+        ]
+    else:
+        search_headers = [header_name, "Term Source REF", "Term Accession Number"]
     if create_value_column:
         pattern = r"(.+)\[(.+)\]"
         result = re.search(pattern, header_name)

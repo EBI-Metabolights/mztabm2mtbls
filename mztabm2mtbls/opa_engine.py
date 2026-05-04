@@ -156,7 +156,7 @@ def _builtin_time_parse_ns(*args):
 
 
 class OpaEngine:
-    def __init__(self, wasm_path: str, bundle_path: str | None = None):
+    def __init__(self, wasm_path: str):
         try:
             if tarfile.is_tarfile(wasm_path):
                 with tarfile.open(wasm_path, "r:*") as tar:
@@ -199,13 +199,12 @@ class OpaEngine:
             # Load data.json from the bundle to provide rule configurations
             # (ontology lists, controlled vocabularies, etc.) to the WASM policy.
             # Without this, many validation rules evaluate to empty/undefined.
-            if bundle_path:
-                self._load_bundle_data(bundle_path)
+            self._load_bundle_data(wasm_path)
         except Exception as e:
             print(f"Failed to load WASM module: {e}")
             raise e
 
-    def _load_bundle_data(self, bundle_path: str) -> None:
+    def _load_bundle_data(self, wasm_path: str) -> None:
         """Extract and load data.json from an OPA bundle into the policy.
 
         The `opa eval --data bundle.tar.gz` command automatically loads both
@@ -215,20 +214,18 @@ class OpaEngine:
         """
         data_names = {"/data.json", "data.json"}
         try:
-            with tarfile.open(bundle_path, "r:*") as tar:
+            with tarfile.open(wasm_path, "r:*") as tar:
                 for member in tar.getmembers():
                     if member.name in data_names:
                         f = tar.extractfile(member)
                         if f is not None:
                             data = json.load(f)
                             self.policy.set_data(data)
-                            print(
-                                f"Bundle data loaded from {bundle_path}/{member.name}."
-                            )
+                            print(f"Bundle data loaded from {wasm_path}/{member.name}.")
                             return
-            print(f"Warning: No data.json found in bundle {bundle_path}.")
+            print(f"Warning: No data.json found in bundle {wasm_path}.")
         except Exception as e:
-            print(f"Warning: Failed to load bundle data from {bundle_path}: {e}")
+            print(f"Warning: Failed to load bundle data from {wasm_path}: {e}")
 
     def __del__(self):
         if hasattr(self, "_temp_path") and os.path.exists(self._temp_path):

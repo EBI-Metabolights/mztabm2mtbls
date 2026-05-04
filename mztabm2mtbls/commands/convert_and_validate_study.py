@@ -79,9 +79,6 @@ def validate(
     study_path = os.path.join(base_study_path, "studies", mtbls_provisional_study_id)
     data_files_path = os.path.join(study_path, "FILES")
     mztabm_folder_path = os.path.dirname(mztabm_file_path)
-    # mztabm_file_path = os.path.join(
-    #     mztabm_folder_path, mtbls_provisional_study_id + ".mztab"
-    # )
     ctx = click.Context(converter.convert)
     success = ctx.forward(
         converter.convert,
