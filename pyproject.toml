@@ -11,7 +11,7 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "pygments>=2.20.0",
     "opa-wasmtime>=0.1.1",
-    "metabolights-utils",
+    "metabolights-utils>=1.4.30",
 ]
 
 [dependency-groups]
@@ -48,4 +48,3 @@ testpaths = ["test", "tests"]
 
 [tool.uv.sources]
 pymztabm = { git = "https://github.com/lifs-tools/pymzTab-m.git", rev = "development" }
-metabolights-utils = { git = "https://github.com/EBI-Metabolights/metabolights-utils.git", rev = "development" }

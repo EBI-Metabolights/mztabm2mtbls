@@ -101,6 +101,21 @@ echo $MTBLS_PROVISIONAL_STUDY_ID
 ```
 
 ## 4. Prepare local mzTab-M file and raw data files for the tutorial
+Some study level metadata is required while submitting a new study to MetaboLights:
+
+- Contact: `mztabm2mtbls` converts mzTab-M contacts to ISA-TAB investigation file contacts. First contact is set as Principal Investigator, others as Authors. If needed you can update this information in mzTab-M file before conversion.
+- Study Variable Groups: At least one study variable group (with study variable values) must be defined in the mzTab-M file.
+- Protocols and protocol parameters: Following protocols and protocol parameters must be defined in the mzTab-M file for MS-based studies:
+    - Sample collection protocol: No specific parameter required.
+    - Extraction: Post Extraction, Derivatization
+    - Mass spectrometry: Scan polarity, Scan m/z range, Instrument, Ion source, Mass analyzer
+    - Data transformation: No specific parameter required.
+    - Metabolite identification: No specific parameter required.
+
+If there is no specific paramter values for protocol parameters, you can leave the protocol parameter value empty.
+
+Example mzTab-M file `test/data/LCS-00001-1/LCS-00001-1.mztabm` contains these required metadata fields.
+
 
 - Create a test data directory
 

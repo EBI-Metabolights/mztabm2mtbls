@@ -240,8 +240,8 @@ wheels = [
 
 [[package]]
 name = "metabolights-utils"
-version = "1.4.28"
-source = { git = "https://github.com/EBI-Metabolights/metabolights-utils.git?rev=development#662a7554ba0814978e4ca361afd96f7ab58bda4f" }
+version = "1.4.30"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "click" },
@@ -251,6 +251,10 @@ dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "unidecode" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e8/28/3f338539827d213e372933cc45f833d6455597457c7475ad4822fdcffe47/metabolights_utils-1.4.30.tar.gz", hash = "sha256:32ea6e9a164f34f862d9341c45d39cccdcaf1c59ab01338849d842d633851b0a", size = 162937, upload-time = "2026-05-05T08:40:53.229Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/84/23/d0c298927f11430d66ffabd2d93dfcf6362c3c100bc39877718dd8f533b2/metabolights_utils-1.4.30-py3-none-any.whl", hash = "sha256:68aeb62295126ff7b6e66c58f0f2b4c9bae527e583c7c32a420f3c05ac319039", size = 194961, upload-time = "2026-05-05T08:40:54.342Z" },
 ]
 
 [[package]]
@@ -276,7 +280,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "click", specifier = ">=8.3.3" },
-    { name = "metabolights-utils", git = "https://github.com/EBI-Metabolights/metabolights-utils.git?rev=development" },
+    { name = "metabolights-utils", specifier = ">=1.4.30" },
     { name = "opa-wasmtime", specifier = ">=0.1.1" },
     { name = "pygments", specifier = ">=2.20.0" },
     { name = "pymztabm", git = "https://github.com/lifs-tools/pymzTab-m.git?rev=development" },
