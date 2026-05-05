@@ -5,6 +5,7 @@ from mztabm2mtbls.commands.convert_and_validate_submission import (
     convert_and_validate_submission,
 )
 from mztabm2mtbls.commands.create_provisional_study import create_submission
+from mztabm2mtbls.commands.get_ftp_credentials import get_ftp_credentials
 from mztabm2mtbls.commands.remote_validate import validate_remote
 from mztabm2mtbls.commands.upload_data_files import upload_study_data_files
 from mztabm2mtbls.commands.upload_metadata_files import upload_study_metadata_files
@@ -25,3 +26,4 @@ cli.add_command(convert_and_validate_submission)
 cli.add_command(upload_study_metadata_files)
 cli.add_command(upload_study_data_files)
 cli.add_command(validate_remote)
+cli.add_command(get_ftp_credentials)

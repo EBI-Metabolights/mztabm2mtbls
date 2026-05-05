@@ -46,11 +46,11 @@ curl -LsSf https://releases.astral.sh/github/uv/releases/download/0.11.8/uv-inst
 # brew install git
 
 uv --version
-# should print something like: 
+# should print something like:
 #uv 0.11.8 (0e961dd9a 2026-04-27 aarch64-apple-darwin)
 
 git --version
-# should print something like: 
+# should print something like:
 # git version 2.50.1 (Apple Git-155)
 
 ```
@@ -58,8 +58,8 @@ git --version
 
 ```bash
 
-# You may choose to work in a different directory for this tutorial. 
-# In that case, change the directory (or cd) command accordingly 
+# You may choose to work in a different directory for this tutorial.
+# In that case, change the directory (or cd) command accordingly
 # (Linux or Mac)
 cd ~/tutorials/hupo-psi-2026
 
@@ -89,7 +89,7 @@ Before uploading any data, you need to create a provisional study entry in Metab
 
 After creating a provisional study, you will receive an email from MetaboLights with the subject "MetaboLights Temporary Submission initiated". You can find the provisional study ID and FTP upload details in the email.
 
-Notes: 
+Notes:
 
 1- Only 2 provisional studies allowed per user. If you already have 2 provisional studies, you may use it.
 2- Only one provisional study can be submitted in five minutes interval.
@@ -101,7 +101,7 @@ mztabm2mtbls-cli create-provisional-study --user-api-token $MTBLS_API_TOKEN
 
 export MTBLS_PROVISIONAL_STUDY_ID=<CREATED_PROVISIONAL_STUDY_ID>
 echo $MTBLS_PROVISIONAL_STUDY_ID
-# Example output 
+# Example output
 #REQ20260505219305
 ```
 
@@ -138,7 +138,7 @@ MTD	contact[1]-name	Test contact
 MTD	contact[1]-email	test@email.addess
 MTD	contact[1]-affiliation	Test affiliation
 
-# Replace with your contact information. 
+# Replace with your contact information.
 # It is tsv file, so make sure to keep the tab separated format.
 # For example:
 MTD	contact[1]-name	Ozgur Yurekten
@@ -185,7 +185,7 @@ uv run mztabm2mtbls-cli upload-metadata-files \
     --metadata-files-path my-test-data/$MTBLS_PROVISIONAL_STUDY_ID
 ```
 
-- Upload Raw data files to MetaboLights using the `upload-data-files` command. If your data file upload process fails, you can try again. 
+- Upload Raw data files to MetaboLights using the `upload-data-files` command. If your data file upload process fails, you can try again.
 
 ```bash
 mztabm2mtbls-cli upload-data-files \
@@ -193,7 +193,21 @@ mztabm2mtbls-cli upload-data-files \
     --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID \
     --data-files-path my-test-data/files
 
+# If you did not receive an email with ftp credentials, 
+# you can get them using the `get-ftp-credentials` command. 
+# mztabm2mtbls-cli get-ftp-credentials \
+#     --mtbls-api-token $MTBLS_API_TOKEN \
+#     --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID
+# It will print the ftp server url, remote folder directory, ftp username and ftp password.
+
 ```
+
+```bash
+mztabm2mtbls-cli get-ftp-credentials \
+    --mtbls-api-token $MTBLS_API_TOKEN \
+    --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID
+```
+
 
 - Run remote validation using the `remote-validation` command. Review the validation results.
 
