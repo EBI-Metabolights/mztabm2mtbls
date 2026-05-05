@@ -36,7 +36,7 @@ The `mztabm2mtbls` library is a command-line tool that converts mzTab-M files in
 
 ```bash
 # install python package manager uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -LsSf https://releases.astral.sh/github/uv/releases/download/0.11.8/uv-installer.sh | sh
 
 # add $HOME/.local/bin to your PATH, either restart your shell or run
 # export PATH=$HOME/.local/bin:$PATH
@@ -88,6 +88,11 @@ mztabm2mtbls-cli
 Before uploading any data, you need to create a provisional study entry in MetaboLights. This reserves a unique study identifier (e.g. `REQ20260505219305`) that acts as a placeholder for your submission. The provisional ID is used in all subsequent steps — converting metadata, uploading files, and triggering validation — so make sure to save it as an environment variable (MTBLS_PROVISIONAL_STUDY_ID).
 
 After creating a provisional study, you will receive an email from MetaboLights with the subject "MetaboLights Temporary Submission initiated". You can find the provisional study ID and FTP upload details in the email.
+
+Notes: 
+
+1- Only 2 provisional studies allowed per user. If you already have 2 provisional studies, you may use it.
+2- Only one provisional study can be submitted in five minutes interval.
 
 ```bash
 mztabm2mtbls-cli create-provisional-study --user-api-token $MTBLS_API_TOKEN

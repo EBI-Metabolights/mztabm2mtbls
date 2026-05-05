@@ -47,6 +47,7 @@ def create_submission(
         dataset_license_agreement=True,
         title="New study with mztab-M",
         description="New study with mztab-M",
+        selected_submission_workflows=["mzTab-M"],
     )
     submission_ids, error_message = repo.create_submission(
         user_api_token=user_api_token, study_creation_request=study_creation_request
