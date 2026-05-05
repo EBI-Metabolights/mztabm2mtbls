@@ -152,6 +152,7 @@ def convert_and_validate_submission(
         f"{mtbls_provisional_study_id}_validation_input.json",
     )
     validation_input_path = os.path.realpath(relative_validation_input_path)
+    os.makedirs(os.path.dirname(validation_input_path), exist_ok=True)
     with open(validation_input_path, "w") as f:
         json.dump(json_validation_input, f, indent=2)
 

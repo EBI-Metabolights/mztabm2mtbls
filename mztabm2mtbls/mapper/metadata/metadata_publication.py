@@ -60,7 +60,7 @@ class MetadataPublicationMapper(BaseMapper):
             # use contact names as publication author list
             if mztab_model.metadata.contact:
                 pub.author_list = ", ".join(
-                    [x.name for x in mztab_model.metadata.contact]
+                    [x.name or "" for x in mztab_model.metadata.contact]
                 )
 
             uri_comment.value.append(sanitise_data(uri))

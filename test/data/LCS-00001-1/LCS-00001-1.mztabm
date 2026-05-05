@@ -7,12 +7,9 @@ MTD	description	Establishing multiple omics baselines for three Southeast Asian 
 MTD	publication[1]	doi:10.1038/s41467-017-00413-x
 MTD	publication[2]	doi:10.1016/j.clinms.2017.11.002
 MTD	publication[3]	doi:10.1038/srep19139
-MTD	contact[1]-name	Peter J. Meikle
-MTD	contact[1]-email	peter.meikle@baker.edu.au
-MTD	contact[1]-affiliation	Metabolomics Laboratory, Baker IDI Heart and Diabetes Institute, 75 Commercial Road, Melbourne 3004, Australia.
-MTD	contact[2]-name	Markus Wenk
-MTD	contact[2]-email	bchmrw@nus.edu.sg
-MTD	contact[2]-affiliation	Department of Biochemistry, Center for Life Sciences, 28 Medical Drive, National University of Singapore, Singapore 117456, Singapore.
+MTD	contact[1]-name	Test contact
+MTD	contact[1]-email	test@email.addess
+MTD	contact[1]-affiliation	Test affiliation
 MTD	cv[1]-label	MS
 MTD	cv[1]-full_name	PSI-MS controlled vocabulary
 MTD	cv[1]-version	4.0.18
