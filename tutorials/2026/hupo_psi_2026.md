@@ -99,7 +99,7 @@ mztabm2mtbls-cli create-provisional-study --user-api-token $MTBLS_API_TOKEN
 # Example output:
 # Studies created: REQ20260505219305
 
-export MTBLS_PROVISIONAL_STUDY_ID=REQ20260505219305
+export MTBLS_PROVISIONAL_STUDY_ID=<CREATED_PROVISIONAL_STUDY_ID>
 echo $MTBLS_PROVISIONAL_STUDY_ID
 # Example output 
 #REQ20260505219305
@@ -134,16 +134,16 @@ cp -r test/data/LCS-00001-1/files my-test-data/
 
 ```bash
 # Placeholder contact information in the original file:
-# MTD	contact[1]-name	Test contact
-# MTD	contact[1]-email	test@email.addess
-# MTD	contact[1]-affiliation	Test affiliation
+MTD	contact[1]-name	Test contact
+MTD	contact[1]-email	test@email.addess
+MTD	contact[1]-affiliation	Test affiliation
 
 # Replace with your contact information. 
 # It is tsv file, so make sure to keep the tab separated format.
 # For example:
-# MTD	contact[1]-name	Ozgur Yurekten
-# MTD	contact[1]-email	ozgury@ebi.ac.uk
-# MTD	contact[1]-affiliation	EMBL European Bioinformatics Institute
+MTD	contact[1]-name	Ozgur Yurekten
+MTD	contact[1]-email	ozgury@ebi.ac.uk
+MTD	contact[1]-affiliation	EMBL European Bioinformatics Institute
 
 ```
 
@@ -160,14 +160,21 @@ mztabm2mtbls-cli convert-to-isatab \
     --temp-folder my-test-data/validation
 ```
 
-- Review the generated ISA-TAB files and the validation report.
+- Review the generated ISA-TAB files.
 ```bash
 ls my-test-data/$MTBLS_PROVISIONAL_STUDY_ID
 
 ```
 
+- Review the generated validation report on `my-test-data/validation` folder. You can find the details of validation issues (errors and warnings) in the report. If there are any errors, you need to fix them in your mzTab-M file and regenerate the ISA-TAB files. Once you fix the issues, you can regenerate the ISA-TAB files by running the `convert-to-isatab` command again.
+
+If there is no error in the validation report, you can upload the metadata and raw data files to MetaboLights.
 
 ## 6. Upload the Metadata & RawData files to MetaboLights
+
+Once your ISA-Tab files and raw data are ready, they need to be uploaded to MetaboLights in two separate steps: first the metadata (ISA-Tab) files, then the raw data files via FTP. You can use any FTP client (e.g. FileZilla, Cyberduck, or the ftp client in your terminal) to upload the raw data files. The ftp upload details can be found in the email received after creating the provisional study.
+
+After both uploads are complete, you can trigger a server-side remote validation to confirm that everything is consistent and meets MetaboLights submission requirements.
 
 - Upload the ISA-TAB files to MetaboLights using the `upload-metadata-files` command.
 
@@ -178,9 +185,7 @@ uv run mztabm2mtbls-cli upload-metadata-files \
     --metadata-files-path my-test-data/$MTBLS_PROVISIONAL_STUDY_ID
 ```
 
-- Upload Raw data files to MetaboLights using the `upload-data-files` command. You can use any FTP client (e.g. FileZilla, Cyberduck, or the ftp client in your terminal) to upload the raw data files. The ftp upload details can be found in the email received after creating the provisional study.
-
-If your data file upload process fails, you can try again. 
+- Upload Raw data files to MetaboLights using the `upload-data-files` command. If your data file upload process fails, you can try again. 
 
 ```bash
 mztabm2mtbls-cli upload-data-files \

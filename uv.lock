@@ -240,7 +240,7 @@ wheels = [
 
 [[package]]
 name = "metabolights-utils"
-version = "1.4.30"
+version = "1.4.31"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -252,9 +252,9 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "unidecode" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e8/28/3f338539827d213e372933cc45f833d6455597457c7475ad4822fdcffe47/metabolights_utils-1.4.30.tar.gz", hash = "sha256:32ea6e9a164f34f862d9341c45d39cccdcaf1c59ab01338849d842d633851b0a", size = 162937, upload-time = "2026-05-05T08:40:53.229Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/59/12/4d96c5b01bbf19eea5f26f00d160d6c6ab851bd9b31b7c4295304fd26189/metabolights_utils-1.4.31.tar.gz", hash = "sha256:4daf5658dc888768d69002cd791cff77b0fbc07f69d8ad0c4002ffe59caa6f68", size = 163014, upload-time = "2026-05-05T10:09:53.96Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/84/23/d0c298927f11430d66ffabd2d93dfcf6362c3c100bc39877718dd8f533b2/metabolights_utils-1.4.30-py3-none-any.whl", hash = "sha256:68aeb62295126ff7b6e66c58f0f2b4c9bae527e583c7c32a420f3c05ac319039", size = 194961, upload-time = "2026-05-05T08:40:54.342Z" },
+    { url = "https://files.pythonhosted.org/packages/9b/93/4684d8a9d90425c8e049914055c43a3d553da6047fb05c710d2aade54ae1/metabolights_utils-1.4.31-py3-none-any.whl", hash = "sha256:101ffdab4a3f17777a15fa3d41b593360fee67bf56a799eec9a8f68ad2311962", size = 195029, upload-time = "2026-05-05T10:09:52.444Z" },
 ]
 
 [[package]]
@@ -280,7 +280,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "click", specifier = ">=8.3.3" },
-    { name = "metabolights-utils", specifier = ">=1.4.30" },
+    { name = "metabolights-utils", specifier = ">=1.4.31" },
     { name = "opa-wasmtime", specifier = ">=0.1.1" },
     { name = "pygments", specifier = ">=2.20.0" },
     { name = "pymztabm", git = "https://github.com/lifs-tools/pymzTab-m.git?rev=development" },
@@ -883,7 +883,7 @@ wheels = [
 
 [[package]]
 name = "virtualenv"
-version = "21.3.0"
+version = "21.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distlib" },
@@ -892,9 +892,9 @@ dependencies = [
     { name = "python-discovery" },
     { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3f/8b/6331f7a7fe70131c301106ec1e7cf23e2501bf7d4ca3636805801ca191bb/virtualenv-21.3.0.tar.gz", hash = "sha256:733750db978ec95c2d8eb4feadaa57091002bce404cb39ba69899cf7bd28944e", size = 7614069, upload-time = "2026-04-27T17:05:58.927Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/0d/915c02c94d207b85580eb09bffab54438a709e7288524094fe781da526c2/virtualenv-21.3.1.tar.gz", hash = "sha256:c2305bc1fddeec40699b8370d13f8d431b0701f00ce895061ce493aeded4426b", size = 7613791, upload-time = "2026-05-05T01:34:31.402Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4b/eb/03bfb1299d4c4510329e470f13f9a4ce793df7fcb5a2fd3510f911066f61/virtualenv-21.3.0-py3-none-any.whl", hash = "sha256:4d28ee41f6d9ec8f1f00cd472b9ffbcedda1b3d3b9a575b5c94a2d004fd51bd7", size = 7594690, upload-time = "2026-04-27T17:05:55.468Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/4f/f71e641e504111a5a74e3a20bc52d01bd86788b22699dd3fee1c63253cf6/virtualenv-21.3.1-py3-none-any.whl", hash = "sha256:d1a71cf58f2f9228fff23a1f6ec15d39785c6b32e03658d104974247145edd35", size = 7594539, upload-time = "2026-05-05T01:34:28.98Z" },
 ]
 
 [[package]]
