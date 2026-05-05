@@ -1,6 +1,6 @@
 # HUPO PSI 2026 tutorial
 
-This tutorial walks you through the complete workflow for submitting mass spectrometry metabolomics data to [MetaboLights](https://www.ebi.ac.uk/metabolights/) using the [mzTab-M](https://github.com/HUPO-PSI/mzTab) format.
+This tutorial walks you through the complete workflow for submitting mass spectrometry metabolomics data to [MetaboLights](https://www.ebi.ac.uk/metabolights/) using the [mzTab-M](https://github.com/HUPO-PSI/mzTab-M) format.
 
 In this tutorial, we will follow these steps:
 
@@ -54,6 +54,7 @@ git --version
 # git version 2.50.1 (Apple Git-155)
 
 ```
+
 - Clone and install mztabm2mtbls locally:
 
 ```bash
@@ -61,6 +62,7 @@ git --version
 # You may choose to work in a different directory for this tutorial.
 # In that case, change the directory (or cd) command accordingly
 # (Linux or Mac)
+mkdir -p ~/tutorials/hupo-psi-2026
 cd ~/tutorials/hupo-psi-2026
 
 git clone https://github.com/EBI-Metabolights/mztabm2mtbls.git
@@ -91,8 +93,8 @@ After creating a provisional study, you will receive an email from MetaboLights 
 
 Notes:
 
-1- Only 2 provisional studies allowed per user. If you already have 2 provisional studies, you may use it.
-2- Only one provisional study can be submitted in five minutes interval.
+1. Only 2 provisional studies allowed per user. If you already have 2 provisional studies, you may use it.
+2. Only one provisional study can be submitted in five minutes interval.
 
 ```bash
 mztabm2mtbls-cli create-provisional-study --user-api-token $MTBLS_API_TOKEN
@@ -106,7 +108,10 @@ echo $MTBLS_PROVISIONAL_STUDY_ID
 ```
 
 ## 4. Prepare local mzTab-M file and raw data files for the tutorial
-Some study level metadata is required while submitting a new study to MetaboLights:
+
+In this step you will set up a local working directory with a copy of the example mzTab-M file and its associated raw data files. You will also customise the contact information in the mzTab-M file so that the generated ISA-Tab metadata reflects your details.
+
+Additional study level metadata is required while submitting a new study to MetaboLights:
 
 - Contact: `mztabm2mtbls` converts mzTab-M contacts to ISA-TAB investigation file contacts. First contact is set as Principal Investigator, others as Authors. If needed you can update this information in mzTab-M file before conversion.
 - Study Variable Groups: At least one study variable group (with study variable values) must be defined in the mzTab-M file.
@@ -117,7 +122,7 @@ Some study level metadata is required while submitting a new study to MetaboLigh
     - Data transformation: No specific parameter required.
     - Metabolite identification: No specific parameter required.
 
-If there is no specific paramter values for protocol parameters, you can leave the protocol parameter value empty.
+If there are no specific parameter values for protocol parameters, you can leave the protocol parameter value empty.
 
 Example mzTab-M file `test/data/LCS-00001-1/LCS-00001-1.mztabm` contains these required metadata fields.
 
@@ -132,10 +137,10 @@ cp -r test/data/LCS-00001-1/files my-test-data/
 
 - Open `my-test-data/LCS-00001-1.mztabm` with your text editor and update the contact information with your information. Replace the placeholder values shown below with your own:
 
-```bash
+```text
 # Placeholder contact information in the original file:
 MTD	contact[1]-name	Test contact
-MTD	contact[1]-email	test@email.addess
+MTD	contact[1]-email	test@email.address
 MTD	contact[1]-affiliation	Test affiliation
 
 # Replace with your contact information.
@@ -149,6 +154,8 @@ MTD	contact[1]-affiliation	EMBL European Bioinformatics Institute
 
 ## 5. Convert mzTab-M to ISA-TAB format with mztabm2mtbls-cli
 
+The `convert-to-isatab` command reads your mzTab-M file, maps its metadata (contacts, protocols, samples, assays, and metabolite annotations) into the ISA-Tab structure, and runs a local validation against MetaboLights submission rules. The output is a set of ISA-Tab files ready for upload and a validation report highlighting any errors or warnings that need attention.
+
 - Use `convert-to-isatab` command to create the ISA-TAB files from your mzTab-M file and data files.
 
 ```bash
@@ -161,25 +168,26 @@ mztabm2mtbls-cli convert-to-isatab \
 ```
 
 - Review the generated ISA-TAB files.
+
 ```bash
 ls my-test-data/$MTBLS_PROVISIONAL_STUDY_ID
 
 ```
 
-- Review the generated validation report on `my-test-data/validation` folder. You can find the details of validation issues (errors and warnings) in the report. If there are any errors, you need to fix them in your mzTab-M file and regenerate the ISA-TAB files. Once you fix the issues, you can regenerate the ISA-TAB files by running the `convert-to-isatab` command again.
+- Review the generated validation report on `my-test-data/validation` folder. If there are any errors, you need to fix them in your mzTab-M file and regenerate the ISA-TAB files. Once you fix the issues, you can regenerate the ISA-TAB files by running the `convert-to-isatab` command again.
 
 If there is no error in the validation report, you can upload the metadata and raw data files to MetaboLights.
 
 ## 6. Upload the Metadata & RawData files to MetaboLights
 
-Once your ISA-Tab files and raw data are ready, they need to be uploaded to MetaboLights in two separate steps: first the metadata (ISA-Tab) files, then the raw data files via FTP. You can use any FTP client (e.g. FileZilla, Cyberduck, or the ftp client in your terminal) to upload the raw data files. The ftp upload details can be found in the email received after creating the provisional study.
+Once your ISA-Tab files and raw data are ready, they need to be uploaded to MetaboLights in two separate steps: first the metadata (ISA-Tab) files, then the raw data files via FTP (or Aspera). You can use any FTP client (e.g. FileZilla, Cyberduck, or the ftp client in your terminal) to upload the raw data files. The ftp upload details can be found in the email received after creating the provisional study.
 
 After both uploads are complete, you can trigger a server-side remote validation to confirm that everything is consistent and meets MetaboLights submission requirements.
 
 - Upload the ISA-TAB files to MetaboLights using the `upload-metadata-files` command.
 
 ```bash
-uv run mztabm2mtbls-cli upload-metadata-files \
+mztabm2mtbls-cli upload-metadata-files \
     --mtbls-api-token $MTBLS_API_TOKEN \
     --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID \
     --metadata-files-path my-test-data/$MTBLS_PROVISIONAL_STUDY_ID
@@ -192,22 +200,17 @@ mztabm2mtbls-cli upload-data-files \
     --mtbls-api-token $MTBLS_API_TOKEN \
     --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID \
     --data-files-path my-test-data/files
-
-# If you did not receive an email with ftp credentials, 
-# you can get them using the `get-ftp-credentials` command. 
-# mztabm2mtbls-cli get-ftp-credentials \
-#     --mtbls-api-token $MTBLS_API_TOKEN \
-#     --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID
-# It will print the ftp server url, remote folder directory, ftp username and ftp password.
-
 ```
+
+- If you did not receive an email with ftp credentials, you can get them using the `get-ftp-credentials` command. 
 
 ```bash
 mztabm2mtbls-cli get-ftp-credentials \
     --mtbls-api-token $MTBLS_API_TOKEN \
     --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID
-```
+# It will print the ftp server url, remote folder directory, ftp username and ftp password.
 
+```
 
 - Run remote validation using the `remote-validation` command. Review the validation results.
 
@@ -220,6 +223,13 @@ mztabm2mtbls-cli remote-validation \
 
 ## 7. Review the submission in the MetaboLights web interface
 
-- Open the MetaboLights [editor](https://www.ebi.ac.uk/metabolights/editor/console) in your browser (login if required)
+After uploading and validating your study, you can review it through the MetaboLights editor webpage. This lets you verify that all metadata, raw data files, and validation results appear as expected before finalising your submission.
+
+- Open the [MetaboLights editor](https://www.ebi.ac.uk/metabolights/editor/console) in your browser (login if required)
 - Click your provisional study by clicking 'Study overview' button.
 - Review the study details, including the submitted metadata and raw data files.
+
+
+## **For your real data submission**
+
+If everything looks good and your data is not test data, you can complete your submission by updating the status to "Private" in the MetaboLights editor. It will assign a study accession number to your submission and you will receive an email with the study accession number.
