@@ -1,32 +1,38 @@
+import logging
+
 import click
 from metabolights_utils.commands.submission.submission_upload import submission_upload
 from metabolights_utils.provider.submission_repository import (
     MetabolightsSubmissionRepository,
 )
 
+from mztabm2mtbls.commands.utils import setup_basic_logging_config
 
-@click.command()
+logger = logging.getLogger(__name__)
+
+
+@click.command(name="upload-data-files")
 @click.option(
-    "--mtbls_api_token",
+    "--mtbls-api-token",
     required=True,
     help="The MetaboLights REST API token to validate the study.",
 )
 @click.option(
-    "--mtbls_provisional_study_id",
+    "--mtbls-provisional-study-id",
     required=True,
     help="A provisional study id or the name of the local study directory.",
 )
 @click.option(
-    "--mtbls_rest_api_base_url",
-    required=False,
-    help="MetaboLights REST API base URL.",
-    default="https://wwwdev.ebi.ac.uk/metabolights/test/ws",
-)
-@click.option(
-    "--data_files_path",
+    "--data-files-path",
     required=True,
     help="The path to the local data files directory.",
     type=click.Path(exists=True),
+)
+@click.option(
+    "--mtbls-rest-api-base-url",
+    required=False,
+    help="MetaboLights REST API base URL.",
+    default="https://www.ebi.ac.uk/metabolights/ws",
 )
 def upload_study_data_files(
     mtbls_api_token: str,
@@ -34,6 +40,11 @@ def upload_study_data_files(
     data_files_path: str,
     mtbls_rest_api_base_url: str,
 ):
+    """
+    Upload data files to MetaboLights.
+    """
+    setup_basic_logging_config()
+    logger.info(f"Uploading data files for study {mtbls_provisional_study_id}")
     repo: MetabolightsSubmissionRepository = MetabolightsSubmissionRepository()
     upload_info, error_message = repo.get_ftp_upload_details(
         user_api_token=mtbls_api_token,
@@ -42,7 +53,7 @@ def upload_study_data_files(
     )
     if not upload_info:
         click.echo(error_message, err=True)
-        click.exit(1)
+        exit(1)
 
     success, error_message = repo.upload_data_files(
         study_id=mtbls_provisional_study_id,
@@ -55,7 +66,7 @@ def upload_study_data_files(
 
     if not success:
         click.echo(error_message, err=True)
-        click.exit(1)
+        exit(1)
     success, error_message = repo.sync_private_ftp_data_files(
         user_api_token=mtbls_api_token,
         study_id=mtbls_provisional_study_id,
@@ -63,7 +74,10 @@ def upload_study_data_files(
     )
     if not success:
         click.echo(error_message, err=True)
-        click.exit(1)
+        exit(1)
+    click.echo(
+        f"Data files uploaded successfully for study {mtbls_provisional_study_id}"
+    )
     return success, None
 
 

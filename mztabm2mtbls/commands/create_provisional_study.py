@@ -6,27 +6,37 @@ from metabolights_utils.provider.submission_repository import (
     MetabolightsSubmissionRepository,
 )
 
+from mztabm2mtbls.commands.utils import setup_basic_logging_config
 
-@click.command()
+
+@click.command(name="create-provisional-study")
 @click.option(
-    "--mtbls_rest_api_base_url",
+    "--user-api-token",
+    required=True,
+    help="MetaboLights REST API user API token.",
+)
+@click.option(
+    "--mtbls-rest-api-base-url",
     required=False,
     help="MetaboLights REST API base URL.",
-    default="https://wwwdev.ebi.ac.uk/metabolights/test/ws",
+    default="https://www.ebi.ac.uk/metabolights/ws",
 )
-@click.argument("user_api_token")
 def create_submission(
     user_api_token: str, mtbls_rest_api_base_url: str, timeout: int = 30
 ) -> tuple[Union[list[str], None], Union[str, None]]:
-    """Create a MetaboLights submission. Return a submission ID and a message.
+    """Create a provisional MetaboLights study.
+
+    Returns the provisional study ID and a message.
 
     Args:
-        mtbls_api_token (str): MetaboLights REST API user token
+        user_api_token (str): MetaboLights REST API user token
         mtbls_rest_api_base_url (str): MetaboLights REST API base URL
 
     Returns:
-        tuple[Union[str, None], Union[str, None]]: submission_id (if success) and message (if failure)
+        tuple[Union[str, None], Union[str, None]]: submission_ids (if success) and message (if failure)
     """
+
+    setup_basic_logging_config()
     if not user_api_token:
         click.echo("MetaboLights API token is required.", err=True)
         exit(1)

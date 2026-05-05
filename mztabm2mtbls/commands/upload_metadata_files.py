@@ -11,6 +11,7 @@ from metabolights_utils.provider.submission_repository import (
 )
 
 from mztabm2mtbls import utils
+from mztabm2mtbls.commands.utils import setup_basic_logging_config
 
 
 def _update_study_identifiers(study_model, mtbls_provisional_study_id):
@@ -77,25 +78,25 @@ def _update_study_identifiers(study_model, mtbls_provisional_study_id):
     study_model.investigation.identifier = mtbls_provisional_study_id
 
 
-@click.command()
+@click.command(name="upload-metadata-files")
 @click.option(
-    "--mtbls_api_token",
+    "--mtbls-api-token",
     required=True,
     help="The MetaboLights REST API token to validate the study.",
 )
 @click.option(
-    "--mtbls_provisional_study_id",
+    "--mtbls-provisional-study-id",
     required=True,
     help="A provisional study id or the name of the local study directory.",
 )
 @click.option(
-    "--mtbls_rest_api_base_url",
+    "--mtbls-rest-api-base-url",
     required=False,
     help="MetaboLights REST API base URL.",
-    default="https://wwwdev.ebi.ac.uk/metabolights/test/ws",
+    default="https://www.ebi.ac.uk/metabolights/ws",
 )
 @click.option(
-    "--metadata_files_path",
+    "--metadata-files-path",
     required=True,
     help="The path to the local data files directory.",
     type=click.Path(exists=True),
@@ -106,6 +107,10 @@ def upload_study_metadata_files(
     metadata_files_path: str,
     mtbls_rest_api_base_url: str,
 ):
+    """
+    Upload metadata files to MetaboLights.
+    """
+    setup_basic_logging_config()
     repo: MetabolightsSubmissionRepository = MetabolightsSubmissionRepository()
 
     study_model, error_message = repo.load_study_model(
@@ -120,7 +125,7 @@ def upload_study_metadata_files(
         or not study_model.investigation.studies[0]
     ):
         click.echo(error_message, err=True)
-        click.exit(1)
+        exit(1)
 
     temp_dir_path = Path(f".temp-{uuid.uuid4().hex}")
     if not temp_dir_path.exists():
@@ -131,7 +136,7 @@ def upload_study_metadata_files(
         utils.save_metabolights_study_model(study_model, output_dir=temp_dir_path)
         if not study_model:
             click.echo("Failed to load study model", err=True)
-            click.exit(1)
+            exit(1)
         success, error_message = repo.upload_metadata_files(
             study_id=mtbls_provisional_study_id,
             metadata_files_path=temp_dir_path,
@@ -143,7 +148,7 @@ def upload_study_metadata_files(
 
         if not success:
             click.echo(error_message, err=True)
-            click.exit(1)
+            exit(1)
 
     finally:
         if temp_dir_path.exists():

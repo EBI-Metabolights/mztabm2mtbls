@@ -24,6 +24,19 @@ dev = [
 [project.scripts]
 mztabm2mtbls-cli = "mztabm2mtbls.commands.cli:cli"
 
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mztabm2mtbls*"]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+mztabm2mtbls = ["**/*.json", "**/*.txt", "**/*.tsv", "**/*.yaml", "**/*.wasm", "**/*.tar.gz"]
+
+
 [tool.ruff.lint]
 extend-select = ["E4", "E7", "E9", "F", "I"]
 ignore= ["F401", "F403", "F541", "F841", "F405", "G003" ]

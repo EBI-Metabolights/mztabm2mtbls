@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 from urllib.request import urlopen
 
 logger = logging.getLogger(__name__)
@@ -24,3 +25,17 @@ def load_from_url(url: str, file_path: str) -> None:
             out_file.write(chunk)
 
     logger.info("Saved %s (%d bytes)", file_path, os.path.getsize(file_path))
+
+
+def setup_basic_logging_config(level: int = logging.INFO):
+    logging.basicConfig(
+        level=level,
+        format="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s",
+        datefmt="%d/%b/%Y %H:%M:%S",
+        stream=sys.stdout,
+    )
+    logging.getLogger("fake_useragent").setLevel(logging.ERROR)
+    logging.getLogger("mhd_model.model.v0_1.dataset.validation.base").setLevel(
+        logging.WARNING
+    )
+    logging.getLogger("httpx").setLevel(logging.ERROR)
