@@ -178,7 +178,7 @@ ls my-test-data/$MTBLS_PROVISIONAL_STUDY_ID
 
 If there is no error in the validation report, you can upload the metadata and raw data files to MetaboLights.
 
-## 6. Upload the Metadata & RawData files to MetaboLights
+## 6. Upload the metadata and raw data files to MetaboLights
 
 Once your ISA-Tab files and raw data are ready, they need to be uploaded to MetaboLights in two separate steps: first the metadata (ISA-Tab) files, then the raw data files via FTP (or Aspera). You can use any FTP client (e.g. FileZilla, Cyberduck, or the ftp client in your terminal) to upload the raw data files. The ftp upload details can be found in the email received after creating the provisional study.
 
@@ -199,10 +199,11 @@ mztabm2mtbls-cli upload-metadata-files \
 mztabm2mtbls-cli upload-data-files \
     --mtbls-api-token $MTBLS_API_TOKEN \
     --mtbls-provisional-study-id $MTBLS_PROVISIONAL_STUDY_ID \
-    --data-files-path my-test-data/files
+    --data-files-path my-test-data/files \
+    --mztabm-file-path test/data/LCS-00001-1/LCS-00001-1.mztabm
 ```
 
-- If you did not receive an email with ftp credentials, you can get them using the `get-ftp-credentials` command. 
+- (Skip this step if you have already uploaded your raw data files using the `upload-data-files` command above.) If you want to upload your raw data files using ftp client or aspera, you can get the FTP credentials for your provisional study using the `get-ftp-credentials` command.
 
 ```bash
 mztabm2mtbls-cli get-ftp-credentials \

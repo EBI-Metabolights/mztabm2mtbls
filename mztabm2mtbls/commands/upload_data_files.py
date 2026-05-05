@@ -1,4 +1,6 @@
 import logging
+import os
+import shutil
 
 import click
 from metabolights_utils.commands.submission.submission_upload import submission_upload
@@ -29,6 +31,12 @@ logger = logging.getLogger(__name__)
     type=click.Path(exists=True),
 )
 @click.option(
+    "--mztabm-file-path",
+    required=True,
+    help="The path to the local mztabm file path.",
+    type=click.Path(exists=True),
+)
+@click.option(
     "--mtbls-rest-api-base-url",
     required=False,
     help="MetaboLights REST API base URL.",
@@ -39,6 +47,7 @@ def upload_study_data_files(
     mtbls_provisional_study_id: str,
     data_files_path: str,
     mtbls_rest_api_base_url: str,
+    mztabm_file_path: str,
 ):
     """
     Upload data files to MetaboLights.
@@ -54,6 +63,17 @@ def upload_study_data_files(
     if not upload_info:
         click.echo(error_message, err=True)
         exit(1)
+    if mztabm_file_path != data_files_path:
+        target_mztabm_path = os.path.join(
+            data_files_path, os.path.basename(mztabm_file_path)
+        )
+        if os.path.exists(target_mztabm_path):
+            if os.path.isfile(target_mztabm_path):
+                os.remove(target_mztabm_path)
+            elif os.path.isdir(target_mztabm_path):
+                shutil.rmtree(target_mztabm_path)
+        shutil.copy(mztabm_file_path, target_mztabm_path)
+        logger.info("Copying mztabm file to %s", target_mztabm_path)
 
     success, error_message = repo.upload_data_files(
         study_id=mtbls_provisional_study_id,
