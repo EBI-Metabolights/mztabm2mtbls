@@ -100,7 +100,13 @@ graph TD
 ### Run converter for example file
 
 ```bash
-PYTHONPATH=. uv run python mztabm2mtbls/converter.py --input-file submission_validation_test/MTBLS263/MTBLS263.mztab --mtbls_accession_number MTBLS100001
+PYTHONPATH=. uv run python mztabm2mtbls/converter.py --input-file test/data/MTBLS263/MTBLS263.mztab --mtbls_accession_number MTBLS100001
+```
+
+The converter can also run on the JSON file directly:
+
+```bash
+PYTHONPATH=. uv run python mztabm2mtbls/converter.py --input-file test/data/MTBLS263.mztab.json --mtbls_accession_number MTBLS100001
 ```
 
 ### Run converter without remote validation
