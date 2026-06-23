@@ -186,11 +186,11 @@ wheels = [
 
 [[package]]
 name = "idna"
-version = "3.13"
+version = "3.18"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ce/cc/762dfb036166873f0059f3b7de4565e1b5bc3d6f28a414c13da27e442f99/idna-3.13.tar.gz", hash = "sha256:585ea8fe5d69b9181ec1afba340451fba6ba764af97026f92a91d4eef164a242", size = 194210, upload-time = "2026-04-22T16:42:42.314Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cd/63/9496c57188a2ee585e0f1db071d75089a11e98aa86eb99d9d7618fc1edce/idna-3.18.tar.gz", hash = "sha256:ffb385a7e039654cef1ab9ef32c6fafe283c0c0467bba1d9029738ce4a14a848", size = 196711, upload-time = "2026-06-02T14:34:07.794Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5d/13/ad7d7ca3808a898b4612b6fe93cde56b53f3034dcde235acb1f0e1df24c6/idna-3.13-py3-none-any.whl", hash = "sha256:892ea0cde124a99ce773decba204c5552b69c3c67ffd5f232eb7696135bc8bb3", size = 68629, upload-time = "2026-04-22T16:42:40.909Z" },
+    { url = "https://files.pythonhosted.org/packages/1e/5e/d4e9f1a599fb8e573b7b87160658329fbf28d19eac2718f51fc3def3aa5a/idna-3.18-py3-none-any.whl", hash = "sha256:7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2", size = 65455, upload-time = "2026-06-02T14:34:06.319Z" },
 ]
 
 [[package]]
@@ -240,21 +240,22 @@ wheels = [
 
 [[package]]
 name = "metabolights-utils"
-version = "1.4.31"
+version = "1.4.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "click" },
     { name = "httpx" },
+    { name = "idna" },
     { name = "jsonpath-ng" },
     { name = "jsonschema" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "unidecode" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/59/12/4d96c5b01bbf19eea5f26f00d160d6c6ab851bd9b31b7c4295304fd26189/metabolights_utils-1.4.31.tar.gz", hash = "sha256:4daf5658dc888768d69002cd791cff77b0fbc07f69d8ad0c4002ffe59caa6f68", size = 163014, upload-time = "2026-05-05T10:09:53.96Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a0/9f/6968187eaea50648c862c04b2cd0bd32ff4aaf914e37ca38784fba2c09f0/metabolights_utils-1.4.35.tar.gz", hash = "sha256:e36159c2cffe1848f6a174bf051acd5bfcb3638cc30ed80a98119242d78449c0", size = 164666, upload-time = "2026-06-05T18:43:36.749Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9b/93/4684d8a9d90425c8e049914055c43a3d553da6047fb05c710d2aade54ae1/metabolights_utils-1.4.31-py3-none-any.whl", hash = "sha256:101ffdab4a3f17777a15fa3d41b593360fee67bf56a799eec9a8f68ad2311962", size = 195029, upload-time = "2026-05-05T10:09:52.444Z" },
+    { url = "https://files.pythonhosted.org/packages/97/5a/3175993b59b713fd6c96150a5bd13ba6264449d09d3f547b54fbcaad51fb/metabolights_utils-1.4.35-py3-none-any.whl", hash = "sha256:5ac5f83ad4b491c2f59bee2fbd919eaf117ebc29e92130f35b605bd28205c804", size = 196718, upload-time = "2026-06-05T18:43:35.269Z" },
 ]
 
 [[package]]
@@ -265,7 +266,6 @@ dependencies = [
     { name = "click" },
     { name = "metabolights-utils" },
     { name = "opa-wasmtime" },
-    { name = "pygments" },
     { name = "pymztabm" },
     { name = "python-dotenv" },
 ]
@@ -280,9 +280,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "click", specifier = ">=8.3.3" },
-    { name = "metabolights-utils", specifier = ">=1.4.31" },
+    { name = "metabolights-utils", specifier = ">=1.4.35" },
     { name = "opa-wasmtime", specifier = ">=0.1.1" },
-    { name = "pygments", specifier = ">=2.20.0" },
     { name = "pymztabm", git = "https://github.com/lifs-tools/pymzTab-m.git?rev=development" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
 ]
@@ -515,7 +514,7 @@ wheels = [
 [[package]]
 name = "pymztabm"
 version = "0.1.0"
-source = { git = "https://github.com/lifs-tools/pymzTab-m.git?rev=development#d1ede2df00fbcd25fdcf25c5462c421680fe6d87" }
+source = { git = "https://github.com/lifs-tools/pymzTab-m.git?rev=development#09d1fa92cc4dc7691a842a114585c2f989ebbb19" }
 dependencies = [
     { name = "email-validator" },
     { name = "jsonschema" },

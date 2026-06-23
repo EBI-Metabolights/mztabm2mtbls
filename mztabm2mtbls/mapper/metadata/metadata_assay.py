@@ -139,7 +139,11 @@ class MetadataAssayMapper(BaseMapper):
         for protocol in protocols:
             if protocol.name == "Mass spectrometry":
                 names = " ".join(
-                    [x.name.name for x in mztab_model.metadata.instrument or [] if x.name]
+                    [
+                        x.name.name
+                        for x in mztab_model.metadata.instrument or []
+                        if x.name
+                    ]
                 )
                 analyzers = set()
                 sources = " ".join(

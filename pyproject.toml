@@ -9,9 +9,8 @@ dependencies = [
     "click>=8.3.3",
     "pymztabm",
     "python-dotenv>=1.2.2",
-    "pygments>=2.20.0",
     "opa-wasmtime>=0.1.1",
-    "metabolights-utils>=1.4.31",
+    "metabolights-utils>=1.4.35",
 ]
 
 [dependency-groups]
