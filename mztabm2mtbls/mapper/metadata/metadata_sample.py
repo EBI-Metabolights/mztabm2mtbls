@@ -23,8 +23,8 @@ class MetadataSampleMapper(BaseMapper):
         study = mtbls_model.investigation.studies[0]
         samples_file: SamplesFile = mtbls_model.samples[list(mtbls_model.samples)[0]]
 
-        samples_map = {x.id: x for x in mztab_model.metadata.sample}
-        assays_map = {x.id: x for x in mztab_model.metadata.assay}
+        samples_map = {x.id: x for x in mztab_model.metadata.sample or []}
+        assays_map = {x.id: x for x in mztab_model.metadata.assay or []}
         ##################################################################################
         # DEFINE SAMPLE SHEET COLUMNS
         ##################################################################################
@@ -48,13 +48,13 @@ class MetadataSampleMapper(BaseMapper):
         current_index = protocol_ref_header.column_index
         # If Cell type and Disease values are defined, add them as characteristics
         custom_characteristics = []
-        for sample in mztab_model.metadata.sample:
+        for sample in mztab_model.metadata.sample or []:
             if sample.cell_type and sample.cell_type[0]:
                 custom_characteristics.append("Cell type")
             if sample.disease and sample.disease[0]:
                 custom_characteristics.append("Disease")
 
-        for item in mztab_model.metadata.sample:
+        for item in mztab_model.metadata.sample or []:
             if item.custom:
                 for param in item.custom:
                     name = param.name.strip('"')
@@ -80,7 +80,7 @@ class MetadataSampleMapper(BaseMapper):
             for x in mztab_model.metadata.study_variable or {}
         }
         study_variable_groups: Dict[str, list[str]] = {
-            x.id: [groups_dict[a] for a in x.group_refs if a in groups_dict]
+            x.id: [groups_dict[a] for a in x.group_refs or {} if a in groups_dict]
             for x in mztab_model.metadata.study_variable or {}
         }
         sample_id_study_variable_id: Dict[str, list[str]] = {}
@@ -95,7 +95,7 @@ class MetadataSampleMapper(BaseMapper):
                             study_variables[k]
                         )
         numeric_factors = set()
-        groups = {x.id: x for x in mztab_model.metadata.study_variable_group}
+        groups = {x.id: x for x in mztab_model.metadata.study_variable_group or {}}
         study.study_factors.factors = []
         for sv in mztab_model.metadata.study_variable:
             if sv.group_refs:
@@ -176,7 +176,7 @@ class MetadataSampleMapper(BaseMapper):
                     header.column_header
                 ].target_column_name = header.column_name
 
-        sample_count = len(mztab_model.metadata.sample)
+        sample_count = len(mztab_model.metadata.sample or [])
         # create empty sample rows
         for column_name in samples_file.table.columns:
             if column_name == "Protocol REF":
@@ -186,7 +186,7 @@ class MetadataSampleMapper(BaseMapper):
             elif column_name not in samples_file.table:
                 samples_file.table.data[column_name] = [""] * sample_count
 
-        for row_idx, sample in enumerate(mztab_model.metadata.sample):
+        for row_idx, sample in enumerate(mztab_model.metadata.sample or []):
             update_isa_table_row(samples_file, row_idx, sample, selected_column_headers)
             if sample.custom:
                 for param in sample.custom:

@@ -13,7 +13,7 @@
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "args": [
-        "--input-file=test/data/test2/LCS-00001-1.mztabm"
+        "--input-file=test/data/LCS-00001-1/LCS-00001-1.mztabm"
       ],
       "env": {
         "PYTHONPATH": "${workspaceFolder}"
@@ -26,10 +26,10 @@
       "request": "launch",
       "program": "${workspaceFolder}/mztabm2mtbls/commands/convert_and_validate_submission.py",
       "args": [
-        "--mtbls-provisional-study-id=MTBLS10000000",
-        "--mztabm-file-path=test/data/LCS-00001-1/LCS-00001-1.mztabm",
-        "--data-files-path=test/data/LCS-00001-1/files",
-        "--target-metadata-files-path=test/data/LCS-00001-1/isa-tab",
+        "--mtbls-provisional-study-id=REQ20260528220073",
+        "--mztabm-file-path=REQ20260528220073/MST-2025-03-10-and-2025-04-10-combined-neg.mzTab",
+        "--data-files-path=REQ20260528220073/DATA-FILES",
+        "--target-metadata-files-path=REQ20260528220073/ISA-TAB",
         "--opa-executable-path=opa",
         "--mtbls-validation-bundle-path=${workspaceFolder}/bundle.tar.gz",
         "--mtbls-validation-wasm-path=${workspaceFolder}/mtbls-validation.wasm",

@@ -134,22 +134,22 @@ class MetadataAssayMapper(BaseMapper):
         # add_isa_table_single_column(samples, "Comment[mztab:metadata:assay:external_uri]", new_column_index=4)
         protocols = mtbls_model.investigation.studies[0].study_protocols.protocols
         ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
-        samples_map = {x.id: x for x in mztab_model.metadata.sample}
-        instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
+        samples_map = {x.id: x for x in mztab_model.metadata.sample or []}
+        instruments_map = {x.id: x for x in mztab_model.metadata.instrument or []}
         for protocol in protocols:
             if protocol.name == "Mass spectrometry":
                 names = " ".join(
-                    [x.name.name for x in mztab_model.metadata.instrument if x.name]
+                    [x.name.name for x in mztab_model.metadata.instrument or [] if x.name]
                 )
                 analyzers = set()
                 sources = " ".join(
                     [
                         x.source.name
-                        for x in mztab_model.metadata.instrument
+                        for x in mztab_model.metadata.instrument or []
                         if x.source.name
                     ]
                 )
-                for instrument in mztab_model.metadata.instrument:
+                for instrument in mztab_model.metadata.instrument or []:
                     analyzers.update([x.name for x in instrument.analyzer if x.name])
                 if not protocol.description:
                     protocol.description += ". ".join(
@@ -166,7 +166,7 @@ class MetadataAssayMapper(BaseMapper):
                 species = set()
                 tissues = set()
 
-                for x in mztab_model.metadata.sample:
+                for x in mztab_model.metadata.sample or []:
                     if x.species:
                         species.update([x.name for x in x.species])
                     if x.tissue:
@@ -260,8 +260,8 @@ class MetadataAssayMapper(BaseMapper):
                 self.add_protocol_parameter(protocols, "Data transformation", header[0])
 
         ms_run_map = {x.id: x for x in mztab_model.metadata.ms_run}
-        samples_map = {x.id: x for x in mztab_model.metadata.sample}
-        instruments_map = {x.id: x for x in mztab_model.metadata.instrument}
+        samples_map = {x.id: x for x in mztab_model.metadata.sample or []}
+        instruments_map = {x.id: x for x in mztab_model.metadata.instrument or []}
         ms_run_default_field_maps = {
             "Sample Name": "sample_name",
             "Extract Name": "assay_name",
@@ -340,15 +340,15 @@ class MetadataAssayMapper(BaseMapper):
                     assay_file.table.data[column_name].append(value)
         #################################################################################################
 
-        protocols_map = {x.id: x for x in mztab_model.metadata.protocol}
+        protocols_map = {x.id: x for x in mztab_model.metadata.protocol or []}
         protocol_by_type_map: dict[str, list[str]] = {}
-        for protocol in mztab_model.metadata.protocol:
+        for protocol in mztab_model.metadata.protocol or []:
             protocol_by_type_map.setdefault(protocol.type.name.lower(), []).append(
                 protocol
             )
 
         protocol_params: dict[str, dict[str, mztab_common.Parameter]] = {}
-        for protocol in mztab_model.metadata.protocol:
+        for protocol in mztab_model.metadata.protocol or []:
             protocol_params[protocol.type.name.lower()] = {
                 x.name.lower(): x for x in protocol.parameters or []
             }
